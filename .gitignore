@@ -1,0 +1,6 @@
+main.cpp
+*.out
+input*
+output*
+answer*
+*.swp
