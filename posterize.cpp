@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Posterize 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    12/28/2017
  *  
- *  + TAG
+ *  + Dynamic Programming
  */
 
 #include <algorithm>
@@ -34,7 +34,21 @@ typedef long double ld;
 
 #define rep(i, s, e) for (int i = s, fe__ = e; i < fe__; ++i)
 
+const int N = 256;
+
+struct pixel {
+    int r, p;
+};
+
 int main() {
     ios::sync_with_stdio(false), cin.tie(0);
+    int d, k;
+    cin >> d >> k;
+    vector<pixel> P(d);
+    for (auto &p : P) cin >> p.r >> p.p;
+    sort(P.begin(), P.end(), [](pixel &a, pixel &b) {
+        return a.r < b.r;
+    });
+
     return 0;
 }
