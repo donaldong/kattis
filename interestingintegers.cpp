@@ -1,25 +1,29 @@
 /**
  *  @brief   Kattis - Interesting Integers 
  *  @author  Donald Dong (@donaldong)
- *  @date    12/25/2017
+ *  @date    12/29/2017
  *  
+ *  + Brute Force
  *  + Numbers
+ *  + Extended Euclidean
  */
 
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <queue>
-#include <deque>
-#include <map>
-#include <set>
-#include <unordered_map>
-#include <unordered_set>
-#include <stdio.h>
-#include <cmath>
-#include <cstring>
 #include <algorithm>
 #include <climits>
+#include <cmath>
+#include <cstdio>
+#include <cstring>
+#include <deque>
+#include <iostream>
+#include <map>
+#include <queue>
+#include <regex>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 using namespace std;
 
 typedef long long int ll;
@@ -27,57 +31,81 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pb push_back
 #define mp make_pair
 
-ld sqrt5 = sqrt(5);
-ld P = (1.0 + sqrt5) / 2.0;
-ld p = (1.0 - sqrt5) / 2.0;
-hmap<uint, uint> F;
+#define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
 
-uint f(uint n) {
-    if (F.find(n) != F.end()) return F[n];
-    uint res = (pow(P, n) - pow(p, n)) / sqrt5;
-    F[n] = res;
-    return res;
-}
+const int N = 46;
+ll F[N];
 
-uint G(uint n, uint a1, uint a2) {
-    return f(n - 2) * a1 + f(n - 1) * a2;
-}
-
-bool isPerfectSquare(int x) {
-    int s = sqrt(x);
-    return s * s == x;
-}
-
-uint getN(uint f) {
-    return log(f * sqrt5 + sqrt(5 * f * f - 4.0))/log(p);
-}
- 
-bool possible(uint a1, uint a2, uint n) {
-    for (int i = 3; i < 50; ++i) {
-        uint res = G(i, a1, a2);
-        if (res == n) return true;
-        if (res > n) break;
+ll gcdExt(ll a, ll b, ll &x, ll &y) {
+    if (a == 0) {
+        x = 0;
+        y = 1;
+        return b;
     }
-    return false;
+    ll x1, y1;
+    ll gcd = gcdExt(b % a, a, x1, y1);
+    x = y1 - (b/a) * x1;
+    y = x1;
+    return gcd;
+}
+
+bool possible(size_t i, ll n, ll &x, ll &y) {
+    ll a = F[i - 1], b = F[i];
+    if (a > n || b > n) return false;
+    gcdExt(a, b, x, y);
+    x *= n;
+    y *= n;
+    if (x <= y) {
+        ll k = (y - x) / (a + b);
+        x += k * b;
+        y -= k * a;
+    } else {
+        ll k = (x - y) / (a + b);
+        x -= k * b;
+        y += k * a;
+    }
+    if (x > y) {
+        x -= b;
+        y += a;
+    }
+    return x >= 1 && y >= 1;
+}
+
+void solve(ll n, ll &g1, ll &g2) {
+    for (int i = N; i >= 2; --i) {
+        ll x, y; 
+        if (possible(i, n, x, y)) {
+            if (y < g2) {
+                g2 = y;
+                g1 = x;
+            } else if (y == g2 && x < g1) {
+                g1 = x;
+            }
+            return;
+        }
+    }
 }
 
 int main() {
-    int t;
-    cin >> t;
-    while (t--) {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    F[0] = 0;
+    F[1] = 1;
+    rep(i, 2, N) {
+        F[i] = F[i - 1] + F[i - 2];
+    }
+    int T;
+    cin >> T;
+    rep(t, 0, T) {
         int n;
         cin >> n;
-        uint a1 = 1, a2 = 1;
-        while (!possible(a1, a2, n)) {
-            if (a1 < a2) ++a1;
-            else { 
-                ++a2;
-                a1 = 1;
-            }
-        }
-        cout << a1 << " " << a2 << endl;
+        ll g1, g2;
+        g1 = g2 = LLONG_MAX;
+        solve(n, g1, g2);
+        cout << g1 << " " << g2 << endl;
     }
     return 0;
 }

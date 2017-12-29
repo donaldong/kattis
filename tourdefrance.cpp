@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Tour de France 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    12/28/2017
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -37,5 +37,24 @@ typedef long double ld;
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int f, r;
+    int F[10], R[10];
+    ld D[100];
+    while (cin >> f >> r) {
+        if (!f) break;
+        rep(i, 0, f) cin >> F[i];
+        rep(i, 0, r) cin >> R[i];
+        rep(i, 0, f) rep(j, 0, r) {
+            D[i * r + j] = ld(R[j]) / F[i];
+        }
+        int size = f * r;
+        sort(D, D + size);
+        ld res = 0.0;
+        rep(i, 1, size) {
+            res = max(res, D[i] / D[i-1]);
+        }
+        printf("%.2Lf\n", res);
+    }
     return 0;
 }
+

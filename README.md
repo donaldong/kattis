@@ -13,6 +13,7 @@
 + Dynamic Programming
 + Encryption
 + Exponential
++ Extended Euclidean
 + Floating Point Numbers
 + Geometry
 + Graph
