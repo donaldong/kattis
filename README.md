@@ -5,16 +5,19 @@
 + Binary Search
 + Bit Manipulation
 + Brute Force
++ Bad Description
 + Chess
 + Coordinate
 + Coordinate Plane
 + Counting
 + Disjoint Set
 + Dynamic Programming
++ DFS
 + Encryption
 + Exponential
 + Extended Euclidean
 + Floating Point Numbers
++ Funny
 + Geometry
 + Graph
 + Greedy

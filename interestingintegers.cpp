@@ -78,12 +78,8 @@ void solve(ll n, ll &g1, ll &g2) {
     for (int i = N; i >= 2; --i) {
         ll x, y; 
         if (possible(i, n, x, y)) {
-            if (y < g2) {
-                g2 = y;
-                g1 = x;
-            } else if (y == g2 && x < g1) {
-                g1 = x;
-            }
+            g1 = x;
+            g2 = y;
             return;
         }
     }
