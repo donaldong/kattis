@@ -16,6 +16,7 @@
 + Encryption
 + Exponential
 + Extended Euclidean
++ Equation
 + Floating Point Numbers
 + Funny
 + Geometry
@@ -30,6 +31,7 @@
 + Numbers
 + Permutation
 + Probability
++ Physics
 + Recursion
 + Regex
 + Shortest Path

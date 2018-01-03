@@ -1,9 +1,10 @@
-/**
- *  @brief   Kattis - NAME 
+/*
+ *  @brief   Kattis - Fractional Lotion 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/02/2018
  *  
- *  + TAG
+ *  + Equation
+ *  + Numbers
  */
 
 #include <algorithm>
@@ -39,9 +40,41 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+hmap<int, int> prime_factors(int n) {
+    hmap<int, int> f;
+    while (n % 2 == 0) {
+        n /= 2;
+        ++f[2];
+    }
+    for (int i = 3; i * i <= n; i += 2) {
+        while (n % i == 0) {
+            n /= i;
+            ++f[i];
+        }
+    }
+    if (n > 2) ++f[n];
+    return f;
+}
+
+ull solve(int n) {
+    auto f = prime_factors(n);
+    ull res = 1;
+    for (auto &entry : f) {
+        res *= 2 * entry.second + 1;
+    }
+    return (res + 1) / 2;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    while (true) {
+        int one = 0, n = 0;
+        scan(one); scan(n);
+        if (one != 1) break;
+        print(solve(n));
+        putchar('\n');
+    }
     return 0;
 }
 

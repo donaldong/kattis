@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Charting Progress 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/02/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -42,6 +42,27 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int sumstar = 0;
+    int blank = 0, star = 0;
+    while (true) {
+        char c = getchar();
+        if (c == '*') ++star;
+        else if (c == '.') ++blank;
+        else if (c == '\n') {
+            if (!blank && !star) {
+                putchar('\n');
+                sumstar = 0;
+                continue;
+            }
+            rep(i, 0, blank - sumstar) putchar('.');
+            rep(i, 0, star) putchar('*');
+            rep(i, 0, sumstar) putchar('.');
+            putchar('\n');
+            sumstar += star;
+            blank = 0;
+            star = 0;
+        } else break;
+    }
     return 0;
 }
 
