@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - I Can Guess the Data Structure! 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/08/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -41,9 +41,54 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+string check(vector<bool> &v) {
+    int count = 0;
+    for (auto b : v) {
+        if (b) ++count;
+    }
+    if (count == 0) return "impossible";
+    if (count > 1) return "not sure";
+    if (v[0]) return "stack";
+    if (v[1]) return "queue";
+    return "priority queue";
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int N;
+    while (cin >> N) {
+        stack<int> s;
+        queue<int> q;
+        pq<int, vector<int>, less<int>> q2;
+        vector<bool> v(3, true);
+        while (N--) {
+            int op, e;
+            cin >> op >> e;
+            if (op == 1) {
+                s.push(e);
+                q.push(e);
+                q2.push(e);
+            } else {
+                if (s.empty()) v[0] = false;
+                else {
+                    if (s.top() != e) v[0] = false;
+                    s.pop();
+                }
+                if (q.empty()) v[1] = false;
+                else {
+                    if (q.front() != e) v[1] = false;
+                    q.pop();
+                }
+                if (q2.empty()) v[2] = false;
+                else {
+                    if (q2.top() != e) v[2] = false;
+                    q2.pop();
+                }
+            }
+        }
+        cout << check(v) << endl;
+    }
     return 0;
 }
 

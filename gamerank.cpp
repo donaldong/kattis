@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Game Rank 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/07/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,57 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int get_stars(int rank) {
+    if (rank >= 21 && rank <= 25) return 2;
+    if (rank >= 16 && rank <= 20) return 3;
+    if (rank >= 11 && rank <= 15) return 4;
+    return 5;
+}
+
+int bonus(int rank, int consecutive) {
+    if (rank < 6) return 0;
+    return consecutive >= 3;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    string line;
+    cin >> line;
+    int rank = 25;
+    int stars = 0;
+    int consecutive = 0;
+    bool legend = false;
+    for (char c : line) {
+        int maxstars = get_stars(rank);
+        if (c == 'W') {
+            ++consecutive;
+            ++stars;
+            stars += bonus(rank, consecutive);
+            if (stars > maxstars) {
+                --rank;
+                stars -= maxstars;
+            }
+            if (rank <= 0) {
+                legend = true;
+                break;
+            }
+        } else {
+            if (rank <= 20) --stars;
+            consecutive = 0;
+            if (stars < 0) {
+                if (rank < 20) {
+                    ++rank;
+                    maxstars = get_stars(rank);
+                    stars += maxstars;
+                } else {
+                    stars = 0;
+                }
+            }
+        }
+    }
+    if (legend) cout << "Legend" << endl;
+    else cout << rank << endl;
     return 0;
 }
 

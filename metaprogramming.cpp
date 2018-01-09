@@ -41,9 +41,39 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+string to_string(bool f) {
+    return f ? "true" : "false";
+}
+
+string eval(string &a, string &b, char op, hmap<string, int> &M) {
+   if (M.find(a) == M.end() || M.find(b) == M.end()) return "undefined";
+   int v1 = M[a], v2 = M[b];
+   if (op == '<') return to_string(v1 < v2);
+   if (op == '=') return to_string(v1 == v2);
+   return to_string(v1 > v2);
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    hmap<string, int> M;
+    string line;
+    while (getline(cin, line)) {
+        stringstream ss(line);
+        string cmd;
+        ss >> cmd;
+        if (cmd == "define") {
+            int val;
+            string var;
+            ss >> val >> var;
+            M[var] = val;
+        } else {
+            string var1, var2;
+            char op;
+            ss >> var1 >> op >> var2;
+            cout << eval(var1, var2, op, M) << endl;
+        }
+    }
     return 0;
 }
 

@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Closest Sums 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/08/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -44,6 +44,42 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n;
+    int T = 1;
+    while (cin >> n) {
+        printf("Case %d:\n", T++);
+        set<int> N, S;
+        while (n--) {
+            int e;
+            cin >> e;
+            N.insert(e);
+        }
+        for (auto i = N.begin(); i != N.end(); ++i) {
+            auto j = i; ++j;
+            for (; j != N.end(); ++j) {
+                S.insert(*i + *j);
+            }
+        }
+        int q;
+        cin >> q;
+        while (q--) {
+            int e;
+            cin >> e;
+            int diff = INT_MAX;
+            int res = 0;
+            auto beg = S.lower_bound(e);
+            if (beg != S.begin()) --beg;
+            auto end = S.upper_bound(e);
+            if (end != S.end()) ++end;
+            for (auto i = beg; i != end; ++i) {
+                if (abs(*i - e) < diff) {
+                    res = *i;
+                    diff = abs(*i - e);
+                }
+            }
+            printf("Closest sum to %d is %d.\n", e, res);
+        }
+    }
     return 0;
 }
 

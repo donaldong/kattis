@@ -1,7 +1,7 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - WERTYU 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/04/2018
  *  
  *  + TAG
  */
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -42,8 +41,28 @@ inline void print(ull);
 inline void print(string&);
 
 int main() {
+    hmap<char, char> M;
+    M[' '] = ' ';
+    vector<string> V = {
+        "11234567890-=",
+        "QWERTYUIOP[]\\",
+        "ASDFGHJKL;\'",
+        "ZXCVBNM,./"
+    };
+    for (auto s : V) {
+        for (int i = 1; i < s.size(); ++i) {
+            M[s[i]] = s[i - 1];
+        }
+    }
     ios::sync_with_stdio(false);
     cin.tie(0);
+    string line;
+    while (getline(cin, line)) {
+        for (char c : line) {
+            putchar(M[c]);
+        }
+        putchar('\n');
+    }
     return 0;
 }
 

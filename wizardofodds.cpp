@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Wizard of Odds 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/05/2018
  *  
- *  + TAG
+ *  + Numbers
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,28 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ld read() {
+    int c;
+    ld number = 0;
+    number = 0;
+    c = getchar();
+    if (c=='-') {
+        c = getchar();
+    }
+    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
+    return number;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    ld N = read(), K = read();
+    ld diff = log(N) / log(2) - K;
+    if (diff > 1e-9) {
+        cout << "You will become a flying monkey!" << endl;
+    } else {
+        cout << "Your wish is granted!" << endl;
+    }
     return 0;
 }
 

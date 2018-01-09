@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Restaurant Ratings 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/05/2018
  *  
- *  + TAG
+ *  + Counting
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,40 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ull choose(int n, int k) {
+    if (k > n) return 0;
+    if (k * 2 > n) k = n - k;
+    if (k == 0) return 1;
+    ull res = n;
+    for (int i = 2; i <= k; i++) {
+        res *= (n - i + 1);
+        res /= i;
+    }
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n;
+    while (cin >> n) {
+        if (!n) break;
+        vector<int> k(n);
+        int sum = 0;
+        ull res = 0;
+        for (auto &e : k) { cin >> e; sum += e; }
+        rep(i, 0, sum) {
+            res += choose(i + n - 1, i);
+        }
+        ll cur = 0;
+        rep(i, 0, n - 1) {
+            rep(j, 0, k[i]) {
+                res += choose(sum - cur - j + n - i - 2, n - i - 2);
+            }
+            cur += k[i];
+        }
+        cout << res + 1 << endl;
+    }
     return 0;
 }
 

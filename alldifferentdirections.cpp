@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - All Different Directions 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/05/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,58 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ld dist(ld x1, ld y1, ld x2, ld y2) {
+    ld dx = x1 - x2;
+    ld dy = y1 - y2;
+    return sqrt(dx * dx + dy * dy);
+}
+
+struct coord {
+    ld x, y;
+    coord() {}
+    coord(ld x, ld y) : x(x), y(y) {}
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n;
+    while (cin >> n) {
+        if (!n) break;
+        ld avg_x = 0, avg_y = 0;
+        vector<coord> V(n);
+        cin.ignore();
+        rep(i, 0, n) {
+            string line;
+            getline(cin, line);
+            stringstream ss(line);
+            ld ox, oy, arg, cx, cy;
+            ss >> ox >> oy;
+            cx = ox; cy = oy;
+            string cmd;
+            ld dir;
+            while (ss >> cmd >> arg) {
+                if (cmd == "start") dir = arg;
+                else if (cmd == "turn") dir += arg;
+                else {
+                    ld theta = dir / 180 * M_PI;
+                    cx += cos(theta) * arg;
+                    cy += sin(theta) * arg;
+                }
+            }
+            avg_x += cx;
+            avg_y += cy;
+            V[i] = coord(cx, cy);
+        }
+        avg_x /= n;
+        avg_y /= n;
+        ld maxd = 0;
+        for (auto &p : V) {
+            ld newd = dist(p.x, p.y, avg_x, avg_y);
+            maxd = max(maxd, newd);
+        }
+        printf("%.3Lf %.3Lf %.3Lf\n", avg_x, avg_y, maxd);
+    }
     return 0;
 }
 

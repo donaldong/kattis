@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Elevator Trouble 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/08/2018
  *  
- *  + TAG
+ *  + Dynamic Programming
  */
 
 #include <algorithm>
@@ -44,6 +44,32 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int f, s, g, u, d;
+    cin >> f >> s >> g >> u >> d;
+    vector<uint> T(f + 1, -1);
+    vector<bool> F(f + 1, false);
+    T[s] = 0;
+    F[s] = true;
+    queue<int> q;
+    q.push(s);
+    while (!q.empty()) {
+        int i = q.front();
+        q.pop();
+        int a = i - d;
+        if (a >= 1) {
+            T[a] = min(T[a], T[i] + 1);
+            if (!F[a]) q.push(a);
+            F[a] = true;
+        }
+        int b = i + u;
+        if (b <= f) {
+            T[b] = min(T[b], T[i] + 1);
+            if (!F[b]) q.push(b);
+            F[b] = true;
+        }
+    }
+    if (T[g] == -1) cout << "use the stairs" << endl;
+    else cout << T[g] << endl;
     return 0;
 }
 

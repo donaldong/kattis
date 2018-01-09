@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Minimum Scalar Product 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/05/2018
  *  
- *  + TAG
+ *  + Greedy
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -44,6 +43,23 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int T;
+    cin >> T;
+    rep(t, 0, T) {
+        int n;
+        cin >> n;
+        vector<int> A(n), B(n);
+        for (auto &e : A) cin >> e;
+        for (auto &e : B) cin >> e;
+        sort(A.begin(), A.end());
+        sort(B.rbegin(), B.rend());
+        ll res = 0;
+        rep(i, 0, n) {
+            ll r = A[i];
+            res += r * B[i];
+        }
+        cout << "Case #" << t + 1 << ": " << res << endl;
+    }
     return 0;
 }
 

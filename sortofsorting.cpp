@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Sort of Sorting 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/07/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,39 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct name {
+    char a, b;
+    int c;
+    string s;
+    name() {}
+    name(string &s, int i) : s(s), c(i) {
+        a = s[0];
+        b = s[1];
+    }
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n;
+    while (cin >> n) {
+        if (!n) break;
+        vector<name> V(n);
+        rep(i, 0, n) {
+            string s;
+            cin >> s;
+            V[i] = name(s, i);
+        }
+        sort(V.begin(), V.end(), [](const name &a, const name &b) {
+            if (a.a != b.a) return a.a < b.a;
+            if (a.b != b.b) return a.b < b.b;
+            return a.c < b.c;
+        });
+        for (auto &e : V) {
+            cout << e.s << endl;
+        }
+        cout << endl;
+    }
     return 0;
 }
 

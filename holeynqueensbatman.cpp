@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Holey N-Queens (Batman) 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/06/2018
  *  
- *  + TAG
+ *  + Backtracking
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,49 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ll getkey(int r, int c) {
+    ll res = r;
+    res <<= 32;
+    return res + c;
+}
+
+void solve(int y, int n, uint &count, vector<bool> &col, vector<bool> &d1, vector<bool> &d2, hset<ll> &s) {
+    if (y == n) {
+        ++count;
+        return;
+    }
+    rep(x, 0, n) {
+        int i = x + y, j = x - y + n - 1;
+        if (col[x] && d1[i] && d2[j] && s.find(getkey(y, x)) == s.end()) {
+            col[x] = d1[i] = d2[j] = false;
+            solve(y + 1, n, count, col, d1, d2, s);
+            col[x] = d1[i] = d2[j] = true;
+        }
+    }
+}
+
+uint solve(hset<ll> &s, int n) {
+    vector<bool> col(n, true), d1(2 * n, true), d2(2 * n, true);
+    uint count = 0;
+    solve(0, n, count, col, d1, d2, s);
+    return count;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    while (true) {
+        int n, m;
+        scan(n); scan(m);
+        if (!n && !m) break;
+        hset<ll> s;
+        while (m--) {
+            int r, c;
+            scan(r); scan(c);
+            s.insert(getkey(r, c));
+        }
+        print(solve(s, n)); putchar('\n');
+    }
     return 0;
 }
 

@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Smart Phone 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/03/2018
  *  
- *  + TAG
+ *  + Greedy
  */
 
 #include <algorithm>
@@ -29,38 +29,52 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
 #define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
 
 inline void scan(int&);
-inline void scan(ll&);
 inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int dist(string &a, string &b) {
+    auto i = b.find(a);
+    if (i != 0) {
+        int res = 0;
+        int size = min(a.size(), b.size());
+        rep(i, 0, size) {
+            if (a[i] != b[i]) {
+                return a.size() + b.size() - 2 * res;
+            }   
+            ++res;
+        }
+    }
+    int size = a.size();
+    size -= b.size();
+    return abs(size);
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int T;
+    cin >> T;
+    while (T--) {
+        string target, current, s1, s2, s3;
+        cin >> target >> current >> s1 >> s2 >> s3;
+        int res = INT_MAX;
+        res = min(res, dist(current, target));
+        res = min(res, dist(s1, target) + 1);
+        res = min(res, dist(s2, target) + 1);
+        res = min(res, dist(s3, target) + 1);
+        cout << res << endl;
+    }
     return 0;
 }
 
 inline void scan(int &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void scan(ll &number) {
     bool negative = false;
     int c;
     number = 0;

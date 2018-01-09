@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Santa Klas 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/03/2018
  *  
- *  + TAG
+ *  + Geometry
  */
 
 #include <algorithm>
@@ -29,14 +29,12 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
 #define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
 
 inline void scan(int&);
-inline void scan(ll&);
 inline void print(uint);
 inline void print(ull);
 inline void print(string&);
@@ -44,23 +42,29 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int h, v;
+    scan(h); scan(v);
+    string safe = "safe\n";
+    if (v <= 180) print(safe);
+    else {
+        v -= 180;
+        bool f = false;
+        if (v >= 90) {
+            v -= 90;
+            f = true;
+        }
+        if (v != 0) {
+            ld a = v; a = a / 180 * M_PI;
+            ld r = f ? h / cos(a) : h / sin(a);
+            cout << floor(r) << endl;
+        } else {
+            cout << h << endl;
+        }
+    }
     return 0;
 }
 
 inline void scan(int &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void scan(ll &number) {
     bool negative = false;
     int c;
     number = 0;

@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Ornaments 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/04/2018
  *  
- *  + TAG
+ *  + Geometry
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -44,6 +43,16 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int r, h, s;
+    while (cin >> r >> h >> s) {
+        if (!r && !h && !s) break;
+        ld theta = acos(ld(r) / h);
+        ld res = 2.0 * sin(theta) * h;
+        res += r * (M_PI - theta) * 2;
+        res *= 100 + s;
+        res /= 100;
+        printf("%.2Lf\n", res);
+    }
     return 0;
 }
 

@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Mastering Mastermind 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/06/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,31 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+void solve(string &a, string &b, int &r, int &s) {
+    r = s = 0;
+    hmap<char, int> c, d;
+    rep(i, 0, a.size()) {
+        if (a[i] == b[i]) {
+            ++r;
+        } else {
+            ++c[a[i]];
+            ++d[b[i]];
+        }
+    }
+    for (auto entry : c) {
+        s += min(entry.second, d[entry.first]);
+    }
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int l;
+    string a, b;
+    cin >> l >> a >> b;
+    int r, s;
+    solve(a, b, r, s);
+    cout << r << " " << s << endl;
     return 0;
 }
 

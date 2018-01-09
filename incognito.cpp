@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Incognito 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/06/2018
  *  
- *  + TAG
+ *  + Counting
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -44,6 +43,23 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int T;
+    cin >> T;
+    while (T--) {
+        int n;
+        cin >> n;
+        hmap<string,int> M;
+        while (n--) {
+            string a, b;
+            cin >> a >> b;
+            ++M[b];
+        }
+        ll res = 1;
+        for (auto &entry : M) {
+            res *= entry.second + 1;
+        }
+        cout << res - 1 << endl;
+    }
     return 0;
 }
 

@@ -1,9 +1,10 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Kolone 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/04/2018
  *  
- *  + TAG
+ *  + Brute Force
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +30,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +41,43 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct ant {
+    char c;
+    bool r;
+    int dest;
+    ant() {}
+    ant(char c, bool r) : c(c), r(r) {}
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int r, l, t;
+    cin >> r >> l;
+    vector<ant> A(r + l);
+    rep(i, 0, r) {
+        cin >> A[i].c;
+        A[i].r = true;
+        A[i].dest = A.size() - 1 - i;
+    }
+    rep(i, 0, l) {
+        int j = r + i;
+        cin >> A[j].c;
+        A[j].r = false;
+        A[j].dest = i;
+    }
+    reverse(A.begin(), A.begin() + r);
+    cin >> t;
+    while (t--) {
+        for (int i = 0; i < A.size() - 1; ++i) {
+            if (A[i].r != A[i + 1].r && i != A[i].dest && i + 1 != A[i+1].dest) {
+                swap(A[i], A[i + 1]);
+                ++i;
+            }
+        }
+    }
+    for (auto a : A) cout << a.c;
+    cout << endl;
     return 0;
 }
 

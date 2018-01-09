@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Flip Five 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/08/2018
  *  
- *  + TAG
+ *  + Brute Force
  */
 
 #include <algorithm>
@@ -41,9 +41,83 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int N = 1 << 9;
+int R = 3, C = 3;
+vector<int> DR = {0, 0, 1, -1};
+vector<int> DC = {1, -1, 0, 0};
+
+string to_grid(int n) {
+    string res;
+    while (n) {
+       if (n & 1) res += '*';
+       else res += '.';
+       n /= 2;
+    }
+    while (res.size() != 9) {
+        res += '.';
+    }
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+int to_index(string g) {
+    int res = 0;
+    for (char c : g) {
+        res <<= 1;
+        if (c == '*') {
+            res += 1;
+        }
+    }
+    return res;
+}
+
+char flip(char c) {
+    if (c == '.') return '*';
+    return '.';
+}
+
+int at(int r, int c) {
+    return r * C + c;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    vector<uint> V(N, -1);
+    vector<bool> F(N, false);
+    V[0] = 0;
+    F[0] = true;
+    queue<int> q;
+    q.push(0);
+    while (!q.empty()) {
+        int i = q.front();
+        q.pop();
+        string g = to_grid(i);
+        rep(r, 0, R) rep(c, 0, C) {
+            string ng = g;
+            ng[at(r, c)] = flip(ng[at(r, c)]);
+            rep(j, 0, 4) {
+                int y = r + DR[j], x = c + DC[j];
+                if (y < 0 || y >= R || x < 0 || x >= C) continue;
+                ng[at(y, x)] = flip(ng[at(y, x)]);
+            }
+            int k = to_index(ng);
+            V[k] = min(V[k], V[i] + 1);
+            if (!F[k]) q.push(k);
+            F[k] = true;
+        }
+    }
+    int t;
+    cin >> t;
+    while (t--) {
+        string g;
+        rep(i, 0, 3) {
+            string s;
+            cin >> s;
+            g += s;
+        }
+        cout << V[to_index(g)] << endl;
+    }
     return 0;
 }
 

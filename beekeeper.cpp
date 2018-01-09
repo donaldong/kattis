@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Beekeeper 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/04/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,41 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+bool is_vowel(char c) {
+    string vowel = "aeiouy";
+    for (char v : vowel) if (c == v) return true;
+    return false;
+}
+
+int parse(string &s) {
+    int res = 0;
+    rep(i, 1, s.size()) {
+        if (s[i] == s[i - 1] && is_vowel(s[i])) ++res;
+    }
+    return res;
+}
+
+struct word {
+    int p;
+    string s;
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int t;
+    while (cin >> t) {
+        if (!t) break;
+        vector<word> V(t);
+        for (auto &w : V) {
+            cin >> w.s;
+            w.p = parse(w.s);
+        }
+        sort(V.begin(), V.end(), [](word &a, word &b) {
+            return a.p > b.p;
+        });
+        cout << V[0].s << endl;
+    }
     return 0;
 }
 

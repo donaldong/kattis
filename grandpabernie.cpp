@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Grandpa Bernie 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/08/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -44,6 +44,27 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n;
+    cin >> n;
+    hmap<string,vector<int>> M;
+    while (n--) {
+        string s;
+        int y;
+        cin >> s >> y;
+        M[s].pb(y);
+    }
+    for (auto &entry : M) {
+        sort(entry.second.begin(), entry.second.end());
+    }
+    int q;
+    cin >> q;
+    while (q--) {
+        string s;
+        int k;
+        cin >> s >> k;
+        --k;
+        cout << M[s][k] << endl;
+    }
     return 0;
 }
 

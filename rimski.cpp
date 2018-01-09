@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Rimski 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/05/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -44,6 +43,38 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    vector<string> a = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+    vector<string> b = {"X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+    hmap<string, vector<int>> M;
+    hmap<int, string> MM;
+    rep(i, 0, a.size()) {
+        string s = a[i];
+        int v = i + 1;
+        MM[v] = s;
+        sort(s.begin(), s.end());
+        M[s].pb(v);
+    }
+    rep(i, 0, b.size()) {
+        int v = (i + 1) * 10;
+        string s = b[i];
+        MM[v] = s;
+        sort(s.begin(), s.end());
+        M[s].pb(v);
+        rep(j, 0, a.size()) {
+            s = b[i] + a[j];
+            v = (i + 1) * 10 + j + 1;
+            MM[v] = s;
+            sort(s.begin(), s.end());
+            M[s].pb(v);
+        }
+    }
+    for (auto &entry : M) {
+        sort(entry.second.begin(), entry.second.end());
+    }
+    string key;
+    cin >> key;
+    sort(key.begin(), key.end());
+    cout << MM[M[key][0]] << endl;
     return 0;
 }
 

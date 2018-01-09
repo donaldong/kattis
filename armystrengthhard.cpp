@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Army Strength (Hard) 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/08/2018
  *  
- *  + TAG
+ *  + Greedy
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -44,6 +43,27 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int T;
+    scan(T);
+    string gwin = "Godzilla\n";
+    string mwin = "MechaGodzilla\n";
+    while (T--) {
+        getchar();
+        int g, m;
+        scan(g); scan(m);
+        vector<int> G(g), M(m);
+        rep(i, 0, g) scan(G[i]);
+        rep(i, 0, m) scan(M[i]);
+        sort(G.begin(), G.end());
+        sort(M.begin(), M.end());
+        int a = 0, b = 0;
+        while (a < g && b < m) {
+            if (G[a] < M[b]) ++a;
+            else ++b;
+        }
+        if (a < g) print(gwin);
+        else print(mwin);
+    }
     return 0;
 }
 

@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Battle Simulation 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/05/2018
  *  
- *  + TAG
+ *  + Implementation
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,34 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+bool is_combo(string &line, int i) {
+    if (i + 2 >= line.size()) return false;
+    string combo = line.substr(i, 3);
+    sort(combo.begin(), combo.end());
+    return combo == "BLR";
+}
+
+char solve(char c) {
+    if (c == 'R') return 'S';
+    if (c == 'B') return 'K';
+    return 'H';
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    string line;
+    getline(cin, line);
+    string res;
+    rep(i, 0, line.size()) {
+        if (is_combo(line, i)) {
+            res += 'C';
+            i += 2;
+        } else {
+            res += solve(line[i]);
+        }
+    }
+    cout << res << endl;
     return 0;
 }
 

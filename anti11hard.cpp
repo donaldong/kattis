@@ -1,9 +1,10 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Ocean's Anti-11 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/04/2018
  *  
- *  + TAG
+ *  + Counting
+ *  + Dynamic Programming
  */
 
 #include <algorithm>
@@ -29,7 +30,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +41,34 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+const ll MOD = 1e9 + 7;
+hmap<int, ll> M;
+
+ll solve(int n, string &s) {
+    if (n <= s.size() - 2) return max((int)(s.size()) - 1, 1);
+    if (n == s.size() - 1) return s.size();
+    if (M.find(n) != M.end()) return M[n];
+    ll res = 0;
+    for (int i = 1; i <= s.size(); ++i) {
+        res = (res + solve(n - i, s)) % MOD;
+    }
+    M[n] = res;
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int T;
+    cin >> T;
+    while (T--) {
+        M.clear();
+        int n;
+        string k;
+        cin >> n >> k;
+        print((uint) solve(n, k));
+        putchar('\n');
+    }   
     return 0;
 }
 

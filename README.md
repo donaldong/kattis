@@ -2,6 +2,7 @@
 ### Tags
 + BFS
 + Base Conversion
++ Backtracking
 + Binary Search
 + Bit Manipulation
 + Brute Force

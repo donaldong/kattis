@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Bits 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/07/2018
  *  
- *  + TAG
+ *  + Base Conversion
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -44,6 +43,19 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int T;
+    cin >> T;
+    while (T--) {
+        string s;
+        cin >> s;
+        uint res = 0;
+        uint n = 0;
+        for (char c : s) {
+            n = 10 * n + c - '0';
+            res = max(res, (uint)__builtin_popcount(n));
+        }
+        print(res); putchar('\n');
+    }
     return 0;
 }
 

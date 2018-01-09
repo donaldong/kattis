@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Guessing Game 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/06/2018
  *  
- *  + TAG
+ *  + Binary Search
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -44,6 +43,27 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n;
+    while (cin >> n) {
+        if (n == 0) break;
+        bool f = true;
+        int lo = 0, hi = 11;
+        while (true) {
+            if (hi - lo <= 1) f = false;
+            string a, b;
+            cin >> a >> b;
+            if (b == "on") {
+                if (n <= lo || n >= hi) f = false;
+                break;
+            } else if (b == "high") {
+                hi = min(hi, n); 
+            } else {
+                lo = max(lo, n);
+            }
+            cin >> n;
+        }
+        cout << (f? "Stan may be honest" : "Stan is dishonest") << endl;
+    }
     return 0;
 }
 

@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - 4 thought 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/04/2018
  *  
- *  + TAG
+ *  + Brute Force
  */
 
 #include <algorithm>
@@ -29,7 +29,6 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
-#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -41,9 +40,70 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+char priority(char o) {
+    if (o == '+' || o == '-') return 1;
+    return 2;
+}
+
+int calc(int a, int b, char c) {
+    if (c == '+') return a + b;
+    if (c == '-') return a - b;
+    if (c == '*') return a * b;
+    return a / b;
+}
+
+int calc(string exp) {
+    stack<int> s;
+    for (char c : exp) {
+        if (c == '4') s.push(4);
+        else {
+            int a = s.top();
+            s.pop();
+            int b = s.top();
+            s.pop();
+            s.push(calc(b, a, c));
+        }
+    }
+    return s.top();
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    hmap<int, string> M;
+    string OP = "+-*/";
+    rep(i, 0, 4) rep(j, 0, 4) rep(k, 0, 4) {
+        string op; op += OP[i]; op += OP[j]; op += OP[k];
+        string exp;
+        stack<char> s;
+        for (char c : op) {
+            exp += '4';
+            while (!s.empty() && priority(c) <= priority(s.top())) {
+                exp+= s.top();
+                s.pop();
+            }
+            s.push(c);
+        }
+        exp += '4';
+        while (!s.empty()) {
+            exp += s.top();
+            s.pop();
+        }
+        int res = calc(exp);
+        M[res] = op;
+    }
+    int T;
+    cin >> T;
+    while (T--) {
+        int n;
+        cin >> n;
+        if (M.find(n) == M.end()) cout << "no solution" << endl;
+        else {
+            string op = M[n];
+            for (char c : op) cout << "4 " << c << " ";
+            cout << "4 = " << n << endl;
+        }
+    }
     return 0;
 }
 

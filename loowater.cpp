@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - The Dragon of Loowater 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    01/07/2018
  *  
- *  + TAG
+ *  + Greedy
  */
 
 #include <algorithm>
@@ -44,6 +44,31 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n, m;
+    string doomed = "Loowater is doomed!\n";
+    while (true) {
+        scan(n); scan(m);
+        if (!n && !m) break;
+        uint cost = 0;
+        bool f = true;
+        vector<int> H(n), K(m);
+        for (auto &e : H) scan(e);
+        for (auto &e : K) scan(e);
+        sort(K.begin(), K.end());
+        if (m >= n) {
+            for (auto h : H) {
+                auto i = lower_bound(K.begin(), K.end(), h);
+                if (i == K.end()) {
+                    f = false;
+                    break;
+                }
+                cost += *i;
+                K.erase(i);
+            }
+        } else f = false;
+        if (!f) print(doomed);
+        else { print(cost); putchar('\n'); }
+    }
     return 0;
 }
 
@@ -104,3 +129,4 @@ inline void print(ull n) {
 inline void print(string &s) {
     rep(i, 0, s.length()) putchar(s[i]);
 }
+
