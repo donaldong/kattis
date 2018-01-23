@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Candle Box 
+ *  @brief   Kattis - Parking
  *  @author  Donald Dong (@donaldong)
- *  @date    01/07/2018
+ *  @date    01/18/2018
  *  
- *  + Equation
+ *  + Sweep Line Algorithm
  */
 
 #include <algorithm>
@@ -29,6 +29,7 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -40,19 +41,23 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int solve(int D, int R, int T) {
-    int b = D + 1, c = (D * D + D) / 2 - 9 - R - T;
-    return (sqrt(b * b - 4 * c) - b) / 2;
-}
+const int N = 100;
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int D, R, T;
-    cin >> D >> R >> T;
-    int t = solve(D, R, T);
-    int actual = (3 + t) * (t - 2) / 2;
-    cout << actual - T << endl;
+    vector<int> price(3), count(N, 0);
+    for (int &p : price) scan(p);
+    rep(i, 0, 3) {
+        int arr, dep;
+        scan(arr); scan(dep);
+        ++count[--arr];
+        --count[--dep];
+    }
+    rep(i, 1, N) count[i] += count[i - 1];
+    ull res = 0;
+    rep(i, 0, N) res += price[count[i] - 1] * count[i];
+    print(res);
     return 0;
 }
 

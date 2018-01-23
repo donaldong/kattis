@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Candle Box 
+ *  @brief   Kattis - Multigram 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/07/2018
+ *  @date    01/11/2018
  *  
- *  + Equation
+ *  + String Manipulation
  */
 
 #include <algorithm>
@@ -29,6 +29,7 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -40,19 +41,35 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int solve(int D, int R, int T) {
-    int b = D + 1, c = (D * D + D) / 2 - 9 - R - T;
-    return (sqrt(b * b - 4 * c) - b) / 2;
+bool anagram(string a, string b) {
+    sort(a.begin(), a.end());
+    sort(b.begin(), b.end());
+    return a == b;
+}
+
+bool solve(string &s, int l) {
+    for (int i = 0; i + l < s.size(); i += l) {
+        string a = s.substr(i, l);
+        string b = s.substr(i + l, l);
+        if (!anagram(a, b)) return false;
+    }
+    return true;
+}
+
+string solve(string &s) {
+    for (int i = 1; 2 * i <= s.size(); ++i) {
+        if (s.size() % i) continue;
+        if (solve(s, i)) return s.substr(0, i);
+    }
+    return "-1";
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int D, R, T;
-    cin >> D >> R >> T;
-    int t = solve(D, R, T);
-    int actual = (3 + t) * (t - 2) / 2;
-    cout << actual - T << endl;
+    string s;
+    cin >> s;
+    cout << solve(s) << endl;
     return 0;
 }
 

@@ -1,9 +1,10 @@
 /**
- *  @brief   Kattis - Candle Box 
+ *  @brief   Kattis - Daydreaming Stockbroker 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/07/2018
+ *  @date    01/11/2018
  *  
- *  + Equation
+ *  + Optimization
+ *  + Greedy
  */
 
 #include <algorithm>
@@ -29,6 +30,7 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -40,19 +42,34 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int solve(int D, int R, int T) {
-    int b = D + 1, c = (D * D + D) / 2 - 9 - R - T;
-    return (sqrt(b * b - 4 * c) - b) / 2;
-}
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int D, R, T;
-    cin >> D >> R >> T;
-    int t = solve(D, R, T);
-    int actual = (3 + t) * (t - 2) / 2;
-    cout << actual - T << endl;
+    int d; scan(d);
+    vector<int> P(d);
+    for (auto &p : P) scan(p);
+    ull shares = 0;
+    ull res = 100;
+    ull L = 100000;
+    rep(i, 0, d - 1) {
+        if (P[i] == P[i + 1]) continue;
+        if (P[i] < P[i + 1] && res >= P[i]) {
+            if (shares == L) continue;
+            ull d = res / P[i];
+            if (d + shares > L) d = L - shares;
+            shares += d;
+            res -= d * P[i];
+        } else if (P[i] > P[i + 1]) {
+            ull t = shares;
+            t *= P[i];
+            res += t;
+            shares = 0;
+        }
+    }
+    ull t = shares;
+    t *= P.back();
+    res += t;
+    print(res); putchar('\n');
     return 0;
 }
 

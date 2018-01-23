@@ -1,9 +1,10 @@
 /**
- *  @brief   Kattis - Candle Box 
+ *  @brief   Kattis - Music Your Way 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/07/2018
+ *  @date    01/20/2018
  *  
- *  + Equation
+ *  + Implementation
+ *  + Recursion
  */
 
 #include <algorithm>
@@ -29,6 +30,7 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -40,19 +42,69 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int solve(int D, int R, int T) {
-    int b = D + 1, c = (D * D + D) / 2 - 9 - R - T;
-    return (sqrt(b * b - 4 * c) - b) / 2;
+typedef vector<string> song;
+
+void solve(vector<song> &songs, vector<int> &v, int index, int beg, int end) {
+    if (beg >= end + 1) return;
+    if (index < -1) return;
+    int j;
+    if (index == -1) j = songs[beg].size() - 1;
+    else j = v[index];
+    sort(&songs[beg], &songs[end], [j](song &a, song &b) {
+        return a[j] < b[j];
+    });
+    string s = songs[beg][j];
+    int mark = beg;
+    rep(i, beg + 1, end) {
+        if (songs[i][j] != s) {
+            solve(songs, v, index - 1, mark, i);
+            s = songs[i][j];
+            mark = i;
+        }
+    }
+    solve(songs, v, index - 1, mark, end);
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int D, R, T;
-    cin >> D >> R >> T;
-    int t = solve(D, R, T);
-    int actual = (3 + t) * (t - 2) / 2;
-    cout << actual - T << endl;
+    string line, token;
+    getline(cin, line);
+    stringstream ss(line);
+    hmap<string, int> M;
+    vector<string> A;
+    for (int i = 0; ss >> token; ++i) {
+         M[token] = i;
+         A.pb(token);
+    }
+    int m, n;
+    cin >> m;
+    vector<song> songs(m);
+    string marker;
+    for (auto &s : songs) {
+        rep(i, 0, M.size()) {
+            cin >> token;
+            s.pb(token);
+        }
+        s.pb(marker);
+        marker += "*";
+    }
+    cin >> n;
+    vector<int> v;
+    rep(j, 0, n) {
+        cin >> token;
+        v.pb(M[token]);
+        solve(songs, v, v.size() - 1, 0, m);
+        for (string &s : A) cout << s << " ";
+        cout << endl;
+        for (auto &s : songs) {
+            for (int i = 0; i < s.size() - 1; ++i) {
+                cout << s[i] << " ";
+            }
+            cout << endl;
+        }
+        cout << endl;
+    }
     return 0;
 }
 

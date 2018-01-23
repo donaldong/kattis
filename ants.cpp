@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Candle Box 
+ *  @brief   Kattis - Ant 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/07/2018
+ *  @date    01/19/2018
  *  
- *  + Equation
+ *  + Greedy
  */
 
 #include <algorithm>
@@ -29,6 +29,7 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -40,19 +41,35 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int solve(int D, int R, int T) {
-    int b = D + 1, c = (D * D + D) / 2 - 9 - R - T;
-    return (sqrt(b * b - 4 * c) - b) / 2;
-}
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int D, R, T;
-    cin >> D >> R >> T;
-    int t = solve(D, R, T);
-    int actual = (3 + t) * (t - 2) / 2;
-    cout << actual - T << endl;
+    int T;
+    scan(T);
+    while (T--) {
+        int l, n;
+        scan(l); scan(n);
+        vector<int> P(n);
+        for (int &p : P) scan(p);
+        uint min_t = INT_MAX, max_t = 0;
+        uint min_p, max_p;
+        int mid = l / 2;
+        for (int p : P) {
+            uint t = abs(p - mid);
+            if (t < min_t) {
+                min_t = t;
+                min_p = p;
+            }
+            t = max(l - p, p);
+            if (t > max_t) {
+                max_t = t;
+                max_p = p;
+            }
+        }
+        min_t = min(l - min_p, min_p);
+        print(min_t); putchar(' ');
+        print(max_t); putchar('\n');
+    }
     return 0;
 }
 

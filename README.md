@@ -38,4 +38,6 @@
 + Shortest Path
 + String Manipulation
 + Subsequence
++ Sweep Line Algorithm
 + Minimum Spanning Tree
++ Optimization

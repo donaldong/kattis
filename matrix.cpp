@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Candle Box 
+ *  @brief   Kattis - Matrix Inverse 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/07/2018
+ *  @date    01/11/2018
  *  
- *  + Equation
+ *  + Matrix
  */
 
 #include <algorithm>
@@ -29,6 +29,7 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -40,19 +41,19 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int solve(int D, int R, int T) {
-    int b = D + 1, c = (D * D + D) / 2 - 9 - R - T;
-    return (sqrt(b * b - 4 * c) - b) / 2;
-}
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int D, R, T;
-    cin >> D >> R >> T;
-    int t = solve(D, R, T);
-    int actual = (3 + t) * (t - 2) / 2;
-    cout << actual - T << endl;
+    int a, b, c, d;
+    int t = 1;
+    while (cin >> a >> b >> c >> d) {
+        cout << "Case " << t++ << ":" << endl;
+        ld x = 1;
+        x /= a * d - b * c;
+        int A = d * x, B = -b * x, C = -c * x, D = a * x;
+        cout << A << " " << B << endl;
+        cout << C << " " << D << endl;
+    }
     return 0;
 }
 

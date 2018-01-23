@@ -4,7 +4,6 @@
  *  @date    01/01/2017
  *  
  *  + Probability
- *  + Binary Search
  */
 
 #include <algorithm>
@@ -35,12 +34,6 @@ typedef long double ld;
 
 #define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
 
-const ld D = 1e-4;
-
-ld prize(ld n, ld t) {
-    return pow(2, n) * pow(t, n);
-}
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
@@ -48,15 +41,20 @@ int main() {
     ld t;
     while (cin >> n >> t) {
         if (n == 0) break;
-        ld lo = 0, hi = n;
-        while (hi - lo > D) {
-            ld mid = (lo + hi) / 2;
-            ld a = prize(mid, t);
-            ld b = prize(mid + 1, t);
-            if (a < b) lo = mid;
-            else hi = mid;
+        ld x = 0;
+        ll prize = 1;
+        ld q = 1.0 - t, p = 0.75;
+        q = (0.5 - t) / q;
+        if (q < 0) q = 0;
+        ld r = (1.0 - q) * p;
+        ld p_right = r, p_quit = q;
+        rep(i, 0, n) {
+            x = max(x, p_quit * prize + p_right * 2.0 * prize);
+            prize *= 2;
+            p_right *= r;
+            p_quit *= r;
         }
-        printf("%.3Lf\n", prize(lo, t));
+        printf("%.3Lf\n", x);
     }
     return 0;
 }

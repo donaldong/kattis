@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Candle Box 
+ *  @brief   Kattis - Flow Shop 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/07/2018
+ *  @date    01/11/2018
  *  
- *  + Equation
+ *  + Dynamic Programming
  */
 
 #include <algorithm>
@@ -29,6 +29,7 @@ typedef unsigned long long int ull;
 typedef long double ld;
 #define hmap unordered_map
 #define hset unordered_set
+#define pq priority_queue
 #define pb push_back
 #define mp make_pair
 #define putchar putchar_unlocked
@@ -40,19 +41,20 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int solve(int D, int R, int T) {
-    int b = D + 1, c = (D * D + D) / 2 - 9 - R - T;
-    return (sqrt(b * b - 4 * c) - b) / 2;
-}
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int D, R, T;
-    cin >> D >> R >> T;
-    int t = solve(D, R, T);
-    int actual = (3 + t) * (t - 2) / 2;
-    cout << actual - T << endl;
+    int N, M;
+    scan(N); scan(M);
+    vector<vector<int>> G(N + 1, vector<int>(M + 1, 0));
+    rep(i, 1, N + 1) {
+        rep(j, 1, M + 1) {
+            int t;
+            scan(t);
+            G[i][j] = t + max(G[i - 1][j], G[i][j-1]);
+        }
+        print((uint)G[i][M]); putchar(' ');
+    }
     return 0;
 }
 
