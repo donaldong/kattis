@@ -1,10 +1,9 @@
 /**
- *  @brief   Kattis - Music Your Way 
+ *  @brief   Kattis - Pripreme 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/20/2018
+ *  @date    01/24/2018
  *  
- *  + Implementation
- *  + Recursion
+ *  + Puzzle
  */
 
 #include <algorithm>
@@ -42,65 +41,20 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-typedef vector<string> song;
-
-void merge(vector<song> &A, int k, int beg, int mid, int end) {
-    int l = mid - beg + 1, r = end - mid;
-    vector<song> L(l), R(r);
-    for (int i = 0; i < l; ++i) L[i] = A[beg + i];
-    for (int i = 0; i < r; ++i) R[i] = A[mid + i + 1];
-    l = r = 0;
-    for (int i = beg; i <= end; ++i) {
-        if (l == L.size()) A[i] = R[r++];
-        else if (r == R.size()) A[i] = L[l++];
-        else if (L[l][k] <= R[r][k]) A[i] = L[l++];
-        else A[i] = R[r++];
-    }
-}
-
-void merge_sort(vector<song> &songs, int k, int beg, int end) {
-    if (beg >= end) return;
-    int mid = (beg + end) / 2;
-    merge_sort(songs, k, beg, mid);
-    merge_sort(songs, k, mid + 1, end);
-    merge(songs, k, beg, mid, end);
-}
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    string line, token;
-    getline(cin, line);
-    stringstream ss(line);
-    hmap<string, int> M;
-    vector<string> A;
-    for (int i = 0; ss >> token; ++i) {
-         M[token] = i;
-         A.pb(token);
+    int N;
+    scan(N);
+    ull __sum = 0, __max = 0;
+    rep(i, 0, N) {
+        int n;
+        scan(n);
+        __sum += n;
+        __max = max(__max, (ull)n);
     }
-    int m, n;
-    cin >> m;
-    vector<song> songs(m);
-    for (auto &s : songs) {
-        rep(i, 0, M.size()) {
-            cin >> token;
-            s.pb(token);
-        }
-    }
-    cin >> n;
-    rep(j, 0, n) {
-        cin >> token;
-        merge_sort(songs, M[token], 0, m - 1);
-        for (string &a : A) cout << a << " ";
-        cout << endl;
-        for (auto &s : songs) {
-            for (int i = 0; i < s.size(); ++i) {
-                cout << s[i] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-    }
+    if (__sum > __max * 2) print(__sum);
+    else print(__max * 2);
     return 0;
 }
 

@@ -1,10 +1,10 @@
 /**
- *  @brief   Kattis - Music Your Way 
+ *  @brief   Kattis - Security Badge 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/20/2018
+ *  @date    02/14/2018
  *  
- *  + Implementation
- *  + Recursion
+ *  + Graph
+ *  + DFS
  */
 
 #include <algorithm>
@@ -25,6 +25,7 @@
 #include <vector>
 using namespace std;
 
+typedef unsigned int uint;
 typedef long long int ll;
 typedef unsigned long long int ull;
 typedef long double ld;
@@ -33,7 +34,6 @@ typedef long double ld;
 #define pq priority_queue
 #define pb push_back
 #define mp make_pair
-#define putchar putchar_unlocked
 #define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
 
 inline void scan(int&);
@@ -42,65 +42,62 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-typedef vector<string> song;
+struct node;
 
-void merge(vector<song> &A, int k, int beg, int mid, int end) {
-    int l = mid - beg + 1, r = end - mid;
-    vector<song> L(l), R(r);
-    for (int i = 0; i < l; ++i) L[i] = A[beg + i];
-    for (int i = 0; i < r; ++i) R[i] = A[mid + i + 1];
-    l = r = 0;
-    for (int i = beg; i <= end; ++i) {
-        if (l == L.size()) A[i] = R[r++];
-        else if (r == R.size()) A[i] = L[l++];
-        else if (L[l][k] <= R[r][k]) A[i] = L[l++];
-        else A[i] = R[r++];
+struct edge {
+    node *t;
+    int lo, hi;
+    bool f = false;
+    edge() {}
+    edge(node *t, int lo, int hi) :
+        t(t), lo(lo), hi(hi) {}
+};
+
+struct node {
+    vector<edge> edges;
+};
+
+node *TARGET;
+
+bool dfs(edge *e, int lo, int hi) {
+    if (e->t == TARGET) return true;
+    e->f = true;
+    for (auto &p : e->t->edges) {
+        if (!p.f && p.lo <= lo && p.hi >= hi)
+            if (dfs(&p, lo, hi)) return true;
     }
-}
-
-void merge_sort(vector<song> &songs, int k, int beg, int end) {
-    if (beg >= end) return;
-    int mid = (beg + end) / 2;
-    merge_sort(songs, k, beg, mid);
-    merge_sort(songs, k, mid + 1, end);
-    merge(songs, k, beg, mid, end);
+    return false;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    string line, token;
-    getline(cin, line);
-    stringstream ss(line);
-    hmap<string, int> M;
-    vector<string> A;
-    for (int i = 0; ss >> token; ++i) {
-         M[token] = i;
-         A.pb(token);
+    int n, m, k;
+    scan(n); scan(m); scan(k);
+    int s, t;
+    scan(s); scan(t);
+    --s; --t;
+    vector<node> N(n);
+    vector<int> K(2 * m);
+    while (m--) {
+        int a, b, c, d;
+        scan(a); scan(b); scan(c); scan(d);
+        --a; --b;
+        N[a].edges.push_back(edge(&N[b], c - 1, d));
+        K[2 * m] = c - 1;
+        K[2 * m + 1] = d;
     }
-    int m, n;
-    cin >> m;
-    vector<song> songs(m);
-    for (auto &s : songs) {
-        rep(i, 0, M.size()) {
-            cin >> token;
-            s.pb(token);
+    TARGET = &N[t];
+    edge source(&N[s], 2e9, -1);
+    sort(K.begin(), K.end());
+    uint res = 0;
+    for (int i = 1; i < K.size(); ++i) {
+        if (i != 1) for (auto &a : N) for (auto &p : a.edges) {
+            p.f = false;
         }
+        if (dfs(&source, K[i - 1], K[i])) res += K[i] - K[i - 1];
     }
-    cin >> n;
-    rep(j, 0, n) {
-        cin >> token;
-        merge_sort(songs, M[token], 0, m - 1);
-        for (string &a : A) cout << a << " ";
-        cout << endl;
-        for (auto &s : songs) {
-            for (int i = 0; i < s.size(); ++i) {
-                cout << s[i] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-    }
+    print(res);
     return 0;
 }
 

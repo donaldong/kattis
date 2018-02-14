@@ -41,32 +41,39 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct vec;
+ld dot(vec&, vec&);
+
 struct point {
     ld x, y;
 };
 
-struct line {
+struct vec {
     point a, b;
-    line() {}
-    line(point &a, point &b) : a(a), b(b) {}
+    ld x, y, l;
+    vec() {}
+    vec(point &a, point &b) : a(a), b(b) {
+        x = b.x - a.x;
+        y = b.y - a.y;
+        l = sqrt(dot(*this, *this));   
+    }
 };
 
-ld dist(point &a, point &b) {
-    ld dx = a.x - b.x, dy = a.y - b.y;
-    return sqrt(dx * dx + dy * dy); 
+ld dot(vec &a, vec &b) {
+    return a.x * b.x + a.y * b.y;
 }
 
-ld law_cosine(ld a, ld b, ld c) {
-    return acos((-a * a + b * b + c * c) / (2 * b * c));
-}
-
-ld dist(point &p, line &l) {
-    ld PA = dist(p, l.a), PB = dist(p, l.b), AB = dist(l.a, l.b);
-    ld A = law_cosine(PB, AB, PA), B = law_cosine(PA, AB, PB);
-    if (A >= M_PI_2) return PA;
-    if (B >= M_PI_2) return PB;
-    ld area = abs((l.a.x - p.x)*(l.b.y - l.a.y) - (l.a.x - l.b.x) * (p.y - l.a.y));
-    return area / AB;
+ld dist(point &p, vec &AB) {
+    vec AP = vec(AB.a, p), BP = vec(AB.b, p);
+    ld s = dot(AP, AB);
+    if (s < 0) return AP.l;
+    // BP * BA < 0
+    if (dot(BP, AB) > 0) return BP.l;
+    vec proj = AB, orth = AP;
+    ld k = s / AB.l / AB.l;
+    proj.x *= k; proj.y *= k;
+    orth.x -= proj.x; orth.y -= proj.y;
+    return sqrt(dot(orth, orth));
 }
 
 int main() {
@@ -84,17 +91,17 @@ int main() {
         cin >> n;
         point p;
         cin >> p.x >> p.y;
-        vector<line> L(n);
+        vector<vec> L(n);
         rep(i, 0, n - 1) {
             point t;
             cin >> t.x >> t.y;
-            L[i] = line(p, t);
+            L[i] = vec(p, t);
             p = t;
         }
-        L[L.size() - 1] = line(p, L[0].a);
+        L[L.size() - 1] = vec(p, L[0].a);
         ld res = 1e15;
         for (point &a : A) {
-            for (line &l : L) {
+            for (vec &l : L) {
                 res = min(res, dist(a, l));
             }
         }

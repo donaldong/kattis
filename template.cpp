@@ -24,6 +24,7 @@
 #include <vector>
 using namespace std;
 
+typedef unsigned int uint;
 typedef long long int ll;
 typedef unsigned long long int ull;
 typedef long double ld;

@@ -1,10 +1,9 @@
 /**
- *  @brief   Kattis - Music Your Way 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    01/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + Implementation
- *  + Recursion
+ *  + TAG
  */
 
 #include <algorithm>
@@ -42,64 +41,58 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-typedef vector<string> song;
+int n, m, k;
 
-void merge(vector<song> &A, int k, int beg, int mid, int end) {
-    int l = mid - beg + 1, r = end - mid;
-    vector<song> L(l), R(r);
-    for (int i = 0; i < l; ++i) L[i] = A[beg + i];
-    for (int i = 0; i < r; ++i) R[i] = A[mid + i + 1];
-    l = r = 0;
-    for (int i = beg; i <= end; ++i) {
-        if (l == L.size()) A[i] = R[r++];
-        else if (r == R.size()) A[i] = L[l++];
-        else if (L[l][k] <= R[r][k]) A[i] = L[l++];
-        else A[i] = R[r++];
-    }
+int at(int r, int c) {
+    if (r < 0 || r >= n || c < 0 || c >= m) return -1;
+    return r * m + c;
 }
 
-void merge_sort(vector<song> &songs, int k, int beg, int end) {
-    if (beg >= end) return;
-    int mid = (beg + end) / 2;
-    merge_sort(songs, k, beg, mid);
-    merge_sort(songs, k, mid + 1, end);
-    merge(songs, k, beg, mid, end);
+int DR[3] = {-1, 0, -1};
+int DC[3] = {0, -1, -1};
+
+bool possible(vector<bool> &v, bool f) {
+    int r = v.size() / m;
+    int c = v.size() % m;
+    int plus = 0, minus = 0;
+    for (int i = 0; i < 3; ++i) {
+        int j = at(r + DR[i], c + DC[i]);
+        if (j < 0) return true;
+        if (v[j]) ++plus;
+        else ++minus;
+    }
+    if (plus + 1 ==  minus && f) return true;
+    if (plus == minus + 1 && !f) return true;
+    return false;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    string line, token;
-    getline(cin, line);
-    stringstream ss(line);
-    hmap<string, int> M;
-    vector<string> A;
-    for (int i = 0; ss >> token; ++i) {
-         M[token] = i;
-         A.pb(token);
-    }
-    int m, n;
-    cin >> m;
-    vector<song> songs(m);
-    for (auto &s : songs) {
-        rep(i, 0, M.size()) {
-            cin >> token;
-            s.pb(token);
-        }
-    }
-    cin >> n;
-    rep(j, 0, n) {
-        cin >> token;
-        merge_sort(songs, M[token], 0, m - 1);
-        for (string &a : A) cout << a << " ";
-        cout << endl;
-        for (auto &s : songs) {
-            for (int i = 0; i < s.size(); ++i) {
-                cout << s[i] << " ";
+    //scan(n); scan(m);
+    for (int i = 2; i <= 10; ++i) for (int j = 2; j <= 10; ++j) {
+    vector<vector<bool>> G;
+    n = i; m = j;
+    ull size = n * m;
+    G.pb({true});
+    G.pb({false});
+    while (G[0].size() != size) {
+        int j = G.size();
+        for (int i = 0; i < j; ++i) {
+            auto v = G[i];
+            if (possible(v, true)) {
+                G.pb(v);
+                G.back().pb(true);
             }
-            cout << endl;
+            if (possible(v, false)) {
+                G.pb(v);
+                G.back().pb(false);
+            }
         }
-        cout << endl;
+        G.erase(G.begin(), G.begin() + j);
+    }
+    cout << i << " " << j << " ";
+    cout << G.size() << endl;
     }
     return 0;
 }

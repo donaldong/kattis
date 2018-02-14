@@ -35,7 +35,9 @@
 + Physics
 + Recursion
 + Regex
++ Sorting
 + Shortest Path
++ Stack
 + String Manipulation
 + Subsequence
 + Sweep Line Algorithm
