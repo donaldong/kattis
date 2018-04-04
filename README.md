@@ -11,6 +11,7 @@
 + Coordinate
 + Coordinate Plane
 + Counting
++ Combinatorial
 + Disjoint Set
 + Dynamic Programming
 + DFS
@@ -42,4 +43,5 @@
 + Subsequence
 + Sweep Line Algorithm
 + Minimum Spanning Tree
++ Memoization
 + Optimization
