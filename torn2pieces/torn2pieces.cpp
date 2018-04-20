@@ -42,44 +42,67 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct node {
+    bool f = false;
+    string name;
+    vector<node*> neigh;
+    node *prev = 0;
+};
+
+void bfs(node *a, node *b) {
+    queue<node*> Q;
+    Q.push(a);
+    a->f = true;
+    while (!Q.empty()) {
+        auto cur = Q.front();
+        Q.pop();
+        for (auto n : cur->neigh) {
+            if (!n->f) {
+                n->f = true;
+                n->prev = cur; 
+                Q.push(n);
+            }
+        }
+    }
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    while (true) {
-        int N, K;
-        scan(N); scan(K);
-        if (!N && !K) break;
-        int sum = 0;
-        vector< vector< vector<int> > > T(N, vector<vector<int>>(2));
-        rep(i, 0, N) {
-            vector<int> C(2);
-            scan(C[0]); scan(C[1]);
-            sum += C[0] + C[1];
-            if (i == 0) {
-                T[i][0].pb(C[0]);
-                T[i][1].pb(C[1]);
-            }
-            else if (i == 1) {
-                T[i][0] = vector<int>(2);
-                T[i][1] = vector<int>(2);
-                T[i][0][0] = min(C[0], T[0][0][0]);
-                T[i][0][1] = T[0][0][0] + C[0];
-                T[i][1][0] = min(C[1], T[0][1][0]);
-                T[i][1][1] = T[0][1][0] + C[1];
-            } else {
-                rep(j, 0, 2) {
-                    int v = min(C[j], T[i - 1][j][0]);
-                    v = min(v, T[i - 2][!j][0]);
-                    T[i][j][0] = v;
-                    rep(k, 1, i + 1) {
-                        v = min(T[i - 1][j][k - 1] + C[j], T[i - 1][j][k]);
-                        rep(a, 1, k + 1) {
-                            v = min(v, T[i - a][!j][a]
-                        }
-                    }
-                }
-            }
+    int n;
+    cin >> n;
+    cin.ignore();
+    hmap<string, node> M;
+    while (n--) {
+        string line;
+        getline(cin, line);
+        stringstream ss(line);
+        string name, token; 
+        ss >> name;
+        while (ss >> token) {
+            M[name].neigh.pb(&M[token]);
+            M[token].neigh.pb(&M[name]);
         }
+    }
+    for (auto &entry : M) {
+        entry.second.name = entry.first;
+    }
+    string src, dest;
+    cin >> src >> dest;
+    auto cur = &M[dest];
+    bfs(&M[src], cur);
+    vector<string> res;
+    cur = cur->prev;
+    while (cur) {
+        res.pb(cur->name);
+        cur = cur->prev;
+    }
+    if (res.empty()) cout << "no route found" << endl;
+    else {
+        for (auto i = res.rbegin(); i != res.rend(); ++i) {
+            cout << *i << " ";
+        }
+        cout << dest << endl;
     }
     return 0;
 }
@@ -141,3 +164,4 @@ inline void print(ull n) {
 inline void print(string &s) {
     rep(i, 0, s.length()) putchar(s[i]);
 }
+

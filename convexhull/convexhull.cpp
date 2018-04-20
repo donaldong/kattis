@@ -42,44 +42,58 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct pt {
+    ll x, y;
+    pt() {}
+    pt(ll x, ll y) : x(x), y(y) {}
+    bool operator< (const pt &p) const {
+		return x < p.x || (x == p.x && y < p.y);
+	}
+    bool operator== (const pt &p) const {
+        return x == p.x && y == p.y;
+    }
+};
+
+void print(vector<pt> &P) {
+    cout << ">>>>>>>" << endl;
+    for (auto &p : P) cout << p.x << " " << p.y << endl;
+    cout << "<<<<<<<" << endl;
+}
+
+bool cw(const pt &a, const pt &b, const pt &c) {
+    return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x) < 0;
+}
+
+vector<pt> convex_hull(vector<pt> p) {
+    int n = p.size();
+    if (n <= 1) return p;
+    int k = 0;
+    vector<pt> q(n * 2);
+    for (int i = 0; i < n; q[k++] = p[i++])
+        for (; k >= 2 && !cw(q[k - 2], q[k - 1], p[i]); --k);
+    for (int i = n - 2, t = k; i >= 0; q[k++] = p[i--])
+        for (; k > t && !cw(q[k - 2], q[k - 1], p[i]); --k);
+    q.resize(k - 1 - (q[0] == q[1]));
+    return q;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     while (true) {
-        int N, K;
-        scan(N); scan(K);
-        if (!N && !K) break;
-        int sum = 0;
-        vector< vector< vector<int> > > T(N, vector<vector<int>>(2));
-        rep(i, 0, N) {
-            vector<int> C(2);
-            scan(C[0]); scan(C[1]);
-            sum += C[0] + C[1];
-            if (i == 0) {
-                T[i][0].pb(C[0]);
-                T[i][1].pb(C[1]);
-            }
-            else if (i == 1) {
-                T[i][0] = vector<int>(2);
-                T[i][1] = vector<int>(2);
-                T[i][0][0] = min(C[0], T[0][0][0]);
-                T[i][0][1] = T[0][0][0] + C[0];
-                T[i][1][0] = min(C[1], T[0][1][0]);
-                T[i][1][1] = T[0][1][0] + C[1];
-            } else {
-                rep(j, 0, 2) {
-                    int v = min(C[j], T[i - 1][j][0]);
-                    v = min(v, T[i - 2][!j][0]);
-                    T[i][j][0] = v;
-                    rep(k, 1, i + 1) {
-                        v = min(T[i - 1][j][k - 1] + C[j], T[i - 1][j][k]);
-                        rep(a, 1, k + 1) {
-                            v = min(v, T[i - a][!j][a]
-                        }
-                    }
-                }
-            }
+        int n;
+        scan(n);
+        if (!n) break;
+        vector<pt> P(n);
+        for (auto &p : P) {
+            scan(p.x); scan(p.y);
         }
+        sort(P.begin(), P.end());
+        auto end = unique(P.begin(), P.end());
+        P.resize(distance(P.begin(), end));
+        auto H = convex_hull(P);
+        cout << H.size() << endl;
+        for (auto p = H.rbegin(); p != H.rend(); ++p) cout << p->x << " " << p->y << endl;
     }
     return 0;
 }

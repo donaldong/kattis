@@ -11,15 +11,18 @@
 using namespace std;
 
 int main() {
-    unordered_map<string, string> t, m;
-    t["A#"] = "Bb";
-    t["C#"] = "Db";
-    t["D#"] = "Eb";
-    t["F#"] = "Gb";
-    t["G#"] = "Ab";
-    for (auto e : t) {
-        m[e.second] = e.first;
-    }
+    unordered_map<string, string> m;
+    m["A#"] = "Bb";
+    m["C#"] = "Db";
+    m["D#"] = "Eb";
+    m["F#"] = "Gb";
+    m["G#"] = "Ab";
+
+    m["Bb"] = "A#";
+    m["Db"] = "C#";
+    m["Eb"] = "D#";
+    m["Gb"] = "F#";
+    m["Ab"] = "G#";
     string a, b;
     int i = 1;
     while (cin >> a) {
@@ -33,4 +36,5 @@ int main() {
     }
     return 0;
 }
+
 

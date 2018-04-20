@@ -42,44 +42,67 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+vector<int> T;
+
+int key(string &s) {
+    int res = 0;
+    for (char c : s) {
+        res <<= 1;
+        if (c == 'o') res += 1;
+    }
+    return res;
+}
+
+bool possible(string &s, int a, int b, int c, string &next) {
+    if (a < 0 || b < 0 || c < 0) return false;
+    if (s[a] == '-' && s[b] == 'o' && s[c] == 'o') {
+        next = s;
+        next[a] = 'o';
+        next[b] = '-';
+        next[c] = '-';
+        return true;
+    }
+    swap(a, c);
+    if (s[a] == '-' && s[b] == 'o' && s[c] == 'o') {
+        next = s;
+        next[a] = 'o';
+        next[b] = '-';
+        next[c] = '-';
+        return true;
+    }
+    return false;
+}
+
+uint solve(string &s) {
+    int k = key(s);
+    if (T[k] != -1) return T[k];
+    uint count = 0;
+    uint best = -1;
+    rep(i, 0, s.size()) {
+        if (s[i] == 'o') ++count;
+        string next;
+        if (possible(s, i - 3, i - 2, i - 1, next)) {
+            best = min(best, solve(next));
+        }
+        if (possible(s, i - 2, i - 1, i, next)) {
+            best = min(best, solve(next));
+        }
+    }
+    T[k] = min(count, best);
+    return T[k];
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    while (true) {
-        int N, K;
-        scan(N); scan(K);
-        if (!N && !K) break;
-        int sum = 0;
-        vector< vector< vector<int> > > T(N, vector<vector<int>>(2));
-        rep(i, 0, N) {
-            vector<int> C(2);
-            scan(C[0]); scan(C[1]);
-            sum += C[0] + C[1];
-            if (i == 0) {
-                T[i][0].pb(C[0]);
-                T[i][1].pb(C[1]);
-            }
-            else if (i == 1) {
-                T[i][0] = vector<int>(2);
-                T[i][1] = vector<int>(2);
-                T[i][0][0] = min(C[0], T[0][0][0]);
-                T[i][0][1] = T[0][0][0] + C[0];
-                T[i][1][0] = min(C[1], T[0][1][0]);
-                T[i][1][1] = T[0][1][0] + C[1];
-            } else {
-                rep(j, 0, 2) {
-                    int v = min(C[j], T[i - 1][j][0]);
-                    v = min(v, T[i - 2][!j][0]);
-                    T[i][j][0] = v;
-                    rep(k, 1, i + 1) {
-                        v = min(T[i - 1][j][k - 1] + C[j], T[i - 1][j][k]);
-                        rep(a, 1, k + 1) {
-                            v = min(v, T[i - a][!j][a]
-                        }
-                    }
-                }
-            }
-        }
+    int N;
+    cin >> N;
+    cin.ignore();
+    T = vector<int>(1 << 23, -1);
+    while (N--) {
+        string line;
+        getline(cin, line);
+        cout << solve(line) << endl; 
     }
     return 0;
 }

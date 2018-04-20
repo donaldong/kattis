@@ -42,24 +42,66 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+void print(char &c, int &i, int v) {
+    if (i & 1) {
+        c -= v;
+    } else {
+        c += v;
+    }
+    ++i;
+    cout << c;
+}
+
+void print(vector<int> &v) {
+    int sum = 0;
+    for (int i = 0; i < v.size(); ++i) {
+        cout << v[i] << " ";
+        sum += v[i];
+    }
+    cout << "[" << sum << "]";
+    cout << endl;
+}
+
+vector<int> balance(int k) {
+    int n = k / 25;
+    int r = k % 25;
+    if (r) ++n;
+    int avg = k / n;
+    vector<int> res(n, avg);
+    if (n == 1) return res;
+    int j = n - 1;
+    r = k % n;
+    if ((r + n) & 1) --j;
+    print(res);
+    while (r) {
+        res[j--]++;
+        if (j < 0) j += n;
+        r--;
+    }
+    print(res);
+    int l = 25 - max(res[0], res[1]);
+    for (int i = 3; i < n; i += 2) {
+        int left = 25 - max(res[i], res[i - 1]);
+        res[i - 3] -= left;
+        res[i - 2] -= left;
+        res[i - 1] += left;
+        res[i] += left;
+    }
+    print(res);
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     int k;
     scan(k);
-    string res;
-    char c;
-    bool f = true;
-    vector<int> R;
-    while (k > 0) {
-        int r;
-        if (k > 25) r = 25;
-        else r = k;
-        R.pb(r);
-        k -= 26;
-    }
-    for (int r : R) cout << r << " ";
-    cout << endl;
+    auto B = balance(k);
+    char prev = 'a';
+    int i = 0;
+    cout << prev;
+    for (int b : B) print(prev, i, b);
+    cout << endl; 
     return 0;
 }
 

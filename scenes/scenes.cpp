@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Mountain Scenes 
  *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
+ *  @date    04/20/2018
  *  
- *  + TAG
+ *  + DP
  */
 
 #include <algorithm>
@@ -45,42 +45,25 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    while (true) {
-        int N, K;
-        scan(N); scan(K);
-        if (!N && !K) break;
-        int sum = 0;
-        vector< vector< vector<int> > > T(N, vector<vector<int>>(2));
-        rep(i, 0, N) {
-            vector<int> C(2);
-            scan(C[0]); scan(C[1]);
-            sum += C[0] + C[1];
-            if (i == 0) {
-                T[i][0].pb(C[0]);
-                T[i][1].pb(C[1]);
+    ull MOD = 1e9 + 7;
+    int n, w, h;
+    scan(n); scan(w); scan(h);
+    vector<vector<ull>> T(w + 1, vector<ull>(n + 1));
+    T[0] = vector<ull>(n + 1, 1);
+    rep(i, 0, w + 1) T[i][0] = 1;
+    rep(i, 1, w + 1) {
+        rep(j, 1, n + 1) {
+            ull v = 0;
+            for (int k = 0; k <= j && k <= h; ++k) {
+                v += T[i - 1][j - k];
+                v %= MOD;
             }
-            else if (i == 1) {
-                T[i][0] = vector<int>(2);
-                T[i][1] = vector<int>(2);
-                T[i][0][0] = min(C[0], T[0][0][0]);
-                T[i][0][1] = T[0][0][0] + C[0];
-                T[i][1][0] = min(C[1], T[0][1][0]);
-                T[i][1][1] = T[0][1][0] + C[1];
-            } else {
-                rep(j, 0, 2) {
-                    int v = min(C[j], T[i - 1][j][0]);
-                    v = min(v, T[i - 2][!j][0]);
-                    T[i][j][0] = v;
-                    rep(k, 1, i + 1) {
-                        v = min(T[i - 1][j][k - 1] + C[j], T[i - 1][j][k]);
-                        rep(a, 1, k + 1) {
-                            v = min(v, T[i - a][!j][a]
-                        }
-                    }
-                }
-            }
+            T[i][j] = v;
         }
     }
+    ull res = T.back().back();
+    res = (res + MOD - min(h, n / w) - 1) % MOD;
+    cout << res << endl;
     return 0;
 }
 

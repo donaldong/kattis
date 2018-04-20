@@ -42,45 +42,36 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct paper {
+    ld a, b;
+    paper() {}
+    paper(ld a, ld b) : a(a), b(b) {}
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    while (true) {
-        int N, K;
-        scan(N); scan(K);
-        if (!N && !K) break;
-        int sum = 0;
-        vector< vector< vector<int> > > T(N, vector<vector<int>>(2));
-        rep(i, 0, N) {
-            vector<int> C(2);
-            scan(C[0]); scan(C[1]);
-            sum += C[0] + C[1];
-            if (i == 0) {
-                T[i][0].pb(C[0]);
-                T[i][1].pb(C[1]);
-            }
-            else if (i == 1) {
-                T[i][0] = vector<int>(2);
-                T[i][1] = vector<int>(2);
-                T[i][0][0] = min(C[0], T[0][0][0]);
-                T[i][0][1] = T[0][0][0] + C[0];
-                T[i][1][0] = min(C[1], T[0][1][0]);
-                T[i][1][1] = T[0][1][0] + C[1];
-            } else {
-                rep(j, 0, 2) {
-                    int v = min(C[j], T[i - 1][j][0]);
-                    v = min(v, T[i - 2][!j][0]);
-                    T[i][j][0] = v;
-                    rep(k, 1, i + 1) {
-                        v = min(T[i - 1][j][k - 1] + C[j], T[i - 1][j][k]);
-                        rep(a, 1, k + 1) {
-                            v = min(v, T[i - a][!j][a]
-                        }
-                    }
-                }
-            }
+    int n;
+    scan(n);
+    vector<int> N(n - 1);
+    vector<paper> P(n - 1);
+    P[0] = paper(pow(2, -5.0/4.0), pow(2, -3.0/4.0));
+    rep(i, 1, P.size()) {
+        P[i].b = P[i - 1].a;
+        P[i].a = P[i - 1].b / 2;
+    }
+    for (int &e : N) scan(e);
+    N[0] -= 2;
+    ld res = P[0].b;
+    rep(i, 0, N.size() - 1) {
+        while (N[i] < 0) {
+            res += P[i + 1].b;
+            N[i + 1] -= 2;
+            ++N[i];
         }
     }
+    if (N.back() < 0) cout << "impossible" << endl;
+    else printf("%.6Lf\n", res);
     return 0;
 }
 
