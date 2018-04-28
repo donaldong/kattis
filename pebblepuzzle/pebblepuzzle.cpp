@@ -42,28 +42,103 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+void print(vector<bool> &v) {
+    for (auto e : v) cout << e << " ";
+    cout << endl;
+}
+
+struct row {
+    vector<bool> v;
+    row() {}
+    row(int n) {
+        v = vector<bool>(n);
+    }
+    void fix(int size) {
+        if (!size) return;
+        int sum = 0;
+        rep(i, 0, size) {
+            if (v[i]) ++sum;
+        }
+        int sum2 = size - sum;
+        if (sum2 > sum) flip(); 
+        else if (sum2 == sum) fix(size / 2);
+    }
+
+    void init() {
+        fix(v.size());
+    }
+
+    void flip() {
+        rep(i, 0, v.size()) v[i] = !v[i];
+    }
+};
+
+void print(vector<row> &G) {
+    for (auto &r : G) {
+        for (auto cell : r.v) {
+            cout << cell << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+void print(const vector<__int128> &v) {
+    rep(i, 0, v.size()) {
+        ll k = v[i];
+        cout << k << " ";
+    }
+    cout << endl;
+}
+
+vector<__int128> norm(vector<row> &G) {
+    for (auto &r : G) r.init();
+    print(G);
+    int size = G.back().v.size();
+    vector<__int128> res(size);
+    rep(i, 0, size) {
+        __int128 r = G[0].v[i];
+        rep(j, 1, G.size()) {
+            r <<= 1;
+            r += G[j].v[i];
+        }
+        res[i] = r;
+    }
+    sort(res.rbegin(), res.rend());
+    return res;
+}
+
+bool equal(const vector<__int128> &a, const vector<__int128> &b) {
+    rep(i, 0, a.size()) {
+        if (a[i] != b[i]) return false;
+    }
+    return true;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
+    int T;
+    cin >> T;
+    while (T--) {
+        int n, m;
+        cin >> n >> m;
+        vector<row> A(n, row(m));
+        auto B = A;
+        rep(i, 0, n) rep(j, 0, m) {
+            string col;
+            cin >> col;
+            A[i].v[j] = col == "RED";
         }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
+        rep(i, 0, n) rep(j, 0, m) {
+            string col;
+            cin >> col;
+            B[i].v[j] = col == "RED";
+        }
+        auto a = norm(A);
+        auto b = norm(B);
+        cout << (equal(a, b) ? "YES" : "NO") << endl;
     }
-    cout << res << endl;
     return 0;
 }
 

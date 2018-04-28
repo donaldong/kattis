@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Counting
  */
 
 #include <algorithm>
@@ -42,28 +42,37 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ull MOD = 1e9 + 7;
+
+ll pow(ll k) {
+    if (k == 0) return 1;
+    ll res = pow(k / 2);
+    if (k & 1) return (res * res * 9) % MOD;
+    return (res * res) % MOD;
+}
+
+ll solve(ll d) {
+    ll res;
+    if (d == 1) {
+        res = 8;
+    } else {
+        res = pow(d);
+        res -= pow(d - 1);
+        if (res < 0) res += MOD;
+    }
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
-        }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
+    int T;
+    scan(T);
+    while (T--) {
+        ll n;
+        scan(n);
+        cout << solve(n) << endl;
     }
-    cout << res << endl;
     return 0;
 }
 

@@ -42,28 +42,80 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct node;
+
+struct edge {
+    node *src, *dest;
+    uint w;
+    edge(node *a, node *b, int t) {
+        this->w = t;
+        src = a;
+        dest = b;
+    }
+};
+
+struct node {
+    vector<edge*> E;
+    int i;
+    node() {}
+};
+
+struct state {
+    int t;
+    set<int> S;
+    state() {}
+    state(int t) : t(t) {}
+};
+
+string get_key(state &s) {
+    string res;
+    for (int n : s.S) res += n;
+    return res;
+}
+
+hmap<string, int> STATES;
+
+size_t solve(node *start, int t) {
+    size_t best = 0;
+    queue<pair<state, node*>> Q;
+    state start_state(0);
+    start_state.S.insert(start->i);
+    Q.push(mp(start_state, start));
+    while (!Q.empty()) {
+        auto front = Q.front();
+        Q.pop();
+        auto cur = front.second;
+        for (auto e : cur->E) {
+            auto next = e->dest;
+            auto w = front.first.t + e->w;
+            if (w <= t) {
+                auto new_state = front.first;
+                new_state.S.insert(next->i);
+                new_state.t = w;
+                string key = get_key(new_state);
+                if (STATES.find(key) != STATES.end() && STATES[key] <= w) continue;
+                best = max(best, new_state.S.size());
+                Q.push(mp(new_state, next));
+            }
+        }
+    }
+    return best;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
-        }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
+    int M, N;
+    scan(M); scan(N);
+    vector<node> nodes(M);
+    rep(i, 0, M) nodes[i].i = i;
+    rep(i, 0, M - 1) {
+        int u, v, t;
+        scan(u); scan(v); scan(t);
+        nodes[u].E.pb(new edge(&nodes[u], &nodes[v], t));
+        nodes[v].E.pb(new edge(&nodes[v], &nodes[u], t));
     }
-    cout << res << endl;
+    cout << solve(&nodes[0], N) - 1 << endl;
     return 0;
 }
 

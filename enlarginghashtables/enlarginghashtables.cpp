@@ -3,7 +3,8 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Brute Force
+ *  + Prime Number
  */
 
 #include <algorithm>
@@ -42,28 +43,42 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+hset<ull> np;
+hset<ull> p;
+
+bool P(ull n) {
+    if (n == 2) return true;
+    if (!(n & 1)) return false;
+    if (p.find(n) != p.end()) return true;
+    if (np.find(n) != np.end()) return false;
+    for (ull i = 3; i * i <= n; i += 2) {
+        if (n % i == 0) {
+            np.insert(n);
+            return false;
+        }
+    }
+    p.insert(n);
+    return true;
+}
+
+ull solve(ull n) {
+    for (ull i = 2 * n + 1;; i += 2) {
+        if (P(i)) return i;
+    }
+    return 0;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
-        }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
+    while (true) {
+        int n;
+        scan(n);
+        if (!n) break;
+        ull res = solve(n);
+        if (P(n)) cout << res << endl;
+        else cout << res << " (" << n << " is not prime)" << endl;
     }
-    cout << res << endl;
     return 0;
 }
 

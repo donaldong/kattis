@@ -42,28 +42,61 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+void print(char &c, int &i, int v) {
+    if (i & 1) {
+        c -= v;
+    } else {
+        c += v;
+    }
+    ++i;
+    cout << c;
+}
+
+void print(vector<int> &v) {
+    int sum = 0;
+    for (int i = 0; i < v.size(); ++i) {
+        cout << v[i] << " ";
+        sum += v[i];
+    }
+    cout << "[" << sum << "]";
+    cout << endl;
+}
+
+vector<int> balance(int k) {
+    int n = k / 25;
+    int r = k % 25;
+    if (r) ++n;
+    int avg = k / n;
+    vector<int> res(n, avg);
+    if (n == 1) return res;
+    int j = n - 1;
+    r = k % n;
+    if ((r + n) & 1) --j;
+    while (r) {
+        res[j--]++;
+        if (j < 0) j += n;
+        r--;
+    }
+    for (int i = res.size() - 1; i >= 2; i--) {
+        int left = 25 - res[i];
+        res[i] += left;
+        res[i - 2] -= left;
+    }
+    print(res);
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     int k;
     scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
-        }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
-    }
-    cout << res << endl;
+    auto B = balance(k);
+    char prev = 'a';
+    int i = 0;
+    cout << prev;
+    for (int b : B) print(prev, i, b);
+    cout << endl; 
     return 0;
 }
 

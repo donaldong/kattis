@@ -3,7 +3,9 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Brute Force
+ *  + Permutation
+ *  + Prime number
  */
 
 #include <algorithm>
@@ -42,28 +44,58 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+vector<bool> P;
+hset<int> used;
+
+vector<string> solve(string &s, int &count) {
+    vector<string> res;
+    if (s.size() == 1) {
+        int n = s[0] - '0';
+        if (P[n] && used.find(n) == used.end()) {
+            ++count;
+            used.insert(n);
+        }
+        res.pb(s);
+        return res;
+    }
+    rep(i, 0, s.size()) {
+        char cur = s[i];
+        string next = s;
+        next.erase(next.begin() + i);
+        auto r = solve(next, count);
+        for (string e : r) {
+            e = cur + e;
+            int k = stoi(e);
+            if (P[k] && used.find(k) == used.end()) {
+                ++count;
+                used.insert(k);
+            }
+            res.pb(e);
+        }
+    }
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
+    P = vector<bool>(1e8, true);
+    P[0] = P[1] = false;
+    for (int p=2; p * p < P.size(); ++p) {
+        if (P[p]) {
+            for (int i = p * p; i < P.size(); i += p) P[i] = false;
         }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
     }
-    cout << res << endl;
+    int T;
+    cin >> T;
+    while (T--) {
+        used.clear();
+        string s;
+        cin >> s;
+        int count = 0;
+        solve(s, count);
+        cout << count << endl;
+    }
     return 0;
 }
 

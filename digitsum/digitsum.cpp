@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - NAME 
+ *  @brief   Kattis - Digit Sum 
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + DP
  */
 
 #include <algorithm>
@@ -42,28 +42,45 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ull calc(string a) {
+  uint64_t res = 0;
+  uint64_t num = 0;
+  uint64_t pow = 1;
+  uint64_t ppow = 1;
+  for (uint64_t i = 0; i < a.size(); ++i)
+  {
+    uint64_t d = a[a.size()-i-1] - '0';
+    if (0 == i)
+      res += d * (d+1) / 2;
+    else
+    {
+      res += d * (d-1) / 2 * pow;
+      res += d * i * 45 * ppow;
+      res += d * (num+1);
+    }
+    num += d * pow;
+    ppow = pow;
+    pow *= 10;
+  }
+  return res;
+}
+
+ull solve(ll a, ll b) {
+    if (a <= 0) return calc(to_string(b));
+    return calc(to_string(b)) - calc(to_string(a));
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
-        }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
+    int N;
+    scan(N);
+    while (N--) {
+        ll a, b;
+        scan(a), scan(b);
+        --a;
+        cout << solve(a, b) << endl;
     }
-    cout << res << endl;
     return 0;
 }
 

@@ -42,28 +42,76 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ll gcd(ll a, ll b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}
+
+struct num {
+    ll a, b;
+    num() {}
+    num(ll x, ll y) {
+        a = x;
+        b = y;
+        simplify();
+    }
+    void simplify() {
+        if (b < 0) {
+            b *= -1;
+            a *= -1;
+        }
+        ll c = gcd(abs(a), b);
+        a /= c;
+        b /= c;
+    }
+};
+
+num add(num &a, num &b) {
+    ll x = a.a * b.b + b.a * a.b;
+    ll y = a.b * b.b;
+    return num(x, y);
+}
+
+num subtract(num &a, num &b) {
+    ll x = a.a * b.b - b.a * a.b;
+    ll y = a.b * b.b;
+    return num(x, y);
+}
+
+num mul(num &a, num &b) {
+    ll x = a.a * b.a;
+    ll y = a.b * b.b;
+    return num(x, y);
+}
+
+num div(num &a, num &b) {
+    ll x = a.a * b.b;
+    ll y = a.b * b.a;
+    return num(x, y);
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
+    int N;
+    cin >> N;
+    while (N--) {
+        int a1, b1, a2, b2;
+        char op;
+        cin >> a1 >> b1 >> op >> a2 >> b2;
+        num x(a1, b1), y(a2, b2);
+        num res;
+        if (op == '+') {
+            res = add(x, y);
+        } else if (op == '-') {
+            res = subtract(x, y);
+        } else if (op == '*') {
+            res = mul(x, y);
+        } else {
+            res = div(x, y);
         }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
+        cout << res.a << " / " << res.b << endl;
     }
-    cout << res << endl;
     return 0;
 }
 
