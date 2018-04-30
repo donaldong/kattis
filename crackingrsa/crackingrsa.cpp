@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Extended Euclidean
  */
 
 #include <algorithm>
@@ -42,20 +42,54 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int get_phi(int n) {
+    if (n % 2 == 0) return n / 2 - 1;
+    for (int i = 3; i * i < n; i += 2) {
+        if (n % i == 0) return (i - 1) * (n / i - 1);
+    }
+    return -1;
+}
+
+ll gcdExt(ll a, ll b, ll &x, ll &y) {
+    if (a == 0) {
+        x = 0;
+        y = 1;
+        return b;
+    }
+    ll x1, y1;
+    ll gcd = gcdExt(b % a, a, x1, y1);
+    x = y1 - (b/a) * x1;
+    y = x1;
+    return gcd;
+}
+
+ll solve(ll e, ll phi) {
+    ll d, k;
+    ll gcd = gcdExt(e, phi, d, k);
+    d /= gcd;
+    if (d < 0) {
+        ll n = -d / phi;
+        if (-d % phi) ++n;
+        d += n * phi;
+    }
+    if (d >= phi) {
+        ll n = d / phi;
+        d -= n * phi;
+    }
+    return d;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     int T;
-    scan(T);
+    cin >> T;
     while (T--) {
         int n, e;
-        scan(n); scan(e);
-        auto pairs = solve(n);
-        int 
-        for (auto p : pairs) {
-            auto phi = get_phi(p);
-            if (possible(
-        }
+        cin >> n >> e;
+        int phi = get_phi(n);
+        ll d = solve(e, phi);
+        cout << d << endl;
     }
     return 0;
 }

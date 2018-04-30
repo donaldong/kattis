@@ -45,22 +45,19 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
-        }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+    int y = 2018, m = 3;
+    hset<int> S;
+    S.insert(2018);
+    while (y <= 10000) {
+        m += 26;
+        int k = m / 12;
+        y += k;
+        m %= 12;
+        S.insert(y);
     }
+    int n;
+    cin >> n;
+    cout << (S.find(n) != S.end() ? "yes" : "no") << endl;
     return 0;
 }
 

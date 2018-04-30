@@ -42,25 +42,56 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+ll gcd(ll a, ll b) {
+    return b == 0 ? a : gcd(b, a % b);
+}
+
+struct rat {
+    ll p, q;
+    rat() {}
+    rat(ll a, ll b) {
+        p = a;
+        q = b;
+        simplify();
+    }
+    void simplify() {
+        if (q < 0) {
+            q *= -1;
+            p *= -1;
+        }
+        ll c = gcd(abs(p), q);
+        p /= c;
+        q /= c;
+    }
+    rat operator+(rat &r) {
+        ll x = p * r.q + r.p * q;
+        ll y = q * r.q;
+        return rat(x, y);
+    }
+    rat operator-(rat &r) {
+        ll x = p * r.q - r.p * q;
+        ll y = q * r.q;
+        return rat(x, y);
+    }
+    rat operator*(rat &r) {
+        ll x = p * r.p;
+        ll y = q * r.q;
+        return rat(x, y);
+    }
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
-        }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
-    }
+    string line;
+    cin >> line;
+    int i = line.find('/');
+    ll p = stoll(line.substr(0, i));
+    line.erase(0, i + 1);
+    ll q = stoll(line);
+    rat a(32, 1), b(5, 9);
+    rat res = (rat(p, q) - a) * b;
+    cout << res.p << "/" << res.q << endl;
     return 0;
 }
 

@@ -42,24 +42,31 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+bool valid(string &s) {
+    int i = s.find("ae");
+    return i >= 0;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
-        }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+    int total = 0, count = 0;
+    string word;
+    while (cin >> word) {
+        ++total;
+        if (valid(word)) ++count;
+    }
+    total *= 4;
+    if (total % 10) {
+        total /= 10;
+        ++total;
+    } else {
+        total /= 10;
+    }
+    if (count >= total) {
+        cout << "dae ae ju traeligt va" << endl;
+    } else {
+        cout << "haer talar vi rikssvenska" << endl;
     }
     return 0;
 }

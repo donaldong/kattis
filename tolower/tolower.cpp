@@ -42,25 +42,29 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+bool valid(string &s) {
+    rep(i, 1, s.size()) {
+        if (tolower(s[i]) != s[i]) return false;
+    }
+    return true;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
+    int P, T;
+    cin >> P >> T;
+    int count = 0;
+    while (P--) {
         bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
+        string s;
+        rep(i, 0, T) {
+            cin >> s;
+            if (!valid(s)) f = false;
         }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+        if (f) ++count;
     }
+    cout << count << endl;
     return 0;
 }
 

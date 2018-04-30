@@ -42,24 +42,77 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+bool fill(vector<string> &res, vector<vector<bool>> &G, string s) {
+    int k = 0;
+    rep(i, 0, G.size()) {
+        rep(j, 0, G[i].size()) {
+            if (G[i][j]) {
+                if (res[i][j] != ' ') { return false; }
+                res[i][j] = s[k++];
+            }
+        }
+    }
+    return true; 
+}
+
+void rotate(vector<vector<bool>> &mat) {
+    int N = mat.size();
+    for (int x = 0; x < N / 2; x++) {
+        for (int y = x; y < N-x-1; y++) {
+            // store current cell in temp variable
+            bool temp = mat[x][y];
+
+            // move values from left to top
+            mat[x][y] = mat[N-1-y][x];
+
+            // move values from bottom to left
+            mat[N-1-y][x] = mat[N-1-x][N-1-y];
+
+            // move values from right to bottom
+            mat[N-1-x][N-1-y] = mat[y][N-1-x];
+
+            mat[y][N-1-x] = temp;
+        }
+    }
+}
+
+bool solve(string &word, vector<vector<bool>> &G, vector<string> &res, int k) {
+    rep(i, 0, 4) {
+        if (!fill(res, G, word.substr(0, k))) return false;
+        rotate(G);
+        word.erase(0, k);
+    }
+    for (auto &s : res) {
+        for (char c : s) if (c == ' ') return false;
+    }
+    return true;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
+    int n;
+    cin >> n;
+    vector<vector<bool>> G(n, vector<bool>(n));
+    int k = 0;
+    rep(i, 0, n) {
+        string s;
+        cin >> s;
+        rep(j, 0, n) {
+            if (s[j] == '.') {
+                G[i][j] = true;
+                ++k;
+            } else G[i][j] = false;
         }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+    }
+    string word;
+    cin >> word;
+    vector<string> res(n, string(n, ' '));
+    if (solve(word, G, res, k)) {
+        for (auto &s : res) cout << s;
+        cout << endl;
+    } else {
+        cout << "invalid grille" << endl;
     }
     return 0;
 }

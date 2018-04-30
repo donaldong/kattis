@@ -45,22 +45,21 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
-        }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+    int N;
+    scan(N);
+    vector<int> T(1001, 0);
+    rep(i, 0, N) {
+        int a, b;
+        scan(a), scan(b);
+        ++T[a];
+        --T[b + 1];
     }
+    bool f = T[0] == N;
+    rep(i, 1, T.size()) {
+        T[i] += T[i - 1];
+        if (T[i] == N) f = true;
+    }
+    cout << (f? "gunilla has a point" : "edward is right") << endl;
     return 0;
 }
 

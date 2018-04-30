@@ -53,25 +53,57 @@ struct row {
     row(int n) {
         v = vector<bool>(n);
     }
-    void fix(int size) {
-        if (!size) return;
-        int sum = 0;
-        rep(i, 0, size) {
-            if (v[i]) ++sum;
-        }
-        int sum2 = size - sum;
-        if (sum2 > sum) flip(); 
-        else if (sum2 == sum) fix(size / 2);
-    }
-
-    void init() {
-        fix(v.size());
-    }
-
     void flip() {
         rep(i, 0, v.size()) v[i] = !v[i];
     }
+    int count() {
+        int sum = 0;
+        rep(i, 0, v.size()) {
+            if (v[i]) ++sum;
+        }
+        return sum;
+    }
 };
+
+bool fix(row &a, row &b) {
+    int c1 = a.count();
+    int c2 = b.count();
+    if (c1 == c2) return true;
+    if (c1 + c2 != a.v.size()) return false;
+    if (c1 > c2) b.flip();
+    else a.flip();
+    return true;
+}
+
+void sort(vector<row> &G, int end) {
+    int size = G.back().v.size();
+    vector<pair<__int128, int>> res(size);
+    rep(i, 0, size) {
+        __int128 r = G[0].v[i];
+        rep(j, 1, end + 1) {
+            r <<= 1;
+            r += G[j].v[i];
+        }
+        res[i] = mp(r, i);
+    }
+    sort(res.rbegin(), res.rend());
+    vector<row> B = G;
+    rep(i, 0, G.size()) {
+        rep(j, 0, size) {
+            B[i].v[j] = G[i].v[res[j].second];
+        }
+    }
+    G = B;
+}
+
+bool equal(vector<row> &A, vector<row> &B, size_t end) {
+    for (int i = 0; i <= end; ++i) {
+        rep(j, 0, A[i].v.size()) {
+            if (A[i].v[j] != B[i].v[j]) return false;
+        }
+    }
+    return true;
+}
 
 void print(vector<row> &G) {
     for (auto &r : G) {
@@ -83,34 +115,15 @@ void print(vector<row> &G) {
     cout << endl;
 }
 
-void print(const vector<__int128> &v) {
-    rep(i, 0, v.size()) {
-        ll k = v[i];
-        cout << k << " ";
-    }
-    cout << endl;
-}
-
-vector<__int128> norm(vector<row> &G) {
-    for (auto &r : G) r.init();
-    print(G);
-    int size = G.back().v.size();
-    vector<__int128> res(size);
-    rep(i, 0, size) {
-        __int128 r = G[0].v[i];
-        rep(j, 1, G.size()) {
-            r <<= 1;
-            r += G[j].v[i];
-        }
-        res[i] = r;
-    }
-    sort(res.rbegin(), res.rend());
-    return res;
-}
-
-bool equal(const vector<__int128> &a, const vector<__int128> &b) {
-    rep(i, 0, a.size()) {
-        if (a[i] != b[i]) return false;
+bool equal(vector<row> &A, vector<row> &B) {
+    if (!fix(A[0], B[0])) return false;
+    sort(A, 0);
+    sort(B, 0);
+    rep(i, 1, A.size()) {
+        if (!fix(A[i], B[i])) return false;
+        sort(A, i);
+        sort(B, i);
+        if (!equal(A, B, i)) return false;
     }
     return true;
 }
@@ -135,9 +148,7 @@ int main() {
             cin >> col;
             B[i].v[j] = col == "RED";
         }
-        auto a = norm(A);
-        auto b = norm(B);
-        cout << (equal(a, b) ? "YES" : "NO") << endl;
+        cout << (equal(A, B) ? "YES" : "NO") << endl;
     }
     return 0;
 }

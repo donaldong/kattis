@@ -42,24 +42,36 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+void fix(int &a) {
+    if (a < 0) a *= -1;
+    if (a >= 180) a -= 180;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
+    int A, B;
+    scan(A), scan(B);
+    vector<bool> T(360, false);
+    T[0] = T[180] = true;
+    rep(i, 0, A) {
+        int n;
+        scan(n);
+        T[n] = true;
+    }
+    rep(i, 1, 360) {
+        if (T[i]) {
+            rep(j, 0, 360) {
+                int k = (i + j * i) % 360;
+                T[k] = true;
             }
         }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+    }
+    while (B--) {
+        int n;
+        scan(n);
+        if (T[n]) cout << "YES" << endl;
+        else cout << "NO" << endl;
     }
     return 0;
 }

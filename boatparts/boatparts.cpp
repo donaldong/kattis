@@ -45,22 +45,23 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
+    int P, N;
+    cin >> P >> N;
+    hset<string> S;
+    int res = 0;
+    rep(i, 1, N + 1) {
+        string s;
+        cin >> s;
+        if (S.find(s) != S.end()) continue;
+        if (S.size() < P) {
+            S.insert(s);
+            if (S.size() == P) {
+                res = i;
             }
         }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
     }
+    if (res > 0) cout << res << endl;
+    else cout << "paradox avoided" << endl;
     return 0;
 }
 

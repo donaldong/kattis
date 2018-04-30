@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + BFS
  */
 
 #include <algorithm>
@@ -42,24 +42,53 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct node {
+    vector<node*> neigh;
+    bool f = false;
+};
+
+int bfs(node* start) {
+    int res = 0;
+    start->f = true;
+    queue<node*> Q;
+    Q.push(start);
+    while (!Q.empty()) {
+        auto cur = Q.front();
+        Q.pop();
+        for (auto n : cur->neigh) {
+            if (!n->f) {
+                n->f = true;
+                Q.push(n);
+                ++res;
+            }
+        }
+    }
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
+    int T;
+    scan(T);
+    while (T--) {
+        int n, m, l;
+        scan(n), scan(m), scan(l);
+        vector<node> nodes(n);
+        while (m--) {
+            int a, b;
+            scan(a), scan(b);
+            --a; --b;
+            nodes[a].neigh.pb(&nodes[b]);
         }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+        node start;
+        while (l--) {
+            int a;
+            scan(a);
+            --a;
+            start.neigh.pb(&nodes[a]);
+        }
+        cout << bfs(&start) << endl;
     }
     return 0;
 }

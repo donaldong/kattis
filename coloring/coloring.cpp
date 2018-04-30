@@ -3,7 +3,8 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Binary Search
+ *  + DFS
  */
 
 #include <algorithm>
@@ -42,70 +43,71 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int X = 1;
-
 struct node {
     int col = -1;
-    bool f = false;
     vector<node*> neigh;
 };
 
-int pick_color(hset<int> &s) {
-    int c = 1;
-    while (true) {
-        if (s.find(c) == s.end()) return c;
-        ++c;
+int X;
+
+bool dfs(node *n) {
+    vector<bool> C(X, false);
+    for (auto e : n->neigh) {
+        if (e->col != -1) {
+            C[e->col] = true;
+        }
     }
-    return c;
-}
-
-void solve(node *start,
-
-void solve(node *start) {
-    queue<node*> Q;
-    Q.push(start);
-    start->f = true;
-    while (!Q.empty()) {
-        auto cur = Q.front();
-        Q.pop();
-        hset<int> col;
-        for (auto n : cur->neigh) {
-            col.insert(n->col);
-            if (!n->f) {
-                n->f = true;
-                Q.push(n);
+    rep(i, 0, C.size()) {
+        if (C[i]) continue;
+        n->col = i;
+        bool f = true;
+        for (auto next : n->neigh) {
+            if (next->col != -1) continue;
+            if (!dfs(next)) {
+                f = false;
+                next->col = -1;
+                break;
             }
         }
-        cur->col = pick_color(col);
-        X = max(X, cur->col);
+        if (f) return true;
     }
+    n->col = -1;
+    return false;
+}
+
+bool colorable(vector<node> &N, int x) {
+    X = x;
+    rep(i, 0, N.size()) N[i].col = -1;
+    return dfs(&N[0]);
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     int n;
-    scan(n);
+    cin >> n;
     vector<node> N(n); 
+    int max_degree = 0;
+    cin.ignore();
     rep(i, 0, n) {
         string line;
         getline(cin, line);
         stringstream ss(line);
         int j;
+        int d = 0;
         while (ss >> j) {
             N[i].neigh.pb(&N[j]);
+            ++d;
         }
+        max_degree = max(max_degree, d);
     }
-    uint res = -1;
-    rep(i, 0, n) {
-        for (auto &e : N) {
-            e.f = false;
-            e.col = -1;
-        }
-        solve(&N[i]);
-        res = min(res, uint(X));
+    int lo = 1, hi = max_degree + 1;
+    while (lo <= hi) {
+        int col = (lo + hi) / 2;
+        if (colorable(N, col)) hi = col - 1;
+        else lo = col + 1;
     }
-    cout << res << endl;
+    cout << lo << endl;
     return 0;
 }
 

@@ -42,24 +42,25 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct node {
+    bool up;
+    int v;
+};
+
+bool solve(vector<node> &V, int i) {
+
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    ld n;
-    while (cin >> n) {
-        int k = -1;
-        bool f = true;
-        while (n > 0) {
-            if (k < -12) break;
-            ld d = pow(3, k--);
-            if (n - 2 * d < 0 && n - d > 0) {
-                f = false;
-                break;
-            } else if (n - 2 * d >= 0) {
-                n -= 2 * d;
-            }
-        }
-        cout << (f ? "MEMBER" : "NON-MEMBER") << endl;
+    int T;
+    scan(T);
+    while (T--) {
+        int N;
+        scan(N);
+        vector<node> V(N);
+        bool f = solve(V, 0);
     }
     return 0;
 }
