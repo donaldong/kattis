@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + TAG
  */
 
 #include <algorithm>
@@ -45,25 +45,25 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
+    int T;
+    scan(T);
+    while (T--) {
+        int t, N;
+        scan(t); scan(N);
+        vector<int> V(N);
+        rep(i, 0, N) scan(V[i]);
+        auto T = V;
+        sort(T.begin(), T.end());
+        int c = 0;
+        int res = 0;
+        rep(i, 0, N) {
+            if (V[i] == T[c]) {
+                ++c;
+                ++res;
             }
-            T[i][j] = v;
         }
+        cout << t << " " << N - res << endl;
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
     return 0;
 }
 

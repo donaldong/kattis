@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + TAG
  */
 
 #include <algorithm>
@@ -45,25 +45,26 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
-        }
+    hmap<string, int> M;
+    string line;
+    int total = 0;
+    while (getline(cin, line)) {
+        if (line.empty()) break;
+        ++M[line];
+        ++total;
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
+    int c = 0;
+    vector<pair<string, int>> V(M.size());
+    for (auto &entry : M) {
+        V[c++] = entry;
+    }
+    sort(V.begin(), V.end());
+    for (auto itr = V.begin(); itr != V.end(); ++itr) {
+        ld f = itr->second;
+        f /= total;
+        f *= 100;
+        cout << itr->first << " " << f << endl;
+    }
     return 0;
 }
 

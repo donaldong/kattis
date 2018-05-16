@@ -42,75 +42,65 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+bool leap(int y) {
+    if (y % 4 == 0 && y % 100 == 0 && y % 400 != 0) return false;
+    return y % 4 == 0;
+}
 
-struct point {
-    int x, y;
+int num_of_days(int y, int m) {
+    if (m == 2) return leap(y) ? 29 : 28;
+    vector<int> D = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    --m;
+    return D[m];
+}
+
+struct date {
+    string Y, M, D;
+    int y, m, d;
+    date(string &Y, string &M, string &D) : Y(Y), M(M), D(D) {}
+    bool valid() {
+        y = stoi(Y);
+        if (y > 2999) return false;
+        if (y >= 1000 && y < 2000) return false;
+        if (y < 2000) y += 2000;
+        m = stoi(M);
+        if (m > 12) return false;
+        if (m == 0) return false;
+        d = stoi(D);
+        if (d > 31) return false;
+        if (d == 0) return false;
+        return d <= num_of_days(y, m);
+    }
+    void print() {
+        printf("%d-%02d-%02d\n", y, m, d);
+    }
 };
-
-int sq_dist(point *a, point *b) {
-    int dx = a->x - b->x;
-    int dy = a->y - b->y;
-    return dx * dx + dy * dy;
-}
-
-int orient(point *p, point *q, point *r) {
-    int val = (q->y - p->y) * (r->x - q->x) -
-              (q->x - p->x) * (r->y - q->y);
-    if (val == 0) return 0;
-    return (val > 0)? 1: 2;
-}
-
-void graham_scan(vector<point> &P) {
-    int ymin = P[0].y, imin = 0;
-    for (int i = 1; i < P.size(); ++i) {
-        if (P[i].y < ymin || (P[i].y == ymin && P[i].x < P[imin].x)) {
-            ymin = P[i].y;
-            imin = i;
-        }
-    }
-    swap(P[0], P[imin]);
-    point *beg = &P[0];
-    sort(&P[1], &P[P.size()], [beg](point &a, point &b) {
-        int o = orient(beg, &a, &b);
-        if (o == 0) return sq_dist(beg, &a) >= sq_dist(beg, &b);
-        return o == 2;
-    });
-    int m = 1;
-    for (int i = 1; i < P.size(); ++i) {
-        while (i < P.size() - 1 && orient(beg, &P[i], &P[i + 1]) == 0) ++i;
-        P[m++] = P[i];
-    }
-    if (m < 3) {
-        cout << m << endl;
-        for (int i = 0; i < m; ++i) {
-            cout << P[i].x << " " << P[i].y << endl;
-        }
-        return;
-    }
-    vector<point*> S;
-    S.push_back(beg); S.push_back(&P[1]); S.push_back(&P[2]);
-    for (int i = 3; i < m; ++i) {
-        while (orient(S[S.size() - 2], S.back(), &P[i]) != 2) S.pop_back();
-        S.push_back(&P[i]);
-    }
-    cout << S.size() << endl;
-    for (int i = 0; i < S.size(); ++i) {
-        cout << S[i]->x << " " << S[i]->y << endl;
-    }
-}
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n;
-    while (true) {
-        scan(n);
-        if (n == 0) break;
-        vector<point> P(n);
-        for (auto &p : P) {
-            scan(p.x); scan(p.y);
-        }
-        graham_scan(P);
+    string line;
+    getline(cin, line);
+    vector<string> V(3);
+    int k = 0;
+    rep(i, 0, line.size()) {
+        if (line[i] != '/') V[k] += line[i];
+        else ++k;
+    }
+    vector<date> D;
+    sort(V.begin(), V.end());
+    do {
+        date d(V[0], V[1], V[2]);
+        if (d.valid()) D.pb(d);
+    } while (next_permutation(V.begin(), V.end()));
+    if (D.empty()) cout << line << " is illegal" << endl;
+    else {
+        sort(D.begin(), D.end(), [](date &a, date &b) {
+            if (a.y != b.y) return a.y < b.y;
+            if (a.m != b.m) return a.m < b.m;
+            return a.d < b.d;
+        });
+        D[0].print();
     }
     return 0;
 }

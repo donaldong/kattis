@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + TAG
  */
 
 #include <algorithm>
@@ -42,28 +42,48 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct expr {
+    bool series;
+    vector<ld> R;
+    ld eval() {
+        ld res = 0.0;
+        if (series) {
+            for (ld r : R) res += r;
+            return res;
+        }
+        for (ld r : R) res += 1.0 / r;
+        return 1.0 / res;
+    }
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
+    int N;
+    cin >> N;
+    vector<ld> R(N);
+    rep(i, 0, N) cin >> R[i];
+    string line;
+    cin >> line;
+    stack<expr> S;
+    ld res;
+    rep(i, 0, line.size()) {
+        if (line[i] == '(') S.push(expr());
+        else if (line[i] >= '0' && line[i] <= '9') {
+            int k = line[i] - '1';
+            S.top().R.pb(R[k]);
+        } else if (line[i] == '-') {
+            S.top().series = true;
+        } else if (line[i] == '|') {
+            S.top().series = false;
+        } else if (line[i] == ')') {
+           ld r = S.top().eval();
+           S.pop();
+           if (S.empty()) res = r;
+           else S.top().R.pb(r);
         }
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
+    printf("%.6Lf\n", res);
     return 0;
 }
 

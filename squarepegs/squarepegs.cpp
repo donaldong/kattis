@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + TAG
  */
 
 #include <algorithm>
@@ -42,28 +42,68 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+void fix(vector<int> &V, int t) {
+    while (!V.empty() && V.back() >= t) {
+        V.pop_back();
+    }
+}
+
+bool get(vector<int> &V, int t) {
+    if (V.empty()) return false;
+    if (V.back() < t) {
+        V.pop_back();
+        return true;
+    }
+    return false;
+}
+
+void print(vector<int> &v) {
+    for (auto &e : v) cout << e << " ";
+    cout << endl;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
-        }
+    int N, M, K;
+    cin >> N >> M >> K;
+    vector<int> P(N), C(M), S(K);
+    rep(i, 0, N) {
+        cin >> P[i];
+        P[i] *= 2;
+        P[i] *= P[i];
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
+    rep(i, 0, M) {
+        cin >> C[i];
+        C[i] *= 2;
+        C[i] *= C[i];
+    }
+    rep(i, 0, K) {
+        cin >> S[i];
+        S[i] *= S[i];
+        S[i] *= 2;
+    }
+    sort(P.begin(), P.end());
+    sort(C.begin(), C.end());
+    sort(S.begin(), S.end());
+    int a = N - 1;
+    int count = 0;
+    while (a >= 0) {
+        fix(C, P[a]);
+        fix(S, P[a]);
+        if (S.empty() && C.empty()) {}
+        else if (S.empty()) {
+            if (get(C, P[a])) ++count;
+        } else if (C.empty()) {
+            if (get(S, P[a])) ++count;
+        } else {
+            if (C.back() <= S.back()) S.pop_back();
+            else C.pop_back();
+            ++count;
+        }
+        --a;
+    }
+    cout << count << endl;
     return 0;
 }
 

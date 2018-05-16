@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Greedy
  */
 
 #include <algorithm>
@@ -54,8 +54,10 @@ int main() {
         rep(i, 0, N.size()) scan(N[i]);
         sort(N.begin(), N.end());
         int res = 0;
-        for (int i = 1; i < N.size(); i += 3) {
-            res += N[i];
+        int cur = N.size() - 2;
+        rep(i, 0, n) {
+            res += N[cur];
+            cur -= 2;
         }
         cout << res << endl;
     }

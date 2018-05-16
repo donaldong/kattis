@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + Dijkstra
  */
 
 #include <algorithm>
@@ -42,28 +42,64 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct node;
+
+struct edge {
+    node *dist;
+    int w;
+    edge() {}
+    edge(node *dist, int w) : dist(dist), w(w) {}
+};
+
+struct node {
+    bool f = false;
+    vector<edge*> E;
+    uint w = -1;
+    node() {}
+};
+
+int solve(node *src, node *dest) {
+    set<pair<uint, node*>> Q;
+    Q.insert(mp(0, src));
+    src->f = true;
+    src->w = 0;
+    while (!Q.empty()) {
+        auto itr = Q.begin();
+        Q.erase(itr);
+        auto cur = itr->second;
+        for (auto e : cur->E) {
+            auto next = e->dist;
+            auto w = cur->w + e->w;
+            if (next->w > w) {
+                auto i = Q.find(mp(next->w, next));
+                if (i != Q.end()) {
+                    Q.erase(i);
+                    Q.insert(mp(w, next));
+                }
+                next->w = w;
+            }
+            if (!next->f) {
+                Q.insert(mp(next->w, next));
+                next->f = true;
+            }
+        }
+    }
+    return dest->w;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
+    int N, S, T, d;
+    scan(N); scan(S); scan(T);
+    vector<node> V(N);
+    rep(i, 0, N) {
+        rep(j, 0, N) {
+            scan(d);
+            V[i].E.pb(new edge(&V[j], d));
         }
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
+    cout << solve(&V[S], &V[T]) << endl;
     return 0;
 }
 

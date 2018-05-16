@@ -1,9 +1,10 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
  *  + DP
+ *  + Memoization
  */
 
 #include <algorithm>
@@ -42,28 +43,51 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct state {
+    ll a = 1e9, b = 0;
+    state() {}
+    state(ll a, ll b) : a(a), b(b) {}
+};
+
+ll get_key(int a, int b) {
+    ll res = a;
+    res <<= 32;
+    return res + b;
+}
+
+hmap<ll, state> M;
+
+state solve(vector<vector<int>> &G, int i, int m) {
+    if (m == 0) return state(0, 0);
+    ll key = get_key(i, m);
+    if (M.find(key) != M.end()) return M[key];
+    state s;
+    rep(j, 0, G.size()) {
+        auto p = solve(G, j, m - 1);
+        s.a = min(s.a, p.a + G[i][j]);
+        s.b = max(s.b, p.b + G[i][j]);
+    }
+    M[key] = s;
+    return s;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
+    int n;
+    while (true) {
+        scan(n);
+        if (!n) break;
+        M.clear();
+        vector<vector<int>> G(n, vector<int>(n));
+        rep(i, 0, n) rep(j, 0, n) {
+            scan(G[i][j]);
         }
+        int m;
+        scan(m);
+        auto p = solve(G, 0, m);
+        cout << p.b << " " << p.a << endl;
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
     return 0;
 }
 

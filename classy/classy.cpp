@@ -4,7 +4,6 @@
  *  @date    12/29/2017
  *  
  *  + Implementation
- *  + Base Conversion
  */
 
 #include <algorithm>
@@ -76,3 +75,4 @@ int main() {
     }
     return 0;
 }
+

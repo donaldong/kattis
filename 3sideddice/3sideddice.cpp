@@ -42,69 +42,93 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-vector<vector<int>> G;
-vector<vector<vector<int>>> T;
-
-int solve(int n, int k, int opt) {
-    if (k < 0) return -1;
-    if (T[n][k][opt] != -2) return T[n][k][opt];
-    if (n == 0) {
-        if (k == 0 && opt == 2) T[n][k][opt] = max(T[n][k][opt], G[n][0] + G[n][1]);
-        else if (k == 1 && opt == 0) T[n][k][opt] = max(T[n][k][opt], G[n][1]);
-        else if (k == 1 && opt == 1) T[n][k][opt] = max(T[n][k][opt], G[n][0]);
-        else T[n][k][opt] = -1;
-        return T[n][k][opt];
-    }
-    int best = -1;
-    int res;
-    if (opt == 0) {
-        res = solve(n - 1, k - 1, 0);
-        if (res >= 0) best = max(best, res + G[n][1]);
-        res = solve(n - 1, k - 1, 2);
-        if (res >= 0) best = max(best, res + G[n][1]);
-    } else if (opt == 1) {
-        res = solve(n - 1, k - 1, 1);
-        if (res >= 0) best = max(best, res + G[n][0]);
-        res = solve(n - 1, k - 1, 2);
-        if (res >= 0) best = max(best, res + G[n][0]);
-    } else if (opt == 2) {
-        rep(i, 0, 3) {
-            int sum = G[n][0] + G[n][1];
-            res = solve(n - 1, k, i);
-            if (res >= 0) best = max(best, res + sum);
+void print(vector< vector<double> > A) {
+    int n = A.size();
+    for (int i=0; i<n; i++) {
+        for (int j=0; j<n+1; j++) {
+            cout << A[i][j] << "\t";
+            if (j == n-1) {
+                cout << "| ";
+            }
         }
+        cout << "\n";
     }
-    T[n][k][opt] = best;
-    return best;
+    cout << endl;
 }
 
-int solve(int n, int k) {
-    --n;
-    int res = -2;
-    rep(i, 0, 3) {
-        res = max(res, solve(n, k, i));
+vector<double> gauss(vector<vector<double>> &A) {
+    int n = A.size();
+    for (int i=0; i<n; i++) {
+        double maxEl = abs(A[i][i]);
+        int maxRow = i;
+        for (int k=i+1; k<n; k++) {
+            if (abs(A[k][i]) > maxEl) {
+                maxEl = abs(A[k][i]);
+                maxRow = k;
+            }
+        }
+        for (int k=i; k<n+1;k++) swap(A[maxRow][k], A[i][k]);
+        for (int k=i+1; k<n; k++) {
+            double c = 1;
+            if (A[i][i] != 0) c = -A[k][i]/A[i][i];
+            for (int j=i; j<n+1; j++) {
+                if (i==j) {
+                    A[k][j] = 0;
+                } else {
+                    A[k][j] += c * A[i][j];
+                }
+            }
+        }
+        print(A);
     }
-    return res;
+    vector<double> x(n);
+    for (int i=n-1; i>=0; i--) {
+        x[i] = 1;
+        if (A[i][i] != 0) x[i] = A[i][n]/A[i][i];
+        for (int k=i-1;k>=0; k--) {
+            A[k][n] -= A[k][i] * x[i];
+        }
+    }
+    for (auto &e : x) cout << e << " ";
+    cout << endl;
+    return x;
+}
+
+bool valid(vector<vector<double>> &G, vector<double> &x) {
+    rep(i, 0, 3) {
+        bool f = true;
+        rep(j, 0, 3) {
+            if (G[i][j] > 0) {
+                if (!f) return false;
+                if (j != i) return false;
+                f = false;
+            }
+        }
+        if (f && G[i][3] >= 0) return false;
+    }
+    for (auto &e : x) if (e < 0) return false;
+    return true;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     while (true) {
-        int N, K;
-        scan(N); scan(K);
-        if (!N && !K) break;
-        G = vector<vector<int>>(N, vector<int>(2));
-        T = vector<vector<vector<int>>>(N, vector<vector<int>>(K + 1, vector<int>(3, -2)));
-        rep(i, 0, N) rep(j, 0, K + 1) rep(k, 0, 3) {
-            T[i][j][k] = -2;
-        }
-        rep(i, 0, N) {
-            rep(j, 0, 2) {
-                scan(G[i][j]);
+        vector<vector<double>> mat(3, vector<double>(4));
+        int a, b, c;
+        cin >> a >> b >> c;
+        if (!a && !b && !c) break;
+        mat[0][0] = a;
+        mat[1][0] = b;
+        mat[2][0] = c;
+        rep(i, 1, 3) {
+            rep(j, 0, 3) {
+                cin >> mat[j][i];
             }
         }
-        cout << solve(N, K) << endl;
+        cin >> mat[0][3] >> mat[1][3] >> mat[2][3];
+        auto x = gauss(mat);
+        cout << (valid(mat, x) ? "YES" : "NO") << endl;
     }
     return 0;
 }

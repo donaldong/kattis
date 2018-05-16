@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Puzzle
  */
 
 #include <algorithm>
@@ -42,90 +42,103 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-void print(vector<bool> &v) {
-    for (auto e : v) cout << e << " ";
-    cout << endl;
-}
-
-struct row {
-    vector<bool> v;
-    row() {}
-    row(int n) {
-        v = vector<bool>(n);
-    }
-    void flip() {
-        rep(i, 0, v.size()) v[i] = !v[i];
-    }
-    int count() {
-        int sum = 0;
-        rep(i, 0, v.size()) {
-            if (v[i]) ++sum;
-        }
-        return sum;
-    }
-};
-
-bool fix(row &a, row &b) {
-    int c1 = a.count();
-    int c2 = b.count();
-    if (c1 == c2) return true;
-    if (c1 + c2 != a.v.size()) return false;
-    if (c1 > c2) b.flip();
-    else a.flip();
-    return true;
-}
-
-void sort(vector<row> &G, int end) {
-    int size = G.back().v.size();
-    vector<pair<__int128, int>> res(size);
-    rep(i, 0, size) {
-        __int128 r = G[0].v[i];
-        rep(j, 1, end + 1) {
-            r <<= 1;
-            r += G[j].v[i];
-        }
-        res[i] = mp(r, i);
-    }
-    sort(res.rbegin(), res.rend());
-    vector<row> B = G;
+void print(vector<vector<bool>> &G) {
     rep(i, 0, G.size()) {
-        rep(j, 0, size) {
-            B[i].v[j] = G[i].v[res[j].second];
-        }
-    }
-    G = B;
-}
-
-bool equal(vector<row> &A, vector<row> &B, size_t end) {
-    for (int i = 0; i <= end; ++i) {
-        rep(j, 0, A[i].v.size()) {
-            if (A[i].v[j] != B[i].v[j]) return false;
-        }
-    }
-    return true;
-}
-
-void print(vector<row> &G) {
-    for (auto &r : G) {
-        for (auto cell : r.v) {
-            cout << cell << " ";
+        rep(j, 0, G[i].size()) {
+            cout << G[i][j] << " ";
         }
         cout << endl;
     }
     cout << endl;
 }
 
-bool equal(vector<row> &A, vector<row> &B) {
-    if (!fix(A[0], B[0])) return false;
-    sort(A, 0);
-    sort(B, 0);
-    rep(i, 1, A.size()) {
-        if (!fix(A[i], B[i])) return false;
-        sort(A, i);
-        sort(B, i);
-        if (!equal(A, B, i)) return false;
+bool even(vector<bool> &v) {
+    int count = 0;
+    rep(i, 0, v.size()) {
+        if (v[i]) ++count;
+    }
+    int r = v.size() - count;
+    if (r == count) return true;
+    if (r > count) {
+        rep(i, 0, v.size()) {
+            v[i] = !v[i];
+        }
+    }
+    return false;
+}
+
+void extract(vector<vector<bool>> &a, vector<vector<bool>> &b,
+    vector<vector<bool>> &c) {
+    rep(i, 0, a.size()) {
+        if (even(a[i])) {
+            c.pb(a[i]);
+        } else {
+            b.pb(a[i]);
+        }
+    }
+}
+
+vector<int> sort(vector<vector<bool>> &G) {
+    if (G.empty()) return vector<int>();
+    int size = G.back().size();
+    vector<pair<__int128, int>> res(size);
+    rep(i, 0, size) {
+        __int128 r = G[0][i];
+        rep(j, 1, G.size()) {
+            r <<= 1;
+            r += G[j][i];
+        }
+        res[i] = mp(r, i);
+    }
+    sort(res.rbegin(), res.rend());
+    vector<int> v(size);
+    rep(i, 0, size) v[i] = res[i].second;
+    vector<vector<bool>> B = G;
+    rep(i, 0, G.size()) {
+        rep(j, 0, G[i].size()) {
+            B[i][j] = G[i][v[j]];
+        }
+    }
+    G = B;
+    return v;
+}
+
+bool equal(vector<vector<bool>> &A, vector<vector<bool>> &B) {
+    rep(i, 0, A.size()) {
+        rep(j, 0, A[i].size()) {
+            if (A[i][j] != B[i][j]) return false;
+        }
     }
     return true;
+}
+
+void fix(vector<vector<bool>> &G, const vector<int> &C) {
+    if (G.empty()) return;
+    int last_index = G.back().size() - 1;
+    rep(i, 0, G.size()) {
+        int k;
+        if (C.empty()) k = last_index;
+        else k = C[last_index];
+        if (!G[i][k]) {
+            rep(j, 0, G[i].size()) {
+                G[i][j] = !G[i][j];
+            }
+        }
+    }
+    sort(G);
+}
+
+bool possible(vector<vector<bool>> &A, vector<vector<bool>> &B) {
+    vector<vector<bool>> a, b, c, d;
+    extract(A, a, b);
+    extract(B, c, d);
+    if (a.size() != c.size()) return false;
+    auto C1 = sort(a);
+    auto C2 = sort(c);
+    if (!equal(a, c)) return false;
+    fix(b, C1);
+    fix(d, C2);
+    return equal(b, d);
 }
 
 int main() {
@@ -136,19 +149,19 @@ int main() {
     while (T--) {
         int n, m;
         cin >> n >> m;
-        vector<row> A(n, row(m));
+        vector<vector<bool>> A(n, vector<bool>(m));
         auto B = A;
         rep(i, 0, n) rep(j, 0, m) {
             string col;
             cin >> col;
-            A[i].v[j] = col == "RED";
+            A[i][j] = col == "RED";
         }
         rep(i, 0, n) rep(j, 0, m) {
             string col;
             cin >> col;
-            B[i].v[j] = col == "RED";
+            B[i][j] = col == "RED";
         }
-        cout << (equal(A, B) ? "YES" : "NO") << endl;
+        cout << (possible(A, B) ? "YES" : "NO") << endl;
     }
     return 0;
 }

@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + Brute Force
  */
 
 #include <algorithm>
@@ -42,28 +42,52 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int DR[] = {-1, 1, 0, 0};
+int DC[] = {0, 0, -1, 1};
+
+bool fix(char a, char b) {
+    if (a == 'R' && b == 'S') return true;
+    if (a == 'S' && b == 'P') return true;
+    if (a == 'P' && b == 'R') return true;
+    return false;
+}
+
+void print(vector<string> &G) {
+    for (auto &row : G) cout << row << endl;
+    cout << endl;
+}
+
+void step(vector<string> &G) {
+    vector<string> B = G;
+    rep(i, 0, G.size()) {
+        rep(j, 0, G[i].size()) {
+            rep(k, 0, 4) {
+               int r = i + DR[k];
+               int c = j + DC[k];
+               if (r >= 0 && r < G.size() && c >= 0 && c < G[i].size()) {
+                   if (fix(G[r][c], G[i][j])) {
+                        B[i][j] = G[r][c];
+                   }
+               }
+            }
+        }
+    }
+    G = B;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
-        }
+    int T;
+    cin >> T;
+    while (T--) {
+        int r, c, n;
+        cin >> r >> c >> n;
+        vector<string> G(r);
+        for (auto &row : G) cin >> row;
+        while (n--) step(G);
+        print(G);
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
     return 0;
 }
 

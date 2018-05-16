@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + TAG
  */
 
 #include <algorithm>
@@ -45,24 +45,40 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
+    int n;
+    scan(n);
+    set<pair<int, int>> inc, dec;
+    int res = 0;
+    while (n--) {
+        int k;
+        scan(k);
+        if (dec.empty()) dec.insert(mp(k, -1));
+        else {
+            int l = -1;
+            auto end = dec.lower_bound(mp(k, l));
+            auto i = dec.begin();
+            while (true) {
+                l = min(l, i->second);
+                if (i == end) break;
+                ++i;
             }
-            T[i][j] = v;
+            --l;
+            res = max(res, -l);
+            inc.insert(mp(k, l));
+        }
+        if (inc.empty()) inc.insert(mp(k, -1));
+        else {
+            int l = -1;
+            auto i = inc.upper_bound(mp(k, l));
+            while (i != inc.end()) {
+                l = min(l, i->second);
+                ++i;
+            }
+            --l;
+            res = max(res, -l);
+            dec.insert(mp(k, l));
         }
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
     cout << res << endl;
     return 0;
 }

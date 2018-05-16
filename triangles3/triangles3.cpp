@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + TAG
  */
 
 #include <algorithm>
@@ -42,28 +42,87 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+struct pt {
+    int r, c;
+    pt() {}
+    pt(int r, int c) : r(r), c(c) {}
+};
+
+struct node {
+   vector<bool> to = vector<bool>(6, false); 
+   node() {}
+};
+
+int DR[] = {-1, -1, 0, 1, 1, 0};
+int DC[] = {-1, 1, 1, 1, -1, -1};
+
+int rev(int dir) {
+    if (dir < 3) return dir + 3;
+    return dir - 3;
+}
+
+pt step(int i, int j, int dir) {
+    if (i & 1) {
+        if (dir == 0) return pt(i-1, j);
+        if (dir == 1) return pt(i-1, j+1);
+        if (dir == 2) return pt(i, j+1);
+        if (dir == 3) return pt(i + 1, j+1);
+        if (dir == 4) return pt(i + 1, j);
+        return pt(i, j-1);
+    }
+    if (dir == 0) return pt(i-1, j-1);
+    if (dir == 1) return pt(i-1, j);
+    if (dir == 2) return pt(i, j+1);
+    if (dir == 3) return pt(i + 1, j);
+    if (dir == 4) return pt(i + 1, j-1);
+    return pt(i, j-1);
+}
+
+void connect(vector<vector<node>> &N, int i, int j, int dir) {
+    N[i][j].to[dir] = true;
+    int rdir = rev(dir);
+    auto p = step(i, j, dir);
+    N[p.r][p.c].to[rdir] = true;
+}
+
+int solve(vector<vector<node>> &G) {
+
+    return 0;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
-        }
+    int r, c;
+    cin >> r >> c;
+    cin.ignore();
+    string line;
+    vector<string> G;
+    while (getline(cin, line)) {
+        G.pb(line);
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
+    vector<vector<node>> N(r, vector<node>(c));
+    r = 0;
+    rep(i, 0, G.size()) {
+        bool f = true;
+        c = 0;
+        rep(j, 0, G[i].size()) {
+            if (G[i][j] != 'x') continue;
+            f = false;
+            rep(dir, 0, 6) {
+                int y = i + DR[dir];
+                int x = j + DC[dir];
+                if (y >= 0 && y < G.size() && x >= 0 && x < G[i].size()) {
+                    if (G[y][x] != ' ') {
+                        connect(N, r, c, dir);
+                    }
+                }
+            }
+            ++c;
+        }
+        if (!f) ++r;
+    }
+    cout << solve(N) << endl;
     return 0;
 }
 

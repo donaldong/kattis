@@ -42,39 +42,45 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+bool valid(vector<int> &V, vector<int> &res) {
+    vector<bool> T(2001, false);
+    sort(V.begin(), V.end());
+    rep(i, 0, V.size()) {
+        rep(j, i + 1, V.size()) {
+            int n = V[j] - V[i];
+            if (T[n]) return false;
+            T[n] = true;
+        }
+    }
+    rep(i, 1, V.back()) {
+        if (!T[i]) res.pb(i);
+    }
+    return true;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int N;
-    cin >> N;
-    ll k = 0;
-    ll cur = 1;
-    ll MOD = 1e9 + 7;
-    while (N--) {
-        cur *= 2;
-        if (cur >= MOD) {
-            k += cur / MOD;
-            cur %= MOD;
+    string line;
+    while (getline(cin, line)) {
+        stringstream ss(line);
+        vector<int> V;
+        int n;
+        while (ss >> n) {
+            V.pb(n);
         }
-        ll b;
-        cin >> b;
-        if (cur >= b) cur -= b;
-        else {
-            cur -= b;
-            ll p = -cur / MOD;
-            k -= p;
-            cur += p * MOD;
-            if (cur < 0) {
-                cur += MOD;
-                --k;
+        vector<int> res;
+        if (valid(V, res)) {
+            if (res.empty()) cout << "perfect" << endl;
+            else {
+                cout << "missing ";
+                for (int r : res) cout << r << " ";
+                cout << endl;
             }
-            if (k < 0) {
-                cout << "error" << endl;
-                return 0;
-            }
+        } else {
+            cout << "not a ruler" << endl;
         }
     }
-    cout << cur << endl;
     return 0;
 }
 

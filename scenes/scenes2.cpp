@@ -42,28 +42,27 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
-        }
+ll MOD = 1e9 + 7;
+
+ll poss(int amt, int wid, int hgt, vector<vector<ll>> &used){
+    if (wid == 0 || amt == 0) return 1;
+    if (used[amt][wid] != -1) return used[amt][wid];
+    ll count = 0;
+    for (int i = 0; i <= hgt && i <= amt; ++i) {
+        count += poss(amt - i, wid - 1, hgt, used);
+        count %= MOD; 
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
+    used[amt][wid] = count;
+    return count;
+}
+
+int main() {
+    int amt, wid, hgt;
+    cin >> amt >> wid >> hgt;
+    vector<vector<ll>> used(amt + 1, vector<ll>(wid + 1, -1));
+    ll ans = poss(amt, wid, hgt, used) - min(amt/hgt, hgt) - 1;
+    if (ans < 0) ans += MOD;
+    cout << ans << endl;
     return 0;
 }
 

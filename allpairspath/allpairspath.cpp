@@ -1,9 +1,9 @@
 /**
- *  @brief   Kattis - Mountain Scenes 
+ *  @brief   Kattis - NAME 
  *  @author  Donald Dong (@donaldong)
- *  @date    04/20/2018
+ *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + TAG
  */
 
 #include <algorithm>
@@ -42,28 +42,52 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+void floyd(vector<vector<int>> &dist) {
+    int V = dist.size();
+    for (int k = 0; k < V; k++) {
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                if (dist[i][k] + dist[k][j] < dist[i][j]
+                    && dist[i][k] < 1e9 && dist[k][j] < 1e9) 
+                    dist[i][j] = dist[i][k] + dist[k][j];
+            }
+        }
+    }
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            for (int k = 0; dist[i][j] != -1e9 && k < V; k++) {
+                if (dist[k][k] < 0 && dist[i][k] != 1e9 && dist[k][j] != 1e9) {
+						dist[i][j] = -1e9;
+                }
+            }
+        }
+    }
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int MOD = 1e9 + 7;
-    int n, w, h;
-    cin >> n >> w >> h;
-    vector<vector<int>> T(w + 1, vector<int>(n + 1));
-    T[0] = vector<int>(n + 1, 1);
-    rep(i, 0, w + 1) T[i][0] = 1;
-    rep(i, 1, w + 1) {
-        rep(j, 1, n + 1) {
-            int v = 0;
-            for (int k = 0; k <= j && k <= h; ++k) {
-                v += T[i - 1][j - k];
-                v %= MOD;
-            }
-            T[i][j] = v;
+    int n, m, q;
+    while (true) {
+        scan(n); scan(m); scan(q);
+        if (!n && !m && !q) break;
+        vector<vector<int>> G(n, vector<int>(n, 1e9));
+        rep(i, 0, n) G[i][i] = 0;
+        while (m--) {
+            int u, v, w;
+            scan(u); scan(v); scan(w);
+            G[u][v] = min(G[u][v], w);
         }
+        floyd(G);
+        while (q--) {
+            int u, v;
+            scan(u); scan(v);
+            if (G[u][v] == 1e9) cout << "Impossible" << endl;
+            else if (G[u][v] == -1e9) cout << "-Infinity" << endl;
+            else cout << G[u][v] << endl;
+        }
+        cout << endl;
     }
-    int res = T.back().back() - min(h, n / w) - 1;
-    if (res < 0) res += MOD;
-    cout << res << endl;
     return 0;
 }
 
