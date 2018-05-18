@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + Prime Factorization
  */
 
 #include <algorithm>
@@ -42,48 +42,33 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+hmap<int, int> factors(int n) {
+    hmap<int, int> F;
+    while (n % 2 == 0) {
+        ++F[2];
+        n /= 2;
+    }
+    for (int i = 3; i * i <= n; i += 2) {
+        while (n % i == 0) {
+            ++F[i];
+            n /= i;
+        }
+    }
+    if (n != 1) ++F[n];
+    return F;
+}
+
+bool valid(hmap<int, int> &F) {
+    return F.size() == 1;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int T;
-    scan(T);
-    while (T--) {
-        int N;
-        scan(N);
-        vector<int> V(N);
-        rep(i, 0, N) scan(V[i]);
-        vector<vector<uint>> T(N, vector<uint>(1001, -1));
-        vector<vector<int>> D(N, vector<int>(1001, 0));
-        T[0][V[0]] = V[0];
-        D[0][V[0]] = 1;
-        rep(i, 1, N) {
-            rep(j, 0, 1001) {
-                if (T[i - 1][j] == -1) continue;
-                uint down = j - V[i];
-                if (j >= V[i] && T[i - 1][j] < T[i][down]) {
-                    T[i][down] = T[i - 1][j];
-                    D[i][down] = -1;
-                }
-                uint up = j + V[i];
-                if (up < 1001 && max(up, T[i - 1][j]) < T[i][up]) {
-                    T[i][up] = max(up, T[i - 1][j]);
-                    D[i][up] = 1;
-                }
-            }
-        }
-        if (T[N - 1][0] == -1) cout << "IMPOSSIBLE" << endl;
-        else {
-            string res;
-            int cur = 0;
-            for (int i = N - 1; i >= 0; --i) {
-                if (D[i][cur] == -1) res += 'D';
-                else res += 'U';
-                cur -= D[i][cur] * V[i];
-            }
-            reverse(res.begin(), res.end());
-            cout << res << endl;
-        }
-    }
+    int n;
+    scan(n);
+    auto F = factors(n);
+    cout << (valid(F) ? "yes" : "no") << endl;
     return 0;
 }
 

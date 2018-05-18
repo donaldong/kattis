@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + DP
+ *  + Brute Force
  */
 
 #include <algorithm>
@@ -42,47 +42,38 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int solve(string &a, string &b) {
+    if (a.size() < b.size()) swap(a, b);
+    vector<int> d(a.size(), 0);
+    reverse(a.begin(), a.end());
+    reverse(b.begin(), b.end());
+    rep(i, 0, b.size()) {
+        d[i] += b[i] - '0';
+    }
+    rep(i, 0, a.size()) {
+        d[i] += a[i] - '0';
+    }
+    int res = 0;
+    for (int i = 0; i < d.size(); ++i) {
+        int k = d[i] / 10;
+        if (k != 0) ++res;
+        d[i] %= 10;
+        if (i + 1 < d.size()) d[i + 1] += k;
+        else if (k >= 1) d.pb(k);
+    }
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int T;
-    scan(T);
-    while (T--) {
-        int N;
-        scan(N);
-        vector<int> V(N);
-        rep(i, 0, N) scan(V[i]);
-        vector<vector<uint>> T(N, vector<uint>(1001, -1));
-        vector<vector<int>> D(N, vector<int>(1001, 0));
-        T[0][V[0]] = V[0];
-        D[0][V[0]] = 1;
-        rep(i, 1, N) {
-            rep(j, 0, 1001) {
-                if (T[i - 1][j] == -1) continue;
-                uint down = j - V[i];
-                if (j >= V[i] && T[i - 1][j] < T[i][down]) {
-                    T[i][down] = T[i - 1][j];
-                    D[i][down] = -1;
-                }
-                uint up = j + V[i];
-                if (up < 1001 && max(up, T[i - 1][j]) < T[i][up]) {
-                    T[i][up] = max(up, T[i - 1][j]);
-                    D[i][up] = 1;
-                }
-            }
-        }
-        if (T[N - 1][0] == -1) cout << "IMPOSSIBLE" << endl;
-        else {
-            string res;
-            int cur = 0;
-            for (int i = N - 1; i >= 0; --i) {
-                if (D[i][cur] == -1) res += 'D';
-                else res += 'U';
-                cur -= D[i][cur] * V[i];
-            }
-            reverse(res.begin(), res.end());
-            cout << res << endl;
-        }
+    string a, b;
+    while (cin >> a >> b) {
+        if (a == "0" && b == "0") break;
+        int res = solve(a, b);
+        if (res == 0) cout << "No carry operation." << endl;
+        else if (res == 1) cout << "1 carry operation." << endl;
+        else cout << res << " carry operations." << endl;
     }
     return 0;
 }
