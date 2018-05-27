@@ -42,45 +42,86 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int DR[] = {0, 0, -1, 1};
+int DC[] = {-1, 1, 0, 0};
+
+int sum(vector<int> &v) {
+    int res = 0;
+    for (auto e : v) res += e;
+    return res;
+}
+
+int bfs(vector<string> &G, char col) {
+    int n = G.size();
+    if (!(G[0][0] == -1 || G[0][0] == col)) return 0;
+    int res = 1;
+    queue<pair<int, int>> Q;
+    Q.push(mp(0, 0));
+    G[0][0] = -2;
+    while (!Q.empty()) {
+        auto cur = Q.front();
+        Q.pop();
+        rep(i, 0, 4) {
+            int r = DR[i] + cur.first;
+            int c = DC[i] + cur.second;
+            if (0 <= r && r < n && 0 <= c && c < n) {
+                if (G[r][c] == -1 || G[r][c] == col) {
+                    res++;
+                    G[r][c] = -2;
+                    Q.push(mp(r, c));
+                }
+            }
+        }
+    }
+    return res;
+}
+
+void step(vector<string> &G, int &count, char &col) {
+    count = 0;
+    for (char i = '1'; i <= '6'; ++i) {
+        auto g = G;
+        int res = bfs(g, i);
+        if (res > count) {
+            count = res;
+            col = i;
+        }
+    }
+}
+
+vector<int> solve(vector<string> &G) {
+    vector<int> moves(6, 0);
+    int n = G.size();
+    bool beg = true;
+    while (true) {
+        int count;
+        char col;
+        step(G, count, col);
+        if (beg) beg = false;
+        else moves[col - '1']++;
+        if (count == n * n) break;
+        bfs(G, col);
+        rep(i, 0, n) rep(j, 0, n) {
+            if (G[i][j] == -2) G[i][j] = -1;
+        }
+    }
+    return moves;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n;
-    scan(n);
-    int v;
-    scan(v);
-    vector<vector<int>> L(2, vector<int>(2)), D(2, vector<int>(2));
-    L[0][0] = L[0][1] = 1;
-    D[0][0] = D[0][1] = v;
-    rep(i, 1, n) {
-        scan(v);
-        if (v > D[0][1] && L[0][1] + 1 > L[0][0]) {
-            L[1][0] = L[0][1] + 1;
-            D[1][0] = v;
-        } else if (v > D[0][1] && L[0][1] + 1 == L[0][0]) {
-            L[1][0] = L[0][0];
-            D[1][0] = max(D[0][0], v);
-        } else {
-            L[1][0] = L[0][0];
-            if (L[1][0] == 1) D[1][0] = max(D[0][0], v);
-            else D[1][0] = D[0][0];
-        }
-
-        if (v < D[0][0] && L[0][0] + 1 > L[0][1]) {
-            L[1][1] = L[0][0] + 1;
-            D[1][1] = v;
-        } else if (v < D[0][0] && L[0][0] + 1 == L[0][1]) {
-            L[1][1] = L[0][1];
-            D[1][1] = min(D[0][1], v);
-        } else {
-            L[1][1] = L[0][1];
-            if (L[1][1] == 1) D[1][1] = min(D[0][1], v);
-            else D[1][1] = D[0][1];
-        }
-        swap(D[0], D[1]);
-        swap(L[0], L[1]);
+    int T;
+    cin >> T;
+    while (T--) {
+        int N;
+        cin >> N;
+        vector<string> G(N);
+        rep(i, 0, N) cin >> G[i];
+        auto res = solve(G);
+        cout << sum(res) << endl;
+        for (int r : res) cout << r << " ";
+        cout << endl;
     }
-    cout << max(L[0][0], L[0][1]) << endl;
     return 0;
 }
 

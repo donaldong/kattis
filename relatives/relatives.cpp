@@ -42,45 +42,31 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int solve(int n) {
+    int res = n;
+    for (ll i = 2; i*i < n; i++) {
+        if (n % i == 0) {
+            while (n % i == 0) {
+                n /= i;
+            }
+            res -= res / i;
+        }
+    }
+    if (n > 1) {
+        res -= res / n;
+    }
+    return res;
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n;
-    scan(n);
-    int v;
-    scan(v);
-    vector<vector<int>> L(2, vector<int>(2)), D(2, vector<int>(2));
-    L[0][0] = L[0][1] = 1;
-    D[0][0] = D[0][1] = v;
-    rep(i, 1, n) {
-        scan(v);
-        if (v > D[0][1] && L[0][1] + 1 > L[0][0]) {
-            L[1][0] = L[0][1] + 1;
-            D[1][0] = v;
-        } else if (v > D[0][1] && L[0][1] + 1 == L[0][0]) {
-            L[1][0] = L[0][0];
-            D[1][0] = max(D[0][0], v);
-        } else {
-            L[1][0] = L[0][0];
-            if (L[1][0] == 1) D[1][0] = max(D[0][0], v);
-            else D[1][0] = D[0][0];
-        }
-
-        if (v < D[0][0] && L[0][0] + 1 > L[0][1]) {
-            L[1][1] = L[0][0] + 1;
-            D[1][1] = v;
-        } else if (v < D[0][0] && L[0][0] + 1 == L[0][1]) {
-            L[1][1] = L[0][1];
-            D[1][1] = min(D[0][1], v);
-        } else {
-            L[1][1] = L[0][1];
-            if (L[1][1] == 1) D[1][1] = min(D[0][1], v);
-            else D[1][1] = D[0][1];
-        }
-        swap(D[0], D[1]);
-        swap(L[0], L[1]);
+    while (true) {
+        int n;
+        scan(n);
+        if (!n) break;
+        cout << solve(n) << endl;
     }
-    cout << max(L[0][0], L[0][1]) << endl;
     return 0;
 }
 

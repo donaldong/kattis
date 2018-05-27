@@ -45,42 +45,14 @@ inline void print(string&);
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n;
-    scan(n);
-    int v;
-    scan(v);
-    vector<vector<int>> L(2, vector<int>(2)), D(2, vector<int>(2));
-    L[0][0] = L[0][1] = 1;
-    D[0][0] = D[0][1] = v;
-    rep(i, 1, n) {
-        scan(v);
-        if (v > D[0][1] && L[0][1] + 1 > L[0][0]) {
-            L[1][0] = L[0][1] + 1;
-            D[1][0] = v;
-        } else if (v > D[0][1] && L[0][1] + 1 == L[0][0]) {
-            L[1][0] = L[0][0];
-            D[1][0] = max(D[0][0], v);
-        } else {
-            L[1][0] = L[0][0];
-            if (L[1][0] == 1) D[1][0] = max(D[0][0], v);
-            else D[1][0] = D[0][0];
-        }
-
-        if (v < D[0][0] && L[0][0] + 1 > L[0][1]) {
-            L[1][1] = L[0][0] + 1;
-            D[1][1] = v;
-        } else if (v < D[0][0] && L[0][0] + 1 == L[0][1]) {
-            L[1][1] = L[0][1];
-            D[1][1] = min(D[0][1], v);
-        } else {
-            L[1][1] = L[0][1];
-            if (L[1][1] == 1) D[1][1] = min(D[0][1], v);
-            else D[1][1] = D[0][1];
-        }
-        swap(D[0], D[1]);
-        swap(L[0], L[1]);
-    }
-    cout << max(L[0][0], L[0][1]) << endl;
+    int a, b, m, s;
+    scan(a); scan(b); scan(m); scan(s);
+    int lo = max(s - m, 1), hi = m - 1;
+    ll x = a >= b ? hi : lo;
+    ll r = m;
+    r *= b;
+    r += x * (a - b);
+    cout << r << endl;
     return 0;
 }
 
