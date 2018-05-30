@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + Looks Easy
  */
 
 #include <algorithm>
@@ -43,53 +43,48 @@ inline void print(ull);
 inline void print(string&);
 
 struct node {
-    int a, b;
-    node() {}
-    node(int a) : a(a), b(a) {}
-    node(int a, int b) : a(a), b(b) {}
-    bool valid() {
-        return b - a >= 1;
+    bool a = false, b = false;
+    bool good() {
+        return a && b;
     }
 };
-
-string get(string &s, node &n) {
-    return s.substr(n.a, n.b - n.a + 1);
-}
-
-vector<string> solve(string &s) {
-    queue<node> Q;
-    rep(i, 0, s.size()) Q.push(node(i));
-    rep(i, 1, s.size()) {
-        if (s[i] == s[i - 1]) {
-            Q.push(node(i - 1, i));
-        }
-    }
-    vector<string> res;
-    while (!Q.empty()) {
-        auto cur = Q.front();
-        Q.pop();
-        if (cur.valid()) {
-            res.pb(get(s, cur));
-        }
-        int a = cur.a - 1, b = cur.b + 1;
-        if (a >= 0 && b < s.size()) {
-            if (s[a] == s[b]) Q.push(node(a, b));
-        }
-    }
-    return res;
-}
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    string line;
-    while (getline(cin, line)) {
-        auto res = solve(line);
-        sort(res.begin(), res.end());
-        auto end = unique(res.begin(), res.end());
-        for (auto itr = res.begin(); itr != end; ++itr) cout << *itr << endl;
-        cout << endl;
+    vector<node> N(1000000);
+    int x;
+    scan(x);
+    rep(j, 0, x) {
+        int i;
+        scan(i);
+        N[i].a = true;
     }
+    int y;
+    scan(y);
+    rep(j, 0, y) {
+        int i;
+        scan(i);
+        N[i].b = true;
+    }
+    bool a = true, b = true;
+    int count = 0;
+    rep(i, 0, N.size()) {
+        if (N[i].good()) {
+            a = true;
+            b = true;
+            ++count;
+        } else if (N[i].a && b) {
+            a = true;
+            b = false;
+            ++count;
+        } else if (N[i].b && a) {
+            b = true;
+            a = false;
+            ++count;
+        }
+    }
+    cout << count << endl;
     return 0;
 }
 
