@@ -42,34 +42,59 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
+vector<bool> B;
+bool f = true;
 
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
+void fill(int n, int k) {
+    k *= 3;
+    for (int i = 2; i >= 0; --i) {
+        B[k + i] = n & 1;
+        n /= 2;
+    }
 }
 
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+void print_hex(int n) {
+    f = false;
+    if (n < 10) cout << n;
+    else cout << char('A' + n - 10);
+}
+
+void print() {
+    for (bool b : B) cout << b;
+    cout << endl;
+}
+
+void solve(size_t &j) {
+    int k = 0;
+    rep(i, 0, 4) {
+        if (B[j++]) ++k;
+        if (i != 3) k <<= 1;
+    }
+    if (f && !k) return;
+    print_hex(k);
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    string line;
+    getline(cin, line);
+    B = vector<bool>(line.size() * 3);
+    rep(i, 0, line.size()) {
+        fill(line[i] - '0', i);
+    }
+    size_t r = B.size() % 4;
+    if (r) {
+        int k = 0;
+        rep(i, 0, r) {
+            if (B[i]) ++k;
+            if (i != r - 1) k <<= 1;
+        }
+        if (k) print_hex(k);
+    }
+    while (r < B.size()) solve(r);
+    if (f) cout << 0;
+    cout << endl;
     return 0;
 }
 

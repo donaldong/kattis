@@ -42,34 +42,43 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
-
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
-}
-
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
-}
+struct node {
+    string s;
+    bool f = true;
+    int l, a, b;
+    node() {}
+    node(string &s) : s(s) {
+        l = s.size();
+        a = 0;
+        b = l - 1;
+    }
+    bool step() {
+        f = !f;
+        int d = l / 4;
+        if (f) b -= d;
+        else a += d;
+        l -= d;
+        return d != 0;
+    }
+    void print() {
+        for (int i = a; i <= b; ++i) cout << s[i];
+        cout << endl;
+    }
+};
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    int T;
+    cin >> T;
+    while (T--) {
+        int k;
+        string s;
+        cin >> k >> s;
+        node n(s);
+        while (k-- && n.step());
+        n.print();
+    }
     return 0;
 }
 

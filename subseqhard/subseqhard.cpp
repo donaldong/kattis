@@ -42,34 +42,27 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
-
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
-}
-
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
-}
-
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    int T;
+    scan(T);
+    while (T--) {
+        cin.ignore();
+        int N;
+        scan(N);
+        ll sum = 0;
+        hmap<ll, ll> m;
+        ll res = 0;
+        while (N--) {
+            ++m[sum];
+            int k;
+            scan(k);
+            sum += k;
+            res += m[sum - 47];
+        }
+        cout << res << endl;
+    }
     return 0;
 }
 

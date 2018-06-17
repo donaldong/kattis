@@ -42,34 +42,68 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
+struct node {
+    int i;
+    vector<node*> in, out;
+    bool safe = true;
+    node() {}
+    node(int i) : i(i) {}
+};
 
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
+hmap<string, node*> M;
+
+node* get(string &s) {
+    if (M.find(s) != M.end()) return M[s];
+    int k = M.size();
+    auto n = new node(k);
+    M[s] = n;
+    return n;
 }
 
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+void dfs() {
+    stack<node*> S;
+    for (auto &entry : M) {
+        if (entry.second->out.empty()) {
+            entry.second->safe = false;
+            S.push(entry.second);
+        }
+    }
+    while (!S.empty()) {
+        auto cur = S.top();
+        S.pop();
+        for (auto n : cur->in) {
+            int count = 0;
+            for (auto nn : n->out) {
+                if (nn->safe) ++count;
+            }
+            if (!count) {
+                n->safe = false;
+                S.push(n);
+            }
+        }
+    }
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    int N;
+    cin >> N;
+    while (N--) {
+        string a, b;
+        cin >> a >> b;
+        auto i = get(a);
+        auto j = get(b);
+        i->out.pb(j);
+        j->in.pb(i);
+    }
+    dfs();
+    string city;
+    while (cin >> city) {
+        auto k = get(city);
+        cout << city << " ";
+        cout << (k->safe ? "safe" : "trapped") << endl;
+    }
     return 0;
 }
 

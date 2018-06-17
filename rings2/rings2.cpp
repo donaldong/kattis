@@ -42,34 +42,73 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
+int n, m;
 
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
+int DR[] = {-1, 0, 0, 1};
+int DC[] = {0, -1, 1, 0};
+int T = 0;
+
+bool step(vector<vector<int>> &G, int age) {
+    bool f = false;
+    rep(i, 0, n) rep(j, 0, m) {
+        if (G[i][j] == age) {
+            rep(k, 0, 4) {
+                int r = i + DR[k];
+                int c = j + DC[k];
+                if (0 <= r && r < n && 0 <= c && c < m) {
+                    if (G[r][c] == -1) {
+                        G[r][c] = age + 1;
+                        T = max(T, G[r][c]);
+                        f = true;
+                    }
+                }
+            }
+        }
+    }
+    return f;
 }
 
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+void solve(vector<vector<int>> &G) {
+    step(G, 0);
+    int i = 1;
+    while (step(G, i++));
+}
+
+void print(int e) {
+    if (T < 10) {
+        if (e == 0) cout << "..";
+        else if (e < 10) cout << "." << e;
+        else cout << e;
+    } else {
+        if (e == 0) cout << "...";
+        else if (e < 10) cout << ".." << e;
+        else if (e < 100) cout << "." << e;
+        else cout << e;
+    }
+}
+
+void print(vector<vector<int>> &G) {
+    for (auto &v : G) {
+        for (int e : v) print(e);
+        cout << endl;
+    }
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    cin >> n >> m;
+    vector<vector<int>> G(n, vector<int>(m, -1));
+    rep(i, 0, n) {
+        string s;
+        cin >> s;
+        rep(j, 0, m) {
+            if (s[j] == '.') G[i][j] = 0;
+            else if (i == 0 || i + 1 == n || j == 0 || j + 1 == m) G[i][j] = 1; 
+        }
+    }
+    solve(G);
+    print(G);
     return 0;
 }
 

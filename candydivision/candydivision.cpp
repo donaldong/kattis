@@ -42,34 +42,62 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
+vector<int> C;
+vector<pair<ll, int>> F;
 
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
+void factors(ll n) {
+    hmap<ll, int> R;
+    while (!(n & 1)) {
+        R[2]++;
+        n /= 2;
+    }
+    for (ll i = 3; i * i <= n; i += 2) {
+        while (n % i == 0) {
+            R[i]++;
+            n /= i;
+        }
+    }
+    if (n > 1) R[n]++;
+    int i = 0;
+    F = vector<pair<ll, int>>(R.size());
+    for (auto &entry : R) {
+        F[i++] = entry;
+    }
 }
 
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
+ll eval() {
+    ll res = 1;
+    rep(i, 0, C.size()) {
+        res *= pow(F[i].first, C[i]);
+    }
     return res;
+}
+
+bool step() {
+    C[0]++;
+    rep(i, 0, C.size() - 1) {
+        if (C[i] > F[i].second) {
+            C[i] = 0;
+            ++C[i + 1];
+        } else break;
+    }
+    return C.back() <= F.back().second;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    ll n;
+    scan(n);
+    factors(n);
+    C = vector<int>(F.size(), 0); 
+    vector<ll> res;
+    do {
+        res.pb(eval()); 
+    } while (step());
+    sort(res.begin(), res.end());
+    for (ll r : res) cout << r - 1 << " ";
+    cout << endl;
     return 0;
 }
 

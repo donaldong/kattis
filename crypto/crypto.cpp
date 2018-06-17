@@ -42,34 +42,36 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
-
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
-}
-
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+hmap<ll, int> factors(ll n) {
+    hmap<ll, int> F;
+    while (n % 2 == 0) {
+        ++F[2];
+        n /= 2;
+    }
+    for (ll i = 3; i * i <= n; i += 2) {
+        while (n % i == 0) {
+            ++F[i];
+            n /= i;
+        }
+    }
+    if (n > 1) ++F[n];
+    return F;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    ll n;
+    scan(n);
+    auto F = factors(n);
+    vector<pair<ll, int>> V(F.size());
+    int i = 0;
+    for (auto &f : F) V[i++] = f;
+    sort(V.begin(), V.end(), [](pair<ll, int> &a, pair<ll, int> &b) {
+        if (a.second != b.second) return a.second > b.second;
+        return a.first < b.first;
+    });
+    cout << V[0].first << endl;
     return 0;
 }
 

@@ -42,34 +42,48 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
+int N, M;
 
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
+char rotate(char c) {
+    if (c == '|') return '-';
+    if (c == '-') return '|';
+    return c;
 }
 
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+void print(vector<string> &G, int c) {
+    string res;
+    for (int r = N - 1; r >= 0; --r) {
+        if (c < G[r].size()) res += rotate(G[r][c]);
+        else res += ' ';
+    }
+    while (res.back() == ' ') res.pop_back();
+    cout << res << endl;
+}
+
+void print(vector<string> &G) {
+    for (int c = 0; c < M; ++c) {
+        print(G, c);
+    }
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    bool f = true;
+    while (true) {
+        cin >> N;
+        cin.ignore();
+        if (!N) break;
+        vector<string> G(N);
+        M = 0;
+        rep(i, 0, N) {
+            getline(cin, G[i]);
+            M = max(M, (int)G[i].size());
+        }
+        if (!f) cout << endl;
+        print(G);
+        f = false;
+    }
     return 0;
 }
 

@@ -42,34 +42,40 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
+ll res;
+int N, M, S, T;
+vector<vector<bool>> G;
+vector<ll> C;
 
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
-}
-
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+void step() {
+    res = 0;
+    vector<ll> B = vector<ll>(C.size(), 0);
+    rep(i, 0, N) {
+        rep(j, 0, N) {
+            if (G[i][j]) {
+                B[j] += C[i];
+                res += C[i];
+            }
+        }
+    }
+    C = B;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    scan(N); scan(M); scan(S); scan(T);
+    G = vector<vector<bool>>(N, vector<bool>(N, false));
+    C = vector<ll>(N, 0);
+    C[S] = 1;
+    rep(i, 0, M) {
+        int u, v;
+        scan(u); scan(v);
+        G[u][v] = true;
+        G[v][u] = true;
+    }
+    rep(i, 0, T) step();
+    cout << res << endl;
     return 0;
 }
 

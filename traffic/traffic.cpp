@@ -42,34 +42,62 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
-
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
+bool too_close(ll a, ll b) {
+    return abs(a - b) < 5;
 }
 
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+void solve(vector<int> &A, vector<int> &B, int a, int b) {
+    rep(i, 1, A.size()) {
+        A[i] += A[i - 1];
+        B[i] += B[i - 1];
+    }
+    ll x = 0, y = 0;
+    rep(i, 0, A.size()) {
+        x += A[i];
+        y += B[i];
+        if (too_close(x + a, y + b)) {
+            cout << "bumper tap at time " << i + 1 << endl;
+            return;
+        }
+    }
+    cout << "safe and sound" << endl;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    int a, b;
+    scan(a); scan(b);
+    vector<int> A(4e6 + 4, 0);
+    auto B = A;
+    int n;
+    scan(n);
+    while (n >= 2) {
+        int x, y;
+        scan(x); scan(y);
+        A[x]++; A[y]--;
+        n -= 2;
+    }
+    if (n) {
+        int x;
+        scan(x);
+        A[x]++;
+        A.back()--;
+    }
+    scan(n);
+    while (n >= 2) {
+        int x, y;
+        scan(x); scan(y);
+        B[x]++; B[y]--;
+        n -= 2;
+    }
+    if (n) {
+        int x;
+        scan(x);
+        B[x]++;
+        B.back()--;
+    }
+    solve(A, B, a, b);
     return 0;
 }
 

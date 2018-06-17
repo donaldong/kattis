@@ -42,34 +42,59 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-int S;
-hmap<ll, ld> M;
+struct node {
+    int x, y;
+    bool f = false;
+    vector<node*> neigh;
+    node() {}
+    node(int x, int y) : x(x), y(y) {}
+    void connect(node *n) {
+        neigh.pb(n);
+    }
+};
 
-ll get_key(int a, int b) {
-    ll res = b;
-    res <<= 14;
-    return res + a;
+int dist(node *a, node *b) {
+    return abs(a->x - b->x) + abs(a->y - b->y);
 }
 
-ld solve(int n, int k) {
-    if (k <= 0 || k > n) return 0;
-    if (n == 1) return (k == 1 ? 1 : 0);
-    ll key = get_key(n, k);
-    if (M.find(key) != M.end()) return M[key];
-    ld res = k * solve(n - 1, k) / S;
-    res += (S - k + 1) * solve(n - 1, k - 1) / S;
-    M[key] = res;
-    return res;
+bool possible(node *a, node *b) {
+    return dist(a, b) <= 1000;
+}
+
+bool dfs(node *n, node *t) {
+    for (auto e : n->neigh) {
+        if (e == t) return true;
+        if (!e->f) {
+            e->f = true;
+            if (dfs(e, t)) return true;
+        }
+    }
+    return false;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, k;
-    scan(n); scan(S); scan(k);
-    ld res = 0;
-    rep(i, k, S + 1) res += solve(n, i);
-    printf("%.8Lf\n", res);
+    int T;
+    scan(T);
+    while (T--) {
+        int n;
+        scan(n);
+        vector<node> N(n + 2);
+        rep(i, 0, N.size()) {
+            scan(N[i].x); scan(N[i].y);
+        }
+        rep(i, 0, N.size()) {
+            rep(j, i + 1, N.size()) {
+                if (possible(&N[i], &N[j])) {
+                   N[i].connect(&N[j]); 
+                   N[j].connect(&N[i]); 
+                }
+            }
+        }
+        N[0].f = true;
+        cout << (dfs(&N[0], &N.back()) ? "happy" : "sad") << endl;
+    }
     return 0;
 }
 
