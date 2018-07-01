@@ -42,93 +42,167 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
-void print(vector< vector<double> > A) {
-    int n = A.size();
-    for (int i=0; i<n; i++) {
-        for (int j=0; j<n+1; j++) {
-            cout << A[i][j] << "\t";
-            if (j == n-1) {
-                cout << "| ";
-            }
-        }
-        cout << "\n";
-    }
-    cout << endl;
+ll gcd(ll a, ll b) {
+    return b == 0 ? a : gcd(b, a % b);
 }
 
-vector<double> gauss(vector<vector<double>> &A) {
-    int n = A.size();
-    for (int i=0; i<n; i++) {
-        double maxEl = abs(A[i][i]);
-        int maxRow = i;
-        for (int k=i+1; k<n; k++) {
-            if (abs(A[k][i]) > maxEl) {
-                maxEl = abs(A[k][i]);
-                maxRow = k;
-            }
+struct rat {
+    ll p, q = 1;
+
+    rat() {}
+
+    rat(ll x, ll y) {
+        p = x; q = y;
+        if (q < 0) {
+            p *= -1;
+            q *= -1;
         }
-        for (int k=i; k<n+1;k++) swap(A[maxRow][k], A[i][k]);
-        for (int k=i+1; k<n; k++) {
-            double c = 1;
-            if (A[i][i] != 0) c = -A[k][i]/A[i][i];
-            for (int j=i; j<n+1; j++) {
-                if (i==j) {
-                    A[k][j] = 0;
-                } else {
-                    A[k][j] += c * A[i][j];
-                }
-            }
-        }
-        print(A);
+        int c = gcd(abs(p), q);
+        p /= c;
+        q /= c;
     }
-    vector<double> x(n);
-    for (int i=n-1; i>=0; i--) {
-        x[i] = 1;
-        if (A[i][i] != 0) x[i] = A[i][n]/A[i][i];
-        for (int k=i-1;k>=0; k--) {
-            A[k][n] -= A[k][i] * x[i];
-        }
+
+    rat operator+(rat const &r) {
+        return rat(p * r.q + r.p * q, q * r.q);
     }
-    for (auto &e : x) cout << e << " ";
-    cout << endl;
-    return x;
+
+    rat operator-(rat const &r) {
+        return rat(p * r.q - r.p * q, q * r.q);
+    }
+
+    rat operator*(rat const &r) {
+        return rat(p * r.p, q * r.q);
+    }
+
+    rat operator/(rat const &r) {
+        return rat(p * r.q, q * r.p);
+    }
+};
+
+bool empty_row(vector<vector<rat>> &G, int r) {
+    return !G[r][0].p && !G[r][1].p && !G[r][2].p;
 }
 
-bool valid(vector<vector<double>> &G, vector<double> &x) {
+bool possible(vector<vector<rat>> &G) {
+    rep(i, 0, 3) if (G[i][3].p < 0) return false;
     rep(i, 0, 3) {
-        bool f = true;
+        int count = 0;
         rep(j, 0, 3) {
-            if (G[i][j] > 0) {
-                if (!f) return false;
-                if (j != i) return false;
-                f = false;
+            if (G[j][i].p == 1) ++count;
+        }
+        if (count > 1) return false;
+        rat diff;
+        diff.p = 1;
+        diff = diff - G[i][3];
+        if (diff.p < 0) return false;
+    }
+    rep(i, 0, 3) {
+        if (empty_row(G, i)) {
+            if (G[i][3].p != 0) return false;
+        }
+    }
+    return true; 
+}
+
+void print(vector<rat> &row) {
+    for (auto &r : row) {
+        cout << " (" << r.p << "/" << r.q << ") ";
+    }
+}
+
+void print(vector<vector<rat>> &G) {
+    for (auto &row : G) {
+        print(row);
+        cout << endl;
+    }
+    cout << endl;
+}
+
+void eliminate(vector<vector<rat>> &G) {
+    rep(k, 0, 3) {
+        int max_idx = k;
+        rat max_val = G[k][k];
+        rep(i, k + 1, 3) {
+            rat cur = G[i][k];
+            if (cur.p < 0) cur.p *= -1;
+            rat diff = cur - max_val;
+            if (diff.p > 0) {
+                max_val = cur;
+                max_idx = i;
             }
         }
-        if (f && G[i][3] >= 0) return false;
+        if (!max_val.p) continue;
+        if (max_idx != k) swap(G[k], G[max_idx]);
+        rep(i, k + 1, 3) {
+            rat q = G[i][k] / G[k][k];
+            rep(j, k + 1, 4) {
+                G[i][j] = G[i][j] - G[k][j] * q;
+            }
+            G[i][k].p = 0;
+            G[i][k].q = 1;
+        }
     }
-    for (auto &e : x) if (e < 0) return false;
-    return true;
+    print(G);
+    if (G[2][2].p) {
+        G[2][3] = G[2][3] / G[2][2];
+        G[2][2].p = 1; G[2][2].q = 1;
+    }
+   
+    if (G[1][2].p) {
+        rep(i, 1, 4) {
+            if (i == 2) continue;
+            G[1][i] = G[1][i] / G[1][2];
+        }
+        G[1][2].p = 0;
+        G[1][3] = G[1][3] - G[2][3];
+    }
+    if (G[1][1].p) {
+        rep(i, 1, 4) {
+            if (i == 1) continue;
+            G[1][i] = G[1][i] / G[1][1];
+        }
+        G[1][1].p = G[1][1].q = 1;
+    }
+    
+    if (G[0][2].p) {
+        rep(i, 0, 4) {
+            if (i == 2) continue;
+            G[0][i] = G[0][i] / G[0][2];
+        }
+        G[0][2].p = 0;
+        G[0][3] = G[0][3] - G[2][3];
+    }
+    if (G[0][1].p) {
+        rep(i, 0, 4) {
+            if (i == 1) continue;
+            G[0][i] = G[0][i] / G[0][1];
+        }
+        G[0][1].p = 0;
+        G[0][3] = G[0][3] - G[1][3];
+        G[0][2] = G[0][2] - G[1][2];
+    }
+    if (G[0][0].p) {
+        rep(i, 1, 4) {
+            G[0][i] = G[0][i] / G[0][0];
+        }
+        G[0][0].p = G[0][0].q = 1;
+    }
+    print(G);
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     while (true) {
-        vector<vector<double>> mat(3, vector<double>(4));
-        int a, b, c;
-        cin >> a >> b >> c;
-        if (!a && !b && !c) break;
-        mat[0][0] = a;
-        mat[1][0] = b;
-        mat[2][0] = c;
-        rep(i, 1, 3) {
+        vector<vector<rat>> G(3, vector<rat>(4));
+        rep(i, 0, 4) {
             rep(j, 0, 3) {
-                cin >> mat[j][i];
+                cin >> G[j][i].p;
             }
         }
-        cin >> mat[0][3] >> mat[1][3] >> mat[2][3];
-        auto x = gauss(mat);
-        cout << (valid(mat, x) ? "YES" : "NO") << endl;
+        if (!G[0][0].p && !G[1][0].p && !G[2][0].p) break;
+        eliminate(G);
+        cout << (possible(G) ? "YES" : "NO") << endl;
     }
     return 0;
 }
