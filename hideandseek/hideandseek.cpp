@@ -3,7 +3,7 @@
  *  @author  Donald Dong (@donaldong)
  *  @date    MM/DD/YYYY
  *  
- *  + TAG
+ *  + DP 
  */
 
 #include <algorithm>
@@ -42,80 +42,149 @@ inline void print(uint);
 inline void print(ull);
 inline void print(string&);
 
+int N, M;
+int INF = 1 << 30;
+int BAD = 1 << 29;
+
 struct node;
 
 struct edge {
-    node *src, *dest;
-    uint w;
-    edge(node *a, node *b, int t) {
-        this->w = t;
-        src = a;
-        dest = b;
-    }
+    node *n;
+    int t;
+
+    edge() {}
+    edge(node *n, int t) : n(n), t(t) {}
 };
 
 struct node {
     vector<edge*> E;
-    int i;
+    int k = 0, i;
+    vector<int> T;
     node() {}
 };
 
-struct state {
-    int t;
-    set<int> S;
-    state() {}
-    state(int t) : t(t) {}
-};
+void build(node *n) {
+    for (auto e : n->E) {
+        build(e->n);
+        n->k += e->n->k + 1;
+    }
+}
 
-string get_key(state &s) {
-    string res;
-    for (int n : s.S) res += n;
+void print(vector<int> &vec) {
+    for (auto v : vec) {
+        cout << v << " ";
+    }
+    cout << endl;
+}
+
+int calc(node *n, vector<int> &list);
+
+int solve(node *n, int k) {
+    if (k == 0) return 0;
+    if (k > n->k) return BAD;
+    --k;
+    if (n->T[k] != INF) return n->T[k];
+    vector<int> C(n->E.size(), 0);
+    //cout << "BEG n: " << n->i << endl;
+    while (true) {
+        C[0]++;
+        rep(i, 0, C.size() - 1) {
+            if (C[i] > n->E[i]->n->k + 1) {
+                C[i] = 0;
+                ++C[i + 1];
+            }
+        }
+        //cout << "C: ";
+        //print(C);
+        if (C.back() > n->E.back()->n->k + 1) break;
+        int j = 0;
+        rep(i, 0, C.size()) j += C[i];
+        --j;
+        int res = calc(n, C);
+        // printf("j: %d, val: %d\n", j, res);
+        n->T[j] = min(n->T[j], res); 
+    }
+    //cout << "END n: " << n->i << endl;
+    return n->T[k];
+}
+
+int initial_cost(node *n, vector<int> &list) {
+    int count = 0;
+    rep(i, 0, list.size()) if (list[i]) ++count;
+    if (!count) return 0;
+    if (count == 1) {
+        rep(i, 0, list.size()) if (list[i])
+            return n->E[i]->t;
+    }
+    int res = 0;
+    bool f = true;
+    rep(i, 0, list.size()) {
+        if (!list[i]) continue;
+        if (f) {
+            f = false;
+            res += n->E[i]->t;
+        } else {
+            res += 2 * n->E[i]->t;
+        }
+    }
     return res;
 }
 
-hmap<string, int> STATES;
-
-size_t solve(node *start, int t) {
-    size_t best = 0;
-    queue<pair<state, node*>> Q;
-    state start_state(0);
-    start_state.S.insert(start->i);
-    Q.push(mp(start_state, start));
-    while (!Q.empty()) {
-        auto front = Q.front();
-        Q.pop();
-        auto cur = front.second;
-        for (auto e : cur->E) {
-            auto next = e->dest;
-            auto w = front.first.t + e->w;
-            if (w <= t) {
-                auto new_state = front.first;
-                new_state.S.insert(next->i);
-                new_state.t = w;
-                string key = get_key(new_state);
-                if (STATES.find(key) != STATES.end() && STATES[key] <= w) continue;
-                best = max(best, new_state.S.size());
-                Q.push(mp(new_state, next));
+int calc(node *n, vector<int> &list) {
+    int res = 0, count = 0;
+    bool f = true;
+    rep(i, 0, list.size()) {
+        if (list[i]) ++count;
+    }
+    if (!count) return 0;
+    //print(list);
+    rep(i, 0, list.size()) {
+        if (!list[i]) continue;
+        int r = solve(n->E[i]->n, list[i] - 1); 
+        if (r >= BAD) return BAD;
+        if (count == 1) {
+            res = r + n->E[i]->t;
+            if (res > M) return BAD;
+            else break;
+        } else {
+            if (f) {
+                f = false;
+                res = r + n->E[i]->t;
+            } else {
+                res += 2 * (r + n->E[i]->t);
             }
         }
+        if (res > M) return BAD;
     }
-    return best;
+    return res;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int M, N;
-    scan(M); scan(N);
-    vector<node> nodes(M);
-    rep(i, 0, M) nodes[i].i = i;
-    rep(i, 0, M - 1) {
-        int u, v, t;
-        scan(u); scan(v); scan(t);
-        nodes[u].E.pb(new edge(&nodes[u], &nodes[v], t));
-        nodes[v].E.pb(new edge(&nodes[v], &nodes[u], t));
+    scan(N), scan(M);
+    vector<node> nodes(N);
+    rep(i, 0, N) nodes[i].i = i;
+    rep(i, 0, N - 1) {
+        int a, b, c;
+        scan(a), scan(b), scan(c);
+        nodes[a].E.pb(new edge(&nodes[b], c));
     }
-    cout << solve(&nodes[0], N) - 1 << endl;
+    build(&nodes[0]);
+    rep(i, 0, N) if (nodes[i].k) {
+        nodes[i].T = vector<int>(nodes[i].k, INF);
+        sort(nodes[i].E.begin(), nodes[i].E.end(), [](edge *a, edge *b) {
+            return a->t > b->t;
+        });
+    }
+    solve(&nodes[0], nodes[0].k);
+    int res = 0;
+    for (int i = nodes[0].k - 1; i >= 0; --i) {
+        if (nodes[0].T[i] >= BAD) continue;
+        res = i + 1;
+        break;
+    }
+    cout << res << endl;
     return 0;
 }
 
