@@ -62,7 +62,7 @@ int solve() {
       if (M[j][i] && M[i][j]) ++F[i];
     }
   }
-  int res = 0;
+  int res = 1;
   for (int f : F) res = max(res, f);
   return N - res;
 }
