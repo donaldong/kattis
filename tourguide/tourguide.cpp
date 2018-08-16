@@ -43,14 +43,15 @@ ld time_back(person &p) {
 
 uint solve(vector<int> &O) {
   ld res = 0, t = 0, x = 0, y = 0;
-  auto P_ = P;
   for (int i : O) {
-    ld delta = reach(P_[i], x, y);
-    for (auto &p : P_) update(p, delta);
+    auto p = P[i];
+    update(p, t);
+    ld delta = reach(p, x, y);
+    update(p, delta);
     t += delta;
-    res = max(res, t + time_back(P_[i]));
-    x = P_[i].x;
-    y = P_[i].y;
+    res = max(res, t + time_back(p));
+    x = p.x;
+    y = p.y;
   }
   return round(res);
 }
