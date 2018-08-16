@@ -21,13 +21,17 @@ ld dist(ld x1, ld y1, ld x2, ld y2) {
 
 ld reach(person &p, ld x, ld y) {
   auto v2 = complex<ld>(p.x - x, p.y - y);
-  ld alpha = M_PI - abs(p.a - arg(v2));
+  ld alpha = arg(v2);
+  if (alpha < 0) alpha += M_PI;
+  alpha = M_PI - abs(p.a - alpha);
   ld a = p.v * p.v - V * V; 
   ld d = dist(p.x, p.y, x, y);
   ld b = -2.0 * cos(alpha) * d * p.v;
   ld c = d * d;
   ld delta = sqrt(b * b - 4.0 * a * c);
-  return (-b - delta) / 2.0 / a;
+  ld res = (-b - delta) / 2.0 / a;
+  if (res > 0) return res;
+  return (-b + delta) / 2.0 / a;
 }
 
 void update(person &p, ld t) {
