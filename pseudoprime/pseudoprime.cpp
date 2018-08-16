@@ -7,7 +7,8 @@ int MOD;
 
 ll power(int a, int b) {
   if (b == 0) return 1;
-  ll res = a * a;
+  ll res = a;
+  res *= a;
   if (b & 1) return (power(res % MOD, b / 2) * a) % MOD;
   return power(res % MOD, b / 2) % MOD;
 }
