@@ -6,6 +6,7 @@ using uint = unsigned int;
 
 struct person {
   ld x, y, v, a;
+  ld vx, vy;
 };
 
 // My velocity
@@ -20,24 +21,20 @@ ld dist(ld x1, ld y1, ld x2, ld y2) {
 }
 
 ld reach(person &p, ld x, ld y) {
-  auto v2 = complex<ld>(p.x - x, p.y - y);
-  ld alpha = arg(v2);
-  if (alpha < 0) alpha += M_PI;
-  alpha = M_PI - abs(p.a - alpha);
-  ld a = p.v * p.v - V * V; 
-  ld d = dist(p.x, p.y, x, y);
-  ld b = -2.0 * cos(alpha) * d * p.v;
-  ld c = d * d;
-  ld delta = sqrt(b * b - 4.0 * a * c);
-  ld res = (-b - delta) / 2.0 / a;
+  ld a = p.vx * p.vx + p.vy * p.vy - V * V;
+  ld dx = p.x - x, dy = p.y - y;
+  ld b = 2 * dx * p.vx;
+  b += 2 * dy * p.vy;
+  ld c = dx * dx + dy * dy;
+  ld delta = sqrt(b* b - 4.0 * a * c);
+  ld res = (-b + delta) / 2.0 / a;
   if (res > 0) return res;
-  return (-b + delta) / 2.0 / a;
+  return (-b - delta) / 2.0 / a;
 }
 
 void update(person &p, ld t) {
-  complex<ld> c = polar(t * p.v, p.a);
-  p.x += c.real();
-  p.y += c.imag();
+  p.x += t * p.vx;
+  p.y += t * p.vy;
 }
 
 ld time_back(person &p) {
@@ -66,7 +63,11 @@ int main() {
     if (!N) break;
     cin >> V;
     P = vector<person>(N);
-    for (auto &p : P) cin >> p.x >> p.y >> p.v >> p.a;
+    for (auto &p : P) {
+      cin >> p.x >> p.y >> p.v >> p.a;
+      p.vx = p.v * cos(p.a);
+      p.vy = p.v * sin(p.a);
+    }
     uint res = -1;
     vector<int> order(N);
     for (int i = 0; i < N; ++i) order[i] = i;
