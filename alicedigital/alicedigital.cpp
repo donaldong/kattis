@@ -37,7 +37,7 @@ int main() {
           Q.pop_front();
         }
       }
-      res = max(res, sum);
+      if (seen) res = max(res, sum);
     }
     cout << res << endl;
   }
