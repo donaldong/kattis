@@ -42,7 +42,7 @@ ld time_back(person &p) {
   return d / p.v;
 }
 
-uint solve(vector<int> &O) {
+ld solve(vector<int> &O) {
   ld res = 0, t = 0, x = 0, y = 0;
   for (int i : O) {
     auto p = P[i];
@@ -54,7 +54,7 @@ uint solve(vector<int> &O) {
     x = p.x;
     y = p.y;
   }
-  return round(res);
+  return res;
 }
 
 int main() {
@@ -68,13 +68,13 @@ int main() {
       p.vx = p.v * cos(p.a);
       p.vy = p.v * sin(p.a);
     }
-    uint res = -1;
+    ld res = 1e10;
     vector<int> order(N);
     for (int i = 0; i < N; ++i) order[i] = i;
     do {
       res = min(res, solve(order));
     } while (next_permutation(order.begin(), order.end()));
-    cout << res << endl;
+    cout << round(res) << endl;
   }
   return 0;
 }
