@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define hset unordered_set
+#define hmap unordered_map
 using uint = unsigned int;
 using ll = long long;
 using ull = unsigned long long;
@@ -15,18 +15,18 @@ struct node {
   int c;
   // total time
   ull tt = -1;
-  // time to sink
-  ull tts;
-  // edge in the path
+  // edge in the augmenting path
   edge *e;
+  // flag for visited
+  bool f = false;
+  // index
+  int i;
 };
 
 struct edge {
   node *src, *dest;
   // time
   ull t;
-  // Time table
-  hset<ull> T;
 
   edge(node *src, node *dest, ull t) : 
     src(src),
@@ -65,47 +65,127 @@ void dijkstra(node *src) {
   }
 }
 
-node* bfs() {
-  node *src;
-  for (size_t i = 1; i < N.size(); ++i) {
-    src = &N[i];
-    if (!src->c) continue;
-    queue<node*> Q;
-    Q.push(src);
-    while (!Q.empty()) {
-      auto cur = Q.front();
-      auto t = cur->tts;
-      Q.pop();
-      for (auto e : cur->E) {
-        auto dest = e->dest;
-        // continue if not an optimal path
-        if (cur->tt != dest->tt + e->t) continue; 
-        // continue if the road is used
-        if (e->T.find(t) != e->T.end()) continue;
-        dest->tts = t + e->t;
-        dest->e = e;
-        if (dest == &N[0]) return src;
+struct flow_edge {
+  int flow;
+  node *src, *dest;
+  int rev;
+  flow_edge(node *src, node *dest, int flow) :
+    src(src), dest(dest), flow(flow) {}
+};
+
+struct flow_net {
+  // visited
+  vector<bool> V;
+  vector<vector<flow_edge>> M;
+  // parents
+  vector<pair<int, int>> P;
+  
+  flow_net(size_t n) : M(n), V(n, false), P(n) {}
+
+  void connect(node *src, node *from, int flow) {
+    flow_edge a(src, from ,flow), b(from, src, 0);
+    b.rev = M[src->i].size();
+    a.rev = M[from->i].size();
+    M[src->i].push_back(a);
+    M[from->i].push_back(b);
+  }
+
+  void unmark() {
+    fill(V.begin(), V.end(), false);
+  }
+
+  void mark(node *n) {
+    V[n->i] = true;
+  }
+
+  bool marked(node *n) {
+    return V[n->i];
+  }
+
+  vector<flow_edge> E(node *n) {
+    return M[n->i];
+  }
+};
+
+flow_net build() {
+  flow_net res(N.size() + 1);
+  res.P.back() = make_pair(-1, -1);
+  queue<node*> Q;
+  Q.push(&N[0]);
+  N[0].f = true;
+  while (!Q.empty()) {
+    auto cur = Q.front();
+    Q.pop();
+    for (auto e : cur->E) {
+      auto dest = e->dest;
+      if (cur->tt + e->t == dest->tt) {
+        res.connect(dest, cur, 1);
+      }
+      if (!dest->f) {
+        dest->f = true;
         Q.push(dest);
       }
     }
   }
-  return 0;
+  return res;
 }
 
-int max_flow() {
-  int res = 0;
-  while (true) {
-    node *cur = bfs();
-    if (!cur) return res;
-    --cur->c;
-    cur->e = 0;
-    auto t = &N[0];
-    while (t->e) {
-      t->e->T.insert(t->e->src->tts);
-      t = t->e->src;
+bool bfs(flow_net &fn, node *s, node *t) {
+  fn.unmark();
+  queue<node*> Q;
+  Q.push(s);
+  fn.mark(s);
+  while (!Q.empty()) {
+    auto cur = Q.front();
+    Q.pop();
+    auto E = fn.E(cur);
+    for (size_t i = 0; i < E.size(); ++i) {
+      auto dest = E[i].dest;
+      if (fn.marked(dest) || E[i].flow == 0) continue;
+      fn.P[dest->i] = make_pair(cur->i, i);
+      fn.mark(dest);
+      Q.push(dest);
     }
-    ++res;
   }
+  return fn.marked(t);
+}
+
+int dfs(flow_net &fn, node *t) {
+  int res = N.size();
+  int cur = t->i;
+  while (true) {
+    int p = fn.P[cur].first;
+    int j = fn.P[cur].second;
+    if (p == -1) break;
+    auto &e = fn.M[p][j];
+    res = min(res, e.flow);
+    cur = p;
+  }
+  cur = t->i;
+  while (true) {
+    int p = fn.P[cur].first;
+    int j = fn.P[cur].second;
+    if (p == -1) break;
+    auto &e = fn.M[p][j];
+    e.flow -= res;
+    fn.M[cur][e.rev].flow += res;
+    cur = p;
+  }
+  return res;
+}
+
+int max_flow(flow_net fn, vector<node*> &vec) {
+  node *s = new node();
+  s->i = N.size();
+  node *t = &N[0];
+  for (auto n : vec) {
+    fn.connect(s, n, 1);
+  }
+  int res = 0;
+  while (bfs(fn, s, t)) {
+    res += dfs(fn, t);
+  }
+  delete s;
   return res;
 }
 
@@ -113,6 +193,7 @@ int main() {
   int n, m, c;
   cin >> n >> m >> c;
   N = vector<node>(n);
+  for (int i = 0; i < n; ++i) N[i].i = i;
   while (m--) {
     int a, b, c;
     cin >> a >> b >> c;
@@ -127,6 +208,17 @@ int main() {
     N[k].c++;
   }
   dijkstra(&N[0]);
-  cout << max_flow() + N[0].c << endl;
+  flow_net fn = build();
+  hmap<ull, vector<node*>> T;
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < N[i].c; ++j) {
+      T[N[i].tt].push_back(&N[i]);
+    }
+  }
+  int res = 0;
+  for (auto &entry : T) {
+    res += max_flow(fn, entry.second);
+  }
+  cout << res << endl;
   return 0;
 }
