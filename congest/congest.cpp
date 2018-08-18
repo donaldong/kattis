@@ -3,6 +3,8 @@ using namespace std;
 
 #define hset unordered_set
 using uint = unsigned int;
+using ll = long long;
+using ull = unsigned long long;
 
 struct edge;
 
@@ -12,9 +14,9 @@ struct node {
   // number of comuters
   int c;
   // total time
-  uint tt = -1;
+  ull tt = -1;
   // time to sink
-  int tts;
+  ull tts;
   // edge in the path
   edge *e;
 };
@@ -22,11 +24,11 @@ struct node {
 struct edge {
   node *src, *dest;
   // time
-  int t;
+  ull t;
   // Time table
-  hset<int> T;
+  hset<ull> T;
 
-  edge(node *src, node *dest, int t) : 
+  edge(node *src, node *dest, ull t) : 
     src(src),
     dest(dest),
     t(t) {}
@@ -51,7 +53,7 @@ void dijkstra(node *src) {
     Q.erase(itr);
     for (auto e : cur->E) {
       // new total time
-      uint ntt = e->t + cur->tt;
+      ull ntt = e->t + cur->tt;
       auto dest = e->dest;
       if (ntt < dest->tt) {
         itr = Q.find(dest);
