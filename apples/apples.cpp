@@ -15,7 +15,7 @@ void solve() {
   // transpose
   for (int i = 0; i < R; ++i) {
     for (int j = 0; j < C; ++j) {
-      G_[j][i] += G[i][j];
+      G_[j] += G[i][j];
     }
   }
   // fix each row
