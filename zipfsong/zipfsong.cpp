@@ -1,12 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using ll = long long;
+using ull = unsigned long long;
 using ld = long double;
 
 struct node {
   string name;
-  ll q;
+  ull q;
 
   node() {}
 };
@@ -16,10 +16,13 @@ int main() {
   cin >> n >> m;
   vector<node> N(n);
   for (int i = 0; i < n; ++i) {
-    ll f;
-    cin >> f >> N[i].name;
-    N[i].q = f;
-    N[i].q *= i;
+    cin >> N[i].q >> N[i].name;
+  }
+  stable_sort(N.begin(), N.end(), [](const node &a, const node &b) {
+    return a.q > b.q;
+  });
+  for (int i = 0; i < n; ++i) {
+    N[i].q *= i + 1;
   }
   stable_sort(N.begin(), N.end(), [](const node &a, const node &b) {
     return a.q > b.q;
