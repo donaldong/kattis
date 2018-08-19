@@ -9,9 +9,11 @@ def power(a, b):
 try:
     while True:
         a, b, c = [int(x) for x in input().split()]
+        i = a // b
+        a %= b
         a *= power(10, c) 
         a //= b
-        print("0.{}".format(a))
+        print("{}.{}".format(i, a))
 except EOFError:
     pass
 
