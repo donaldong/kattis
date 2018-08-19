@@ -4,7 +4,7 @@ using namespace std;
 #define hmap unordered_map
 
 // max number of ingredients
-int MAX_M = 500000;
+int MAX_M = 500001;
 vector<int> M(MAX_M, -1);
 // potions
 hmap<int, vector<int>> P;
@@ -45,11 +45,8 @@ int main() {
     cin >> k;
     // ingredients
     vector<int> I(k);
-    for (auto &e : I) {
-      cin >> e;
-      --e;
-    }
-    if (possible(I, i)) ++res;
+    for (auto &e : I) cin >> e;
+    if (possible(I, i + 1)) ++res;
   }
   cout << res << endl;
   return 0;
