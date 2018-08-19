@@ -17,11 +17,6 @@ int main() {
   vector<node> N(n);
   for (int i = 0; i < n; ++i) {
     cin >> N[i].q >> N[i].name;
-  }
-  stable_sort(N.begin(), N.end(), [](const node &a, const node &b) {
-    return a.q > b.q;
-  });
-  for (int i = 0; i < n; ++i) {
     N[i].q *= i + 1;
   }
   stable_sort(N.begin(), N.end(), [](const node &a, const node &b) {
