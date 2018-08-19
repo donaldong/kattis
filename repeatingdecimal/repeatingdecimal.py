@@ -13,6 +13,9 @@ try:
         a %= b
         a *= power(10, c) 
         a //= b
+        a = str(a)
+        while len(a) < c:
+            a = "0" + a
         print("{}.{}".format(i, a))
 except EOFError:
     pass
