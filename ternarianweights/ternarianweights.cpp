@@ -22,7 +22,9 @@ int main() {
     auto N = to_base3(n);
     vector<ll> L, R;
     ll cur = 1;
-    for (int i = 0; i < N.size() - 1; ++i) {
+    int size = N.size();
+    --size;
+    for (int i = 0; i < size; ++i) {
       N[i + 1] += N[i] / 3;
       N[i] %= 3;
       if (N[i] == 2) {
@@ -34,7 +36,7 @@ int main() {
       }
       cur *= 3;
     }
-    while (N.back()) {
+    if (!N.empty()) while (N.back()) {
       int k = N.back() / 3;
       N.back() %= 3;
       if (N.back() == 2) {
