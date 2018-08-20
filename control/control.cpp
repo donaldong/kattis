@@ -7,22 +7,26 @@ using namespace std;
 // max number of ingredients
 int MAX_M = 500001;
 vector<int> M(MAX_M, -1);
-// potions <idx, <ingredients>>
-hmap<int, hset<int>> P;
 
-bool possible(hset<int> &I, int i) {
-  for (int e : I) {
-    if (M[e] != -1) {
-      for (int b : P[M[e]]) {
-        if (I.find(b) == I.end()) return false;
-      }
-    }
-  } 
-  for (int e : I) {
-    if (M[e] != -1) P[M[e]].clear();
-    M[e] = i;
+bool possible(vector<int> &I, int r) {
+  sort(I.begin(), I.end());
+  int k = 0;
+  hset<int> A;
+  for (int i : I) {
+    if (M[i] == -1) continue;
+    A.insert(M[i]);
   }
-  P[i] = I;
+  for (int i = 0; i < MAX_M; ++i) {
+    if (M[i] == -1) continue;
+    if (k < I.size() && i == I[k]) {
+      ++k;
+      continue;
+    }
+    if (A.find(M[i]) != A.end()) return false;
+  }
+  for (int i : I) {
+    M[i] = r;
+  }
   return true;
 }
 
@@ -34,12 +38,8 @@ int main() {
     int k;
     cin >> k;
     // ingredients
-    hset<int> I;
-    for (int j = 0; j < k; ++j) {
-      int p;
-      cin >> p;
-      I.insert(p);
-    }
+    vector<int> I(k);
+    for (auto &e : I) cin >> e;
     if (possible(I, i)) ++res;
   }
   cout << res << endl;
