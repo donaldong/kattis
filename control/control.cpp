@@ -6,17 +6,19 @@ using namespace std;
 // max number of ingredients
 int MAX_M = 500001;
 vector<int> M(MAX_M, -1);
-// potions
+// potions <idx, <ingredients>>
 hmap<int, vector<int>> P;
 
 bool possible(vector<int> &I, int i) {
   vector<int> A, B;
   for (int e : I) {
-    if (M[e] != -1) A.push_back(e);
+    if (M[e] != -1) {
+      A.push_back(e);
+      for (int b : P[M[e]]) {
+        B.push_back(b);
+      }
+    }
   } 
-  for (int a : A) for (int b : P[a]) {
-    B.push_back(b);
-  }
   sort(B.begin(), B.end());
   auto end = unique(B.begin(), B.end());
   int j = 0;
@@ -46,7 +48,7 @@ int main() {
     // ingredients
     vector<int> I(k);
     for (auto &e : I) cin >> e;
-    if (possible(I, i + 1)) ++res;
+    if (possible(I, i)) ++res;
   }
   cout << res << endl;
   return 0;
