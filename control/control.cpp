@@ -2,39 +2,27 @@
 using namespace std;
 
 #define hmap unordered_map
+#define hset unordered_set
 
 // max number of ingredients
 int MAX_M = 500001;
 vector<int> M(MAX_M, -1);
 // potions <idx, <ingredients>>
-hmap<int, vector<int>> P;
+hmap<int, hset<int>> P;
 
-bool possible(vector<int> &I, int i) {
-  vector<int> A, B;
+bool possible(hset<int> &I, int i) {
   for (int e : I) {
     if (M[e] != -1) {
-      A.push_back(e);
       for (int b : P[M[e]]) {
-        B.push_back(b);
+        if (I.find(b) == I.end()) return false;
       }
     }
   } 
-  sort(B.begin(), B.end());
-  auto end = unique(B.begin(), B.end());
-  int j = 0;
-  B.resize(distance(B.begin(), end));
-  if (A.size() != B.size()) return false;
-  for (int b : B) {
-    if (b != A[j++]) return false;
-  }
-  for (int a : A) {
-    P[a].clear();
-  }
-  for (int e: I) {
-    if (M[e] == -1) B.push_back(e);
+  for (int e : I) {
+    if (M[e] != -1) P[M[e]].clear();
     M[e] = i;
   }
-  P[i] = B;
+  P[i] = I;
   return true;
 }
 
@@ -46,8 +34,12 @@ int main() {
     int k;
     cin >> k;
     // ingredients
-    vector<int> I(k);
-    for (auto &e : I) cin >> e;
+    hset<int> I;
+    for (int j = 0; j < k; ++j) {
+      int p;
+      cin >> p;
+      I.insert(p);
+    }
     if (possible(I, i)) ++res;
   }
   cout << res << endl;
