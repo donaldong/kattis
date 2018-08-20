@@ -21,7 +21,9 @@ void debug() {
 void floyd_warshall() {
   for (int k = 0; k < N; ++k) {
     for (int i = 0; i < N; ++i) {
+      if (k >= i) continue;
       for (int j = 0; j < N; ++j) {
+        if (j >= k) break;
         if (G[i][k] != INF && G[k][j] != INF) {
           G[i][j] = min(G[i][j], max(G[i][k], G[k][j]));
         }
@@ -32,12 +34,14 @@ void floyd_warshall() {
 
 int main() {
   cin >> N >> M;
-  G = vector<vector<uint>>(N, vector<uint>(N, -1));
+  G = vector<vector<uint>>(N);
+  for (int i = 1; i < N; ++i) G[i] = vector<uint>(i, -1);
   for (int i = 0; i < M; ++i) {
     uint a, b, c;
     cin >> a >> b >> c;
+    if (a == b) continue;
+    if (b > a) swap(a, b);
     G[a][b] = min(G[a][b], c);
-    G[b][a] = min(G[b][a], c);
   }
   floyd_warshall();
   uint res = 0;
