@@ -24,6 +24,7 @@ int main() {
       if (itr3 == itr2->second.end()) break;
       itr2->second.erase(itr3);
       if (itr2->second.empty()) H.erase(itr2);
+      i = *itr3;
       --N;
       itr2 = H.find(itr2->first - 1);
     }
