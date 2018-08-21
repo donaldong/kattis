@@ -7,8 +7,8 @@ int main() {
   ll N, K;
   cin >> N >> K;
   ll res = K;
-  ll a = N / K;
-  if (a) res += N % a;
+  ll a = (N - 1)/ K;
+  if (a > 1) res += (N - 1) % K + 1;
   else res = N - 1;
   cout << res << endl;
   return 0;
