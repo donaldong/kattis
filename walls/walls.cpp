@@ -7,7 +7,7 @@ int L, W, N, R;
 ld L_2, W_2;
 
 int DL[] = {-1, 1, 0, 0};
-int DW[] = {0, 0, -1, -1};
+int DW[] = {0, 0, -1, 1};
 
 // Cranes
 vector<tuple<int, int>> C;
