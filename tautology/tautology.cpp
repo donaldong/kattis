@@ -17,9 +17,9 @@ string fix(string &line) {
       if (c == "N") {
         S.top() += c;
       } else {
-        string b = S.top();
-        S.pop();
         string a = S.top();
+        S.pop();
+        string b = S.top();
         S.pop();
         S.push(a + b + c);
       }
