@@ -20,7 +20,7 @@ bool in_range(ld x, vector<ld> V) {
 }
 
 bool inside(ld x, ld y) {
-  if (in_range(x, {X + R, X + W - H}) &&
+  if (in_range(x, {X + R, X + W - R}) &&
       in_range(y, {Y, Y + H})) return true;
   if (in_range(x, {X, X + W}) &&
       in_range(y, {Y + R, Y + H - R})) return true;
