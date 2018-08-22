@@ -62,7 +62,7 @@ void operate(stack<bool> &S, char c) {
     S.pop();
     bool w = S.top();
     S.pop();
-    S.push(!x != !w);
+    S.push(!x == !w);
   }
 }
 
