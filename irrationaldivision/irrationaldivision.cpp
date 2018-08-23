@@ -48,7 +48,8 @@ ti2 S(int p, int q, int h) {
   res = happiness(p, q, h), k = q;
   for (int i = 1; i < q; ++i) {
     bool h1 = h, h2 = h;
-    if (i & 1) h1 = !h1;
+    if (!(q & 1)) h1 = !h1;
+    if (!(i & 1)) h1 = !h1;
     int l = q - i;
     int d = get<1>(B(p, l, h));
     if (d & 1) h2 = !h2;
