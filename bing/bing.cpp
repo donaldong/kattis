@@ -23,6 +23,7 @@ int insert(node *n, string &s, int k=0) {
     }
     auto nn = new node();
     nn->word = true;
+    ++nn->count;
     n->C[i] = nn;
     return 0;
   }
