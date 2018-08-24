@@ -19,7 +19,7 @@ string to_postfix(string &str) {
   }
   if (vars.empty()) return vars;
   if (vars.size() > opts.size() + 1) vars = vars.substr(0, opts.size() + 1);
-  if (!vars.empty() && vars.size() < opts.size()) opts = opts.substr(0, vars.size() - 1);
+  if (vars.size() <= opts.size()) opts = opts.substr(0, vars.size() - 1);
   N = min(N, vars.size());
   vars += string(N, 'N');
   return vars + opts;
