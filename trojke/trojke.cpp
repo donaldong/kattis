@@ -8,7 +8,6 @@ using ti2 = tuple<int, int>;
 
 int N;
 vs G;
-v2i C;
 
 int solve(ti2 &a, ti2 &b) {
   int dr = get<0>(b) - get<0>(a);
@@ -31,18 +30,13 @@ int solve(ti2 &a, ti2 &b) {
   return res;
 }
 
+int C(int n) {
+  return n * (n - 1) * (n - 2) / 6;
+}
+
 int main() {
   cin >> N;
   G = vs(N);
-  C = v2i(N + 1);
-  C[0] = vi(1, 1);
-  C[1] = vi(2, 1);
-  for (size_t i = 2; i < C.size(); ++i) {
-    C[i] = vi(C[i - 1].size() + 1, 1);
-    for (size_t j = 1; j < C.size(); ++j) {
-      C[i][j] = C[i - 1][j] + C[i - 1][j - 1];
-    }
-  }
   vector<ti2> P;
   for (auto &row : G) cin >> row;
   for (int i = 0; i < N; ++i) {
@@ -52,11 +46,11 @@ int main() {
       P.emplace_back(i, j);
     }
   }
-  int res = 0;
+  long long res = 0;
   for (size_t i = 0; i < P.size(); ++i) {
     for (size_t j = i + 1; j < P.size(); ++j) {
       int n = solve(P[i], P[j]);
-      if (n >= 3) res += C[n][3];
+      if (n >= 3) res += C(n);
     }
   }
   cout << res << endl;
