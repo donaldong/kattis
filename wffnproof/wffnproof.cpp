@@ -28,7 +28,6 @@ string solve(string &str) {
   if (vars.empty()) return "no WFF possible";
   if (vars.size() > opts.size() + 1) vars = vars.substr(0, opts.size() + 1);
   else if (vars.size() <= opts.size()) opts = opts.substr(0, vars.size() - 1);
-  N = min(N, vars.size());
   return opts + string(N, 'N') + vars;
 }
 
