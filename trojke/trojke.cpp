@@ -2,36 +2,27 @@
 using namespace std;
 
 using vs = vector<string>;
-using vi = vector<int>;
-using v2i = vector<vi>;
 using ti2 = tuple<int, int>;
+using ld = long double;
 
 int N;
 vs G;
 
-int solve(ti2 &a, ti2 &b) {
-  int dr = get<0>(b) - get<0>(a);
-  int dc = get<1>(b) - get<1>(a);
-  int res = 2;
-  int r, c;
-  tie(r, c) = a;
-  r -= dr;
-  c -= dc;
-  // avoid multiple counting
-  if (0 <= r && r < N && 0 <= c && c < N && G[r][c] != '.') return 0;
-  tie(r, c) = b;
-  r += dr;
-  c += dc;
-  while (0 <= r && r < N && 0 <= c && c < N) {
-    if (G[r][c] != '.') ++res;
-    r += dr;
-    c += dc;
-  }
-  return res;
+ti2 delta(ti2 &A, ti2 &B) {
+  return make_tuple(
+    get<0>(A) - get<0>(B),
+    get<1>(A) - get<1>(B)
+  );
 }
 
-int C(int n) {
-  return n * (n - 1) * (n - 2) / 6;
+ld arg(ti2 &p) {
+  return atan2(get<1>(p), get<0>(p));
+}
+
+bool line(ti2 &A, ti2 &B, ti2 &C) {
+  ti2 ab = delta(B, A);
+  ti2 bc = delta(C, B);
+  return abs(arg(ab) - arg(bc)) < 1e-9;
 }
 
 int main() {
@@ -46,11 +37,12 @@ int main() {
       P.emplace_back(i, j);
     }
   }
-  long long res = 0;
+  int res = 0;
   for (size_t i = 0; i < P.size(); ++i) {
     for (size_t j = i + 1; j < P.size(); ++j) {
-      int n = solve(P[i], P[j]);
-      if (n >= 3) res += C(n);
+      for (size_t k = j + 1; k < P.size(); ++k) {
+        if (line(P[i], P[j], P[k])) ++res;
+      }
     }
   }
   cout << res << endl;
