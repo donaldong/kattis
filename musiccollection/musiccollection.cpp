@@ -21,19 +21,15 @@ hmap build(vs &G) {
 
 string solve(hmap &M, string &s) {
   vs R;
-  bool f = true;
   for (size_t i = 0; i < s.size(); ++i) {
     for (size_t size = 1; size <= s.size() - i; ++size) {
       string sub = s.substr(i, size);
       if (M[sub].size() == 1) {
         R.push_back(sub);
-      } else {
-        f = false;
       }
     }
   }
   if (R.empty()) return ":(";
-  if (f) return "\"\"";
   sort(R.begin(), R.end(), [](string &a, string &b) {
       if (a.size() != b.size()) return a.size() < b.size();
       return a < b;
@@ -54,6 +50,10 @@ int main() {
     for (auto &g : G) {
       getline(cin, g);
       for (char &c : g) c = toupper(c);
+    }
+    if (n == 1) {
+      cout << "\"\"" << endl;
+      continue;
     }
     auto M = build(G);
     for (int j = 0; j < n; ++j) {
