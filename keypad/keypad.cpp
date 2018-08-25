@@ -1,32 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+using ti2 = tuple<int, int>;
 using vs = vector<string>;
-using vi = vector<int>;
+using vti2 = vector<ti2>;
 
 int R, C;
 vs G;
 
 void solve() {
-  // row count, column count
-  int total = 0;
-  vi RC(C, 0), CC(R, 0);
-  for (int i = 0; i < R; ++i) {
-    for (int j = 0; j < C; ++j) {
-      if (G[i][j] == '1') ++RC[j], ++CC[i], ++total;
-    }
+  vti2 P;
+  vs res(R, string(C, 'N'));
+  for (int i = 0; i < R; ++i) for (int j = 0; j < C; ++j) {
+    if (G[i][j] == '1') P.emplace_back(i, j), res[i][j] = 'P';
   }
-  for (int i = 0; i < R; ++i) {
-    for (int j = 0; j < C; ++j) {
-      if (G[i][j] == '0') G[i][j] = 'N';
-      else if (RC[j] == 1 && CC[i] == 1 && total > 1) {
+  int r0, c0, r1, c1; 
+  for (size_t i = 0; i < P.size(); ++i) {
+    tie(r0, c0) = P[i];
+    for (size_t j = i + 1; j < P.size(); ++j) {
+      tie(r1, c1) = P[j];
+      if (r0 == r1 || c0 == c1) continue;
+      if (G[r0][c1] == '0' || G[r1][c0] == '0') {
         cout << "impossible" << endl;
         return;
-      } else if (RC[j] > 1 && CC[i] > 1) G[i][j] = 'I';
-      else G[i][j] = 'P';
+      }
+      res[r0][c0] = 'I';
+      res[r0][c1] = 'I';
+      res[r1][c0] = 'I';
+      res[r1][c1] = 'I';
     }
   }
-  for (auto &row : G) cout << row << endl;
+  for (auto &row : res) cout << row << endl;
 }
 
 int main() {
