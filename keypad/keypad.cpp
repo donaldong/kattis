@@ -9,20 +9,20 @@ vs G;
 
 void solve() {
   // row count, column count
+  int total = 0;
   vi RC(C, 0), CC(R, 0);
   for (int i = 0; i < R; ++i) {
     for (int j = 0; j < C; ++j) {
-      if (G[i][j] == '1') ++RC[j], ++CC[i];
+      if (G[i][j] == '1') ++RC[j], ++CC[i], ++total;
     }
   }
   for (int i = 0; i < R; ++i) {
     for (int j = 0; j < C; ++j) {
-      if (RC[j] == 1 && CC[i] == 1) {
+      if (G[i][j] == '0') G[i][j] = 'N';
+      else if (RC[j] == 1 && CC[i] == 1 && total > 1) {
         cout << "impossible" << endl;
         return;
-      }
-      if (G[i][j] == '0') G[i][j] = 'N';
-      else if (RC[j] > 1 && CC[i] > 1) G[i][j] = 'I';
+      } else if (RC[j] > 1 && CC[i] > 1) G[i][j] = 'I';
       else G[i][j] = 'P';
     }
   }
