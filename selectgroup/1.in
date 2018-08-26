@@ -1,0 +1,7 @@
+group geeks 3 Trevor Chet Kari
+group jocks 3 Chet Mary Bert
+group popular 4 Kari Selma Aaron Mary
+group Trevor 1 Trevor
+union geeks jocks
+intersection geeks union jocks popular
+union geeks union difference jocks popular Trevor
