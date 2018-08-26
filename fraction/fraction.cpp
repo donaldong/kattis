@@ -1,20 +1,22 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int gcd(int a, int b) {
+using ll = long long;
+
+ll gcd(ll a, ll b) {
   if (b == 0) return a;
   return gcd(b, a % b);
 }
 
 struct rat {
-  int p, q;
+  ll p, q;
   rat() : p(1), q(1) {}
-  rat(int p, int q) {
+  rat(ll p, ll q) {
     if (q < 0) {
       p *= -1;
       q *= -1;
     }
-    int k = gcd(abs(p), q);
+    ll k = gcd(abs(p), q);
     this->p = p / k;
     this->q = q / k;
   }
@@ -53,7 +55,7 @@ struct rat {
 };
 
 void display(rat n) {
-  int cur = n.p / n.q;
+  ll cur = n.p / n.q;
   while (true) {
     cout << cur << " ";
     n = n - rat(cur, 1);
@@ -66,9 +68,9 @@ void display(rat n) {
 
 rat build(int n) {
   rat res(0, 1);
-  vector<int> V(n);
+  vector<ll> V(n);
   for (auto &v : V) cin >> v;
-  for (int i = n - 1; i >= 0; --i) {
+  for (ll i = n - 1; i >= 0; --i) {
     res = res + rat(V[i], 1);
     res = res.flip();
   }
