@@ -8,8 +8,6 @@ using v2b = vector<vb>;
 
 // Grid
 vs G(9);
-// rows, cols, boxes
-v2b R(9, vb(9, false)), C(9, vb(9, false)), B(9, vb(9, false));
 
 int index(int i, int j) {
   i /= 3;
@@ -20,6 +18,8 @@ int index(int i, int j) {
 int build() {
   int res = 0;
   hset N;
+  // rows, cols, boxes
+  v2b R(9, vb(9, false)), C(9, vb(9, false)), B(9, vb(9, false));
   for (int i = 0; i < 9; ++i) {
     for (int j = 0; j < 9; ++j) {
       int b = index(i, j);
@@ -39,10 +39,13 @@ int build() {
     for (int j = 0; j < 9; ++j) {
       if (G[i][j] != '.') continue;
       int b = index(i, j);
-      for (int n : N) {
+      bool f = true;
+      for (int n = 0; n < 9; ++n) {
         if (R[i][n] || C[j][n] || B[b][n]) continue;
         ++B2[b][n];
-      } 
+        f = false;
+      }
+      if (f) return -1;
     }
   }
   for (int i = 0; i < 9; ++i) {
@@ -54,21 +57,16 @@ int build() {
     for (int j = 0; j < 9; ++j) {
       if (G[i][j] != '.') continue;
       int b = index(i, j);
-      for (int n : N) {
+      for (int n = 0; n < 9; ++n) {
         if (R[i][n] || C[j][n] || B[b][n]) continue;
-        if (B2[index(i, j)][n] == 1) {
+        if (B2[b][n] == 1) {
           G[i][j] = '1' + n;
           ++res;
         }
       }
     }
   }
-  if (res) {
-    R = v2b(9, vb(9, false));
-    C = v2b(9, vb(9, false));
-    B = v2b(9, vb(9, false));
-    if (build() == -1) return -1;
-  }
+  if (res) if (build() == -1) return -1;
   return 0;
 }
 
