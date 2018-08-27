@@ -1,157 +1,68 @@
-/**
- *  @brief   Kattis - NAME 
- *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
- *  
- *  + TAG
- */
-
-#include <algorithm>
-#include <climits>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <deque>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <regex>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-typedef unsigned int uint;
-typedef long long int ll;
-typedef unsigned long long int ull;
-typedef long double ld;
-#define hmap unordered_map
-#define hset unordered_set
-#define pq priority_queue
-#define pb push_back
-#define mp make_pair
-#define putchar putchar_unlocked
-#define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
-
-inline void scan(int&);
-inline void scan(ll&);
-inline void print(uint);
-inline void print(ull);
-inline void print(string&);
+using ll = long long;
 
 struct pt {
-    ll x, y;
-    pt() {}
-    pt(ll x, ll y) : x(x), y(y) {}
-    bool operator< (const pt &p) const {
-		return x < p.x || (x == p.x && y < p.y);
-	}
-    bool operator== (const pt &p) const {
-        return x == p.x && y == p.y;
-    }
+  ll x, y;
+  pt() {}
+  pt(int x, int y) : x(x), y(y) {}
+  bool operator<(const pt &p) {
+    if (p.x == x) return y < p.y;
+    return x < p.x;
+  }
+  bool operator==(const pt &p) {
+    return x == p.x && y == p.y;
+  }
+  pt operator-(const pt &p) {
+    return pt(x - p.x, y - p.y);
+  }
 };
 
-void print(vector<pt> &P) {
-    cout << ">>>>>>>" << endl;
-    for (auto &p : P) cout << p.x << " " << p.y << endl;
-    cout << "<<<<<<<" << endl;
+using vpt = vector<pt>;
+
+ll cross(pt &a, pt &b) {
+  return a.x * b.y - b.x * a.y;
 }
 
-bool cw(const pt &a, const pt &b, const pt &c) {
-    return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x) < 0;
+bool cw(vpt &P, size_t n, pt &c) {
+  if (P.size() < n) return true;
+  int k = P.size();
+  pt a = P[k - 2], b = P[k - 1];
+  pt ab = b - a, ac = c - a;
+  return cross(ac, ab) > 0;
 }
 
-vector<pt> convex_hull(vector<pt> p) {
-    int n = p.size();
-    if (n <= 1) return p;
-    int k = 0;
-    vector<pt> q(n * 2);
-    for (int i = 0; i < n; q[k++] = p[i++])
-        for (; k >= 2 && !cw(q[k - 2], q[k - 1], p[i]); --k);
-    for (int i = n - 2, t = k; i >= 0; q[k++] = p[i--])
-        for (; k > t && !cw(q[k - 2], q[k - 1], p[i]); --k);
-    q.resize(k - 1 - (q[0] == q[1]));
-    return q;
+vpt convex_hull(vpt &P) {
+  if (P.size() <= 1) return P;
+  vpt H;
+  H.reserve(P.size() * 2);
+  for (auto &p : P) {
+    while (!cw(H, 2, p)) H.pop_back();
+    H.push_back(p);
+  }
+  int n = H.size() + 1;
+  for (auto itr = ++P.rbegin(); itr != P.rend(); ++itr) {
+    while (!cw(H, n, *itr)) H.pop_back();
+    H.push_back(*itr);
+  }
+  H.pop_back();
+  if (H[0] == H[1]) H.pop_back();
+  return H;
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    while (true) {
-        int n;
-        scan(n);
-        if (!n) break;
-        vector<pt> P(n);
-        for (auto &p : P) {
-            scan(p.x); scan(p.y);
-        }
-        sort(P.begin(), P.end());
-        auto end = unique(P.begin(), P.end());
-        P.resize(distance(P.begin(), end));
-        auto H = convex_hull(P);
-        cout << H.size() << endl;
-        for (auto p = H.rbegin(); p != H.rend(); ++p) cout << p->x << " " << p->y << endl;
-    }
-    return 0;
-}
-
-inline void scan(int &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void scan(ll &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void print(uint n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[11];
-    int i = 10;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 10) putchar(buf[++i]);
-}
-
-inline void print(ull n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[20];
-    int i = 19;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 19) putchar(buf[++i]);
-}
-
-inline void print(string &s) {
-    rep(i, 0, s.length()) putchar(s[i]);
+  int N;
+  while (cin >> N) {
+    if (!N) break;
+    vpt P(N);
+    for (auto &p : P) cin >> p.x >> p.y;
+    sort(P.begin(), P.end());
+    auto end = unique(P.begin(), P.end());
+    P.resize(end - P.begin());
+    auto H = convex_hull(P);
+    cout << H.size() << endl;
+    for (auto p = H.rbegin(); p != H.rend(); ++p) cout << p->x << " " << p->y << endl;
+  }
+  return 0;
 }
