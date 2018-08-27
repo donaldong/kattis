@@ -43,7 +43,6 @@ int main() {
     for (ll i = 0; i < size; ++i) N[i] = i;
     for (ll i = A; i <= B; ++i) {
       ll j = i - A;
-      if (N[j] != j) continue;
       vll factors = prime_factors(i);
       for (auto f : factors) {
         for (ll cur = i + f; cur <= B; cur += f) {
