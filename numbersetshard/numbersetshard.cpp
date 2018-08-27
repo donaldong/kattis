@@ -6,17 +6,18 @@ using vll = vector<ll>;
 
 ll A, B, P;
 
-vll prime_factors(ll n) {
+vll seive(ll n) {
   vll res;
-  if (!(n & 1) && 2 >= P) {
-    res.push_back(2);
+  ll size = sqrt(n) + 2;
+  if (size * size == n) ++size;
+  vector<bool> p(size, true);
+  for (ll i = 2; i < size; ++i) {
+    if (!p[i]) continue;
+    for (ll j = i * i; j < size; j += i) {
+      p[j] = false;
+    }
   }
-  while (!(n & 1)) n /= 2;
-  for (ll i = 3; i * i <= n; i += 2) {
-    if (n % i == 0 && i >= P) res.push_back(i);
-    while (n % i == 0) n /= i;
-  }
-  if (n > 1 && n >= P) res.push_back(n);
+  for (ll i = P; i < size; ++i) if (p[i]) res.push_back(i);
   return res;
 }
 
@@ -39,20 +40,18 @@ int main() {
     cin >> A >> B >> P;
     ll size = B - A + 1;
     vll N(size, -1);
-    vector<bool> V(size, false);
-    for (ll i = A; i <= B; ++i) {
-      ll j = i - A;
-      if (V[j]) continue;
-      V[j] = true;
-      vll factors = prime_factors(i);
-      for (auto f : factors) {
-        for (ll cur = i + f; cur <= B; cur += f) {
-          ll k = cur - A;
-          auto ra = find(N, j);
-          auto rb = find(N, k);
+    vll primes = seive(B);
+    for (auto p : primes) {
+      ll prev = (A / p) * p;
+      for (ll cur = prev + p; cur <= B; cur += p) {
+        ll i = prev - A;
+        ll j = cur - A;
+        if (0 <= i && i < size) {
+          auto ra = find(N, i);
+          auto rb = find(N, j);
           if (ra != rb) join(N, ra, rb);
-          V[k] = true;
         }
+        prev = cur;
       }
     }
     int res = 0;
