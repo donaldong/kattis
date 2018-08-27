@@ -8,8 +8,7 @@ ll A, B, P;
 
 vll seive(ll n) {
   vll res;
-  ll size = sqrt(n) + 2;
-  if (size * size == n) ++size;
+  ll size = 1e6;
   vector<bool> p(size, true);
   for (ll i = 2; i < size; ++i) {
     if (!p[i]) continue;
