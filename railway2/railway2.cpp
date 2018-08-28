@@ -7,43 +7,52 @@ struct node {
   int r = -1;
   // children
   vector<node*> C;
-  // total number of nodes in the subtree
-  int t = 0;
   // count
   int k = 0;
-};
-
-struct cmp {
-  bool operator()(node *a, node *b) {
-    size_t n = a->C.size(), m = b->C.size();
-    if (n != m) return n < m;
-    return a < b;
-  }
+  // depth
+  int d = 0;
+  bool visited = false;
 };
 
 using vn = vector<node*>;
-using sn = set<node*, cmp>;
 using vi = vector<int>;
+using hsn = unordered_set<node*>;
 
-void build(node *cur) {
-  for (auto c : cur->C) {
+void build(node *n) {
+  for (auto c : n->C) {
+    c->d = n->d + 1;
     build(c);
-    cur->t += c->t;
   }
-  ++cur->t;
 }
 
-void update(sn &S) {
-  while (!S.empty()) {
-    auto cur = *S.begin();
-    S.erase(S.begin());
-    auto itr = S.find(cur);
-    while (itr == S.end()) {
+node* lca(vn &S) {
+  int d = 1e9;
+  for (auto s : S) d = min(d, s->d);
+  hsn N;
+  for (auto s : S) if (s->d == d) N.insert(s);
+  while (N.size() > 1) {
+    hsn P;
+    for (auto n : N) P.insert(n);
+    N = P;
+  }
+  return *N.begin();
+}
+
+void update(vn &S) {
+  auto root = lca(S);
+  for (auto cur : S) {
+    while (cur != root) {
+      if (cur->visited) break;
+      cur->visited = true;
       ++cur->k;
-      cur = cur->p; 
-      itr = S.find(cur);
+      cur = cur->p;
     }
-    S.erase(itr);
+  }
+  for (auto cur : S) {
+    while (cur != root) {
+      cur->visited = false;
+      cur = cur->p;
+    }
   }
 }
 
@@ -73,11 +82,11 @@ int main() {
   while (m--) {
     int s;
     cin >> s;
-    sn S;
-    while (s--) {
+    vn S(s);
+    for (auto &e : S) {
       int k;
       cin >> k;
-      S.insert(N[--k]);
+      e = N[--k];
     }
     update(S);
   }
