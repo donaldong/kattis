@@ -10,12 +10,14 @@ ll solve(vi &N, vi &M) {
   ll res = 0;
   sort(N.begin(), N.end());
   sort(M.begin(), M.end());
-  queue<int> Q;
-  for (int n : N) Q.push(n);
-  for (size_t i = 0; i < M.size(); ++i) {
-    while (!Q.empty() && Q.front() < M[i]) Q.pop();
-    res += Q.front() - M[i];
-    Q.pop();
+  size_t j = 0;
+  for (size_t i = 0; i < M.size();) {
+    while (j < N.size() && N[j] < M[i]) ++j;
+    while (i < M.size() && M[i] <= N[j]) {
+      res += N[j] - M[i];
+      ++i;
+    }
+    ++j;
   }
   return res;
 }
