@@ -8,10 +8,10 @@ ll solve(vi &N, vi &M) {
   ll res = 0;
   sort(N.begin(), N.end());
   sort(M.begin(), M.end());
-  for (auto itr = M.rbegin(); itr != M.rend(); ++itr) {
-    int m = *itr;
+  for (size_t i = M.size(); i-- > 0;) {
+    int m = M[i];
     int cur = N.back();
-    while (!N.empty() && N.back() >= m) {
+    while (N.size() > i && N.back() >= m) {
       cur = N.back(), N.pop_back();
     }
     res += cur - m;
