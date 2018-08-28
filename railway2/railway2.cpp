@@ -9,8 +9,6 @@ struct node {
   vector<node*> C;
   // count
   int k = 0;
-  // depth
-  int d = 0;
   bool visited = false;
 };
 
@@ -20,29 +18,40 @@ using hsn = unordered_set<node*>;
 
 void build(node *n) {
   n->visited = true;
-  for (auto c : n->C) {
-    if (c->visited) continue;
+  for (auto &c : n->C) {
+    if (c->visited) {
+      c = 0;
+      continue;
+    }
     c->p = n;
-    c->d = n->d + 1;
     build(c);
   }
 }
 
-node* lca(vn &S) {
-  int d = 1e9;
-  for (auto s : S) d = min(d, s->d);
-  hsn N;
-  for (auto s : S) if (s->d == d) N.insert(s);
-  while (N.size() > 1) {
-    hsn P;
-    for (auto n : N) P.insert(n);
-    N = P;
+node *ROOT;
+
+bool subset(vn &S, node *n) {
+  for (auto cur : S) {
+    while (cur) {
+      if (cur == n) break;
+      cur = cur->p;
+    }
+    if (!cur) return false;
   }
-  return *N.begin();
+  return true;
 }
 
-void update(vn &S) {
-  auto root = lca(S);
+node* lca(vn &S, node *n) {
+  for (auto c : n->C) {
+    if (!c) continue;
+    if (!subset(S, c)) return n;
+    return lca(S, c);
+  }
+  return n;
+}
+
+void update(vn &S, node *root) {
+  root = lca(S, root);
   for (auto cur : S) {
     while (cur != root) {
       cur->visited = false;
@@ -93,7 +102,7 @@ int main() {
       cin >> k;
       e = N[--k];
     }
-    update(S);
+    update(S, N[0]);
   }
   vi res;
   for (auto e : N) if (e->k >= k) res.push_back(e->r);
