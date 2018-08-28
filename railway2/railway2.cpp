@@ -18,7 +18,6 @@ using ve = vector<edge*>;
 using v2e = vector<ve>;
 using vb = vector<bool>;
 
-int COUNT;
 ve E;
 v2e NODES;
 vb V;
@@ -32,14 +31,12 @@ bool dfs(hsi &S, int n) {
     if (dfs(S, dest)) {
       res = true;
       ++e->count;
-      if (e->count >= K) ++COUNT;
     }
   }
   return res;
 }
 
 int main() {
-  COUNT = 0;
   cin >> N >> M >> K;
   E = ve(N - 1);
   NODES = v2e(N);
@@ -63,7 +60,11 @@ int main() {
     V = vb(N - 1, false);
     dfs(S, *S.begin());
   }
-  cout << COUNT << endl;
+  int res = 0;
+  for (size_t i = 0; i < E.size(); ++i) {
+    if (E[i]->count >= K) ++res;
+  }
+  cout << res << endl;
   for (size_t i = 0; i < E.size(); ++i) {
     if (E[i]->count >= K) cout << i + 1 << " ";
   }
