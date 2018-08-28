@@ -1,20 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+struct node;
+using vn = vector<node*>;
+using vi = vector<int>;
+using hsn = unordered_set<node*>;
+
 struct node {
   node *p = 0;
   // identifier
   int r = -1;
   // children
   vector<node*> C;
+  // subtree
+  hsn T;
   // count
   int k = 0;
   bool visited = false;
 };
-
-using vn = vector<node*>;
-using vi = vector<int>;
-using hsn = unordered_set<node*>;
 
 void build(node *n) {
   n->visited = true;
@@ -25,18 +28,14 @@ void build(node *n) {
     }
     c->p = n;
     build(c);
+    for (auto e : c->T) n->T.insert(e);
   }
+  n->T.insert(n);
 }
-
-node *ROOT;
 
 bool subset(vn &S, node *n) {
   for (auto cur : S) {
-    while (cur) {
-      if (cur == n) break;
-      cur = cur->p;
-    }
-    if (!cur) return false;
+    if (n->T.find(cur) == n->T.end()) return false;
   }
   return true;
 }
