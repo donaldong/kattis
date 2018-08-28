@@ -1,73 +1,91 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int N, M, K;
+struct node {
+  node *p = 0;
+  // identifier
+  int r = -1;
+  // children
+  vector<node*> C;
+  // total number of nodes in the subtree
+  int t = 0;
+  // count
+  int k = 0;
+};
 
-struct edge {
-  int a, b;
-  int count = 0;
-  edge() {}
-  edge(int a, int b) : a(a), b(b) {}
-  int from(int k) {
-    return k == a ? b : a;
+struct cmp {
+  bool operator()(node *a, node *b) {
+    size_t n = a->C.size(), m = b->C.size();
+    if (n != m) return n < m;
+    return a < b;
   }
 };
 
-using hsi = unordered_set<int>;
-using ve = vector<edge*>;
-using v2e = vector<ve>;
-using vb = vector<bool>;
+using vn = vector<node*>;
+using sn = set<node*, cmp>;
+using vi = vector<int>;
 
-ve E;
-v2e NODES;
-vb V;
-
-bool dfs(hsi &S, int n) {
-  if (V[n]) return false;
-  V[n] = true;
-  bool res = S.find(n) != S.end();
-  for (auto e : NODES[n]) {
-    int dest = e->from(n);
-    if (dfs(S, dest)) {
-      res = true;
-      ++e->count;
-    }
+void build(node *cur) {
+  for (auto c : cur->C) {
+    build(c);
+    cur->t += c->t;
   }
-  return res;
+  ++cur->t;
+}
+
+void update(sn &S) {
+  while (!S.empty()) {
+    auto cur = *S.begin();
+    S.erase(S.begin());
+    auto itr = S.find(cur);
+    while (itr == S.end()) {
+      ++cur->k;
+      cur = cur->p; 
+      itr = S.find(cur);
+    }
+    S.erase(itr);
+  }
 }
 
 int main() {
-  cin >> N >> M >> K;
-  E = ve(N - 1);
-  NODES = v2e(N);
-  for (int i = 0; i < N - 1; ++i) {
+  int n, m, k;
+  cin >> n >> m >> k;
+  vn N(n);
+  for (auto &e : N) e = new node();
+  for (int i = 1; i < n; ++i) {
     int a, b;
     cin >> a >> b;
-    --a, --b;
-    E[i] = new edge(a, b);
-    NODES[a].push_back(E[i]);
-    NODES[b].push_back(E[i]);
-  }
-  int s, e;
-  for (int i = 0; i < M; ++i) {
-    cin >> s;
-    hsi S;
-    while (s--) {
-      cin >> e;
-      --e;
-      S.insert(e);
+    if (a > b) swap(a, b);
+    auto na = N[--a];
+    auto nb = N[--b];
+    if ((!na->p && !nb->p) || na->p) {
+      nb->p = na;
+      nb->r = i;
+      na->C.push_back(nb);
+    } else {
+      na->p = nb;
+      na->r = i;
+      nb->C.push_back(na);
     }
-    V = vb(N - 1, false);
-    dfs(S, *S.begin());
   }
-  int res = 0;
-  for (size_t i = 0; i < E.size(); ++i) {
-    if (E[i]->count >= K) ++res;
+  // rooted at node 0
+  build(N[0]);
+  while (m--) {
+    int s;
+    cin >> s;
+    sn S;
+    while (s--) {
+      int k;
+      cin >> k;
+      S.insert(N[--k]);
+    }
+    update(S);
   }
-  cout << res << endl;
-  for (size_t i = 0; i < E.size(); ++i) {
-    if (E[i]->count >= K) cout << i + 1 << " ";
-  }
+  vi res;
+  for (auto e : N) if (e->k >= k) res.push_back(e->r);
+  sort(res.begin(), res.end());
+  cout << res.size() << endl;
+  for (int r : res) cout << r << " ";
   cout << endl;
   return 0;
 }
