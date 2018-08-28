@@ -8,16 +8,14 @@ int INF = 1e9;
 
 ll solve(vi &N, vi &M) {
   ll res = 0;
-  sort(M.begin(), M.end());
-  for (auto &n : N) if (n < M[0]) n = INF;
   sort(N.begin(), N.end());
-  for (size_t i = M.size(); i-- > 0;) {
-    int m = M[i];
-    int cur = N.back();
-    while (N.size() > i && N.back() >= m) {
-      cur = N.back(), N.pop_back();
-    }
-    res += cur - m;
+  sort(M.begin(), M.end());
+  queue<int> Q;
+  for (int n : N) Q.push(n);
+  for (size_t i = 0; i < M.size(); ++i) {
+    while (!Q.empty() && Q.front() < M[i]) Q.pop();
+    res += Q.front() - M[i];
+    Q.pop();
   }
   return res;
 }
