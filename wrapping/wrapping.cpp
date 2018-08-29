@@ -100,7 +100,11 @@ int main() {
     auto end = unique(P.begin(), P.end());
     P.resize(end - P.begin());
     auto H = convex_hull(P);
-    printf("%.1Lf %\n", board_area / area(H) * 100.0);
+    ld res = board_area / area(H) * 100.0 + 1e-8;
+    int d = res;
+    int d2 = res * 10.0;
+    d2 -= 10 * d;
+    cout << d << "." << d2 << " %" << endl;
   }
   return 0;
 }
