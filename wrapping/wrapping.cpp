@@ -14,8 +14,8 @@ struct pt {
   pt() {}
   pt(ld x, ld y) : x(x), y(y) {}
   bool operator<(const pt& p) {
-    if (x != p.x) return x < p.x;
-    return y < p.y;
+    if (abs(x - p.x) < DELTA) return y < p.y;
+		return x < p.x;
   }
   bool operator==(const pt & p) {
     return abs(x - p.x) < DELTA && abs(y - p.y) < DELTA;
@@ -25,19 +25,22 @@ struct pt {
   }
 };
 
+pt rotate(pt p, pt &o, ld v) {
+  pt op = p - o;
+  ld d = sqrt(op.x * op.x + op.y * op.y);
+  ld a = v - atan2(op.y, op.x);
+  return pt(cos(a) * d + o.x, sin(a) * d + o.y);
+}
+
 void update(vpt &P, int i, ld x, ld y, ld w, ld h, ld v) {
   w /= 2;
   h /= 2;
-  v = v / 90.0 * M_PI_2 + M_PI_2;
-  ld d_2 = sqrt(w * w + h * h);
-  ld d = M_PI_2 - atan2(h, w);
-  ld alpha = v - d, beta = v + d;
-  pt a(cos(alpha) * d_2, sin(alpha) * d_2);
-  pt b(cos(beta) * d_2, sin(beta) * d_2);
-  P[4 * i] = pt(x + a.x, y + a.y);
-  P[4 * i + 1] = pt(x - a.x, y - a.y);
-  P[4 * i + 2] = pt(x + b.x, y + b.y);
-  P[4 * i + 3] = pt(x - b.x, y - b.y);
+  v = v / 90.0 * M_PI_2;
+  pt o(x, y);
+  P[4 * i] = rotate(pt(x + w, y + h), o, v);
+  P[4 * i + 1] = rotate(pt(x - w, y - h), o, v);
+  P[4 * i + 2] = rotate(pt(x + w, y - h), o, v);
+  P[4 * i + 3] = rotate(pt(x - w, y + h), o, v);
 }
 
 ld cross(pt &a, pt &b) {
@@ -65,20 +68,15 @@ vpt convex_hull(vpt &P) {
     while (!cw(H, n, *itr)) H.pop_back();
     H.push_back(*itr);
   }
-  H.pop_back();
   return H;
 }
 
 ld area(vpt &P) {
   ld res = 0;
-  for (size_t i = 0; i < P.size() - 1; ++i) {
-    res += P[i].x * P[i + 1].y;
+  size_t size = P.size();
+  for (size_t i = 0, j = 1; i < size; i++, j = (i + 1) % size) {
+      res += (P[i].x * P[j].y) - (P[i].y * P[j].x);
   }
-  res += P.back().x * P[0].y;
-  for (size_t i = 0; i < P.size() - 1; ++i) {
-    res -= P[i].y * P[i + 1].x;
-  }
-  res -= P.back().y * P[0].x;
   return abs(res) / 2;
 }
 
@@ -100,11 +98,11 @@ int main() {
     auto end = unique(P.begin(), P.end());
     P.resize(end - P.begin());
     auto H = convex_hull(P);
-    ld res = board_area / area(H) * 100.0 + 1e-8;
-    int d = res;
-    int d2 = res * 10.0;
-    d2 -= 10 * d;
-    cout << d << "." << d2 << " %" << endl;
+    ld res = board_area / area(H) * 100.0;
+    int print = int((res * 10) + 0.50001);
+    cout << fixed;
+    cout.precision(1);
+    cout << ld(print)/10 << " %" << endl;
   }
   return 0;
 }
