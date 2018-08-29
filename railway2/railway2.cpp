@@ -2,67 +2,81 @@
 using namespace std;
 
 struct node;
-using vn = vector<node*>;
+using vn = vector<node>;
 using vi = vector<int>;
-using hsn = unordered_set<node*>;
+using v2i = vector<vi>;
 
 struct node {
-  node *p = 0;
+  int p = -1;
   // identifier
   int r = -1;
   // children
-  vector<node*> C;
-  // subtree
-  hsn T;
+  vector<int> C;
   // count
-  int k = 0;
+  int k = 0, i;
   bool visited = false;
 };
 
-void build(node *n) {
-  n->visited = true;
-  for (auto &c : n->C) {
-    if (c->visited) {
-      c = 0;
+vn N;
+v2i LCA;
+
+void build(int k) {
+  auto &n = N[k];
+  n.visited = true;
+  LCA[k][k] = k;
+  for (auto &e : n.C) {
+    auto &c = N[e];
+    if (c.visited) {
+      e = -1;
       continue;
     }
-    c->p = n;
-    build(c);
-    for (auto e : c->T) n->T.insert(e);
+    LCA[k][e] = k;
+    LCA[e][k] = k;
+    c.p = k;
+    build(e);
   }
-  n->T.insert(n);
 }
 
-bool subset(vn &S, node *n) {
-  for (auto cur : S) {
-    if (n->T.find(cur) == n->T.end()) return false;
+void fill() {
+  for (auto &n : N) {
+    int p = n.p;
+    while (p != -1) {
+      auto &cur = N[p];
+      LCA[n.i][cur.i] = cur.i;
+      LCA[cur.i][n.i] = cur.i;
+      p = cur.p;
+    }
   }
-  return true;
 }
 
-node* lca(vn &S, node *n) {
-  for (auto c : n->C) {
-    if (!c) continue;
-    if (!subset(S, c)) return n;
-    return lca(S, c);
+int lca(int a, int b) {
+  if (LCA[a][b] != -1) return LCA[a][b];
+  int r = N[a].p;
+  while (LCA[r][b] == -1) {
+    r = N[r].p;
   }
-  return n;
+  LCA[a][b] = r;
+  LCA[b][a] = r;
+  return r;
 }
 
-void update(vn &S, node *root) {
-  root = lca(S, root);
+void update(vi &S) {
+  int root = S[0];
+  for (size_t i = 1; i < S.size(); ++i) root = lca(root, S[i]);
   for (auto cur : S) {
     while (cur != root) {
-      cur->visited = false;
-      cur = cur->p;
+      auto &n = N[cur];
+      n.visited = false;
+      cur = n.p;
     }
   }
   for (auto cur : S) {
     while (cur != root) {
-      if (cur->visited) break;
-      cur->visited = true;
-      ++cur->k;
-      cur = cur->p;
+      auto &n = N[cur];
+      if (n.visited) break;
+      n.visited = true;
+      ++n.k;
+      cur = n.p;
     }
   }
 }
@@ -70,41 +84,42 @@ void update(vn &S, node *root) {
 int main() {
   int n, m, k;
   cin >> n >> m >> k;
-  vn N(n);
-  for (auto &e : N) e = new node();
+  N = vn(n);
+  LCA = v2i(n, vi(n, -1));
   vector<tuple<int, int>> E(n - 1);
+  for (int i = 0; i < n; ++i) N[i].i = i;
   for (size_t i = 0; i < E.size(); ++i) {
     int a, b;
     cin >> a >> b;
     E[i] = make_tuple(--a, --b);
-    auto na = N[a];
-    auto nb = N[b];
-    na->C.push_back(nb);
-    nb->C.push_back(na);
+    auto &na = N[a];
+    auto &nb = N[b];
+    na.C.push_back(b);
+    nb.C.push_back(a);
   }
   // rooted at node 0
-  build(N[0]);
+  build(0);
+  fill();
   for (size_t i = 0; i < E.size(); ++i) {
     int a, b;
     tie(a, b) = E[i];
-    auto na = N[a];
-    auto nb = N[b];
-    if (na->p == nb) na->r = i + 1;
-    else nb->r = i + 1;
+    auto &na = N[a];
+    auto &nb = N[b];
+    if (na.p == nb.i) na.r = i + 1;
+    else nb.r = i + 1;
   }
   while (m--) {
     int s;
     cin >> s;
-    vn S(s);
+    vi S(s);
     for (auto &e : S) {
-      int k;
-      cin >> k;
-      e = N[--k];
+      cin >> e;
+      --e;
     }
-    update(S, N[0]);
+    update(S);
   }
   vi res;
-  for (auto e : N) if (e->k >= k) res.push_back(e->r);
+  for (auto e : N) if (e.k >= k) res.push_back(e.r);
   sort(res.begin(), res.end());
   cout << res.size() << endl;
   for (int r : res) cout << r << " ";
