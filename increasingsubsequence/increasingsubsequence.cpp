@@ -8,19 +8,31 @@ int INF = 1e9;
 vi lis(vi &N) {
   int k = 0;
   vi T(N.size(), 1);
-  for (size_t i = 0; i < T.size(); ++i) {
-    for (size_t j = i + 1; j < T.size(); ++j) {
-      if (N[j] > N[i] && T[j] <= T[i]) T[j] = T[i] + 1;
-      k = max(k, T[j]);
+  for (size_t i = 1; i < T.size(); ++i) {
+    for (size_t j = 0; j < i; ++j) {
+      if (N[i] > N[j] && T[i] <= T[j]) T[i] = T[j] + 1;
+      k = max(k, T[i]);
     }
   }
   vi res(k, INF);
-  size_t i = 0;
-  while (i < N.size()) {
-    int l = T[i] - 1;
-    if (!l) res[0] = min(res[0], N[i]);
-    else if (N[i] > res[l - 1]) res[l] = min(res[l], N[i]);
-    ++i;
+  size_t size = N.size() - 1;
+  for (size_t i = k; i-- > 0;) {
+    int l = i + 1;
+    size_t size2;
+    for (size_t j = 0; j <= size; ++j) {
+      if (i + 1 == k) {
+        if (T[j] == l && N[j] < res[i]) {
+          res[i] = N[j];
+          size2 = j;
+        } 
+      } else {
+        if (T[j] == l && N[j] < res[i + 1] && N[j] < res[i]) {
+          res[i] = N[j];
+          size2 = j;
+        }
+      }
+    }
+    size = size2;
   }
   return res;
 }
