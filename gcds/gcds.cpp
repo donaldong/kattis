@@ -2,7 +2,7 @@
 using namespace std;
 
 using vi = vector<int>;
-using ti2 = tuple<int, int>;
+using vb = vector<bool>;
 int MAX = 101;
 
 int gcd(int a, int b) {
@@ -11,23 +11,22 @@ int gcd(int a, int b) {
 }
 
 int solve(vi &N) {
-  vector<bool> F(MAX, 0);
-  queue<ti2> Q;
+  vb F(MAX, false), T(MAX, false);
+  for (int n : N) {
+    vb B(MAX, false);
+    for (size_t i = 1; i < F.size(); ++i) {
+      if (F[i]) {
+        int d = gcd(i, n);
+        B[d] = true;
+        T[d] = true;
+      }
+    }
+    B[n] = true;
+    T[n] = true;
+    swap(F, B);
+  }
   int res = 0;
-  for (size_t i = 0; i < N.size(); ++i) {
-    int n = N[i];
-    if (!F[n]) F[n] = true, ++res;
-    Q.push(make_tuple(i, n));
-  }
-  int i, n;
-  while (!Q.empty()) {
-    tie(i, n) = Q.front();
-    Q.pop();
-    if (i + 1 == N.size()) continue;
-    n = gcd(n, N[i + 1]);
-    if (!F[n]) F[n] = true, ++res;
-    if (n != 1) Q.push(make_tuple(i + 1, n));
-  }
+  for (bool f : T) if (f) ++res;
   return res;
 }
 
