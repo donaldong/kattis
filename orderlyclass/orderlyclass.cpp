@@ -3,7 +3,7 @@ using namespace std;
 
 void fix(string &a, string &b, int &i, int &j) {
   while (i < a.size() && a[i] == b[i]) { ++i; }
-  while (j > 0 && a[j] == b[j]) { --j; }
+  while (j >= 0 && a[j] == b[j]) { --j; }
 }
 
 bool possible(string &a, string &b, int i, int j) {
@@ -18,6 +18,7 @@ void solve(string &a, string &b, int &i, int &j) {
   i = 0, j = a.size() - 1;
   while (true) {
     fix(a, b, i, j);
+    if (i == a.size() || j < 0) return;
     if (i >= j || possible(a, b, i, j)) return;
     --j;
   }
@@ -40,14 +41,15 @@ int main() {
   cin >> a >> b;
   int i, j;
   solve(a, b, i, j);
-  if (i >= j) {
+  if (i >= j || i == a.size() || j < 0) {
     cout << 0 << endl;
   } else {
-    cout << 
+    int res = 
       count(a, b, i, j, true, false) +
       count(a, b, i, j, false, true) +
-      count(a, b, i, j, true, true) - 2
-    << endl;
+      count(a, b, i, j, true, true);
+    if (res) res -= 2;
+    cout << res << endl;
   }
   return 0;
 }
