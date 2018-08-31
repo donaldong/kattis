@@ -2,28 +2,23 @@
 using namespace std;
 
 void fix(string &a, string &b, int &i, int &j) {
-  while (!a.empty() && a[0] == b[0]) {
-    a.erase(a.begin());
-    b.erase(b.begin());
-    ++i;
-  }
-  while (!a.empty() && a.back() == b.back()) {
-    a.pop_back();
-    b.pop_back();
-    --j;
-  }
+  while (i < a.size() && a[i] == b[i]) { ++i; }
+  while (j > 0 && a[j] == b[j]) { --j; }
 }
 
-void solve(string a, string b, int &i, int &j) {
+bool possible(string &a, string &b, int i, int j) {
+  while (i < j) {
+    if (a[i] != b[j]) return false;
+    ++i; --j;
+  }
+  return true;
+}
+
+void solve(string &a, string &b, int &i, int &j) {
   i = 0, j = a.size() - 1;
   while (true) {
     fix(a, b, i, j);
-    if (a.empty()) return;
-    reverse(b.begin(), b.end());
-    if (a == b) return; 
-    reverse(b.begin(), b.end());
-    a.pop_back();
-    b.pop_back();
+    if (i >= j || possible(a, b, i, j)) return;
     --j;
   }
 }
