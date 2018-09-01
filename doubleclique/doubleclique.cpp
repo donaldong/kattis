@@ -13,27 +13,24 @@ int size_of_clique(vll &D) {
   int res = 0;
   for (ll d : D) {
     if (!d) continue;
-    if (d != k) return 0;
+    if (d != k) return -1;
     ++res;
   }
   return res;
 }
 
 ll sum_of_combinatiion(int k) {
-  if (k <= 1) return 0;
-  ll res = 0;
+  if (k < 0) return 0;
+  if (k <= 1) return 1;
   vll C = {1, 1};
-  k -= 2;
-  while (k > 0) {
+  for (int i = 0; i < k - 1; ++i) {
     vll C2(C.size() + 1, 1);
     for (size_t i = 1; i < C.size(); ++i) {
       C2[i] = (C[i] + C[i - 1]) % MOD;
     }
     C = C2;
-    --k;
   }
-  for (ll c : C) res = (res + c) % MOD;
-  return res;
+  return (C[k - 1] + 1) % MOD;
 }
 
 int main() {
