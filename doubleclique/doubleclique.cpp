@@ -20,8 +20,6 @@ int size_of_clique(vll &D) {
 }
 
 ll sum_of_combinatiion(int k) {
-  if (k < 0) return 0;
-  if (k <= 1) return 1;
   vll C = {1, 1};
   for (int i = 0; i < k - 1; ++i) {
     vll C2(C.size() + 1, 1);
@@ -44,6 +42,8 @@ int main() {
     ++D[a], ++D[b];
   }
   int k = size_of_clique(D);
-  cout << sum_of_combinatiion(k) << endl;
+  if (k < 0) cout << 0 << endl;
+  else if (k == 0) cout << D.size() + 1 << endl;
+  else cout << sum_of_combinatiion(k) << endl;
   return 0;
 }
