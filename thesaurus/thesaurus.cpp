@@ -10,13 +10,14 @@ using hmap = unordered_map<string, node*>;
 hmap M;
 
 struct node {
-  vn neigh;
   bool visited;
   size_t length;
-  size_t min_length = -1;
+  node *p;
+
   node() {}
   node(string &str) {
     length = str.size();
+    p = this;
   }
 };
 
@@ -26,24 +27,33 @@ node* get_node(string &s) {
   return M[s];
 }
 
-void connect(node *a, node *b) {
-  a->neigh.push_back(b);
-  b->neigh.push_back(a);
+node *find(node *n) {
+  if (n->p != n) {
+    n->p = find(n->p);
+  }
+  return n->p;
 }
 
-size_t dfs(node *n) {
-  if (n->min_length != -1) return n->min_length;
-  n->min_length = min(n->min_length, n->length);
-  for (auto c : n->neigh) {
-    n->min_length = min(n->min_length, dfs(c));
+void join(node *a, node *b) {
+  a = find(a), b = find(b);
+  if (a == b) return;
+  if (a->length <= b->length) {
+    b->p = a;
+  } else if (a->length > b->length) {
+    a->p = b;
   }
-  return n->min_length;
+}
+
+void connect(node *a, node *b) {
+  auto ra = find(a);
+  auto rb = find(b);
+  if (ra != rb) join(a, b);
 }
 
 size_t solve(vs &N) {
   size_t res = 0;
   for (auto &word : N) {
-    res += dfs(get_node(word));
+    res += find(get_node(word))->length;
   }
   return res;
 }
