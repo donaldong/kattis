@@ -48,18 +48,28 @@ bool dfs(node *n, node *prev, int step) {
 }
 
 bool possible(vti2 &W, vti3 &P) {
-  vector<node*> N(P.size());
-  for (auto &n : N) n = new node();
+  vti2 V;
   for (size_t i = 0; i < P.size(); ++i) {
     for (size_t j = i + 1; j < P.size(); ++j) {
       if (!intersect(W, P[i], P[j])) continue;
-      N[i]->neigh.push_back(N[j]);
-      N[j]->neigh.push_back(N[i]);
+      V.emplace_back(i, j);
     }
   }
-  for (auto n : N) if (!n->f) {
-    n->f = true;
-    if (!dfs(n, 0, 0)) return false;
+  vector<node> N(V.size());
+  for (size_t i = 1; i < N.size(); ++i) {
+    int a, b, c, d;
+    tie(a, b) = V[i];
+    for (size_t j = 0; j < i; ++j) {
+      tie(c, d) = V[j];
+      if (a == c || a == d || b == c || b == d) {
+        N[i].neigh.push_back(&N[j]);
+        N[j].neigh.push_back(&N[i]);
+      }
+    }
+  }
+  for (auto &n : N) if (!n.f) {
+    n.f = true;
+    if (!dfs(&n, 0, 0)) return false;
   }
   return true;
 }
