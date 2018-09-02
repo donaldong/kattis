@@ -9,67 +9,75 @@ using vti3 = vector<ti3>;
 using vb = vector<bool>;
 using v2b = vector<vb>;
 
+vi sub(vi &a, vi &b) {
+  return {a[0] - b[0], a[1] - b[1]};
+}
+
+int cross(vi &a, vi &b) {
+  return a[0] * b[1] - b[0] * a[1];
+}
+
+int dir(vi &a, vi &b, vi &c) {
+  auto ab = sub(b, a);
+  auto ac = sub(c, a);
+  int r = cross(ac, ab);
+  if (!r) return 0;
+  if (r > 0) return 1;
+  return 2;
+}
+
+bool on_seg(vi &a, vi &b, vi &c) {
+  return b[0] <= max(a[0], c[0]) && 
+    b[0] >= min(a[0], c[0]) && 
+    b[1] <= max(a[1], c[1]) && 
+    b[1] >= min(a[1], c[1]);
+}
+
 bool intersect(vti2 &W, ti3& A, ti3 &B) {
-  vi X(4), Y(4);
+  vi a(2), b(2), c(2), d(2);
   int i, j; 
-  tie(i, X[1], Y[1]) = A;
-  tie(j, X[3], Y[3]) = B;
+  tie(i, b[0], b[1]) = A;
+  tie(j, d[0], d[1]) = B;
   if (i == j) return false;
-  tie(X[0], Y[0]) = W[i];
-  tie(X[2], Y[2]) = W[j];
-  bool aymin = min(Y[0], Y[1]);
-  bool aymax = max(Y[0], Y[1]);
-  bool bymin = min(Y[2], Y[3]);
-  bool bymax = max(Y[2], Y[3]);
-  if (aymin > bymax || bymin > aymax) return false;
-  bool axmin = min(X[0], X[1]);
-  bool axmax = max(X[0], X[1]);
-  bool bxmin = min(X[2], X[3]);
-  bool bxmax = max(X[2], X[3]);
-  return axmin <= bxmax && bxmin <= axmax;
+  tie(a[0], a[1]) = W[i];
+  tie(c[0], c[1]) = W[j];
+  vi D(4);
+  D[0] = dir(a, b, c);
+  D[1] = dir(a, b, d);
+  D[2] = dir(c, d, a);
+  D[3] = dir(c, d, b);
+  if (D[0] != D[1] && D[2] != D[3]) return true;
+  return (!D[0] && on_seg(a, c, b)) ||
+    (!D[1] && on_seg(a, d, b)) ||
+    (!D[2] && on_seg(c, a, d)) ||
+    (!D[3] && on_seg(c, b, d));
 }
 
 struct node {
-  bool f = false;
+  int col = -1;
   vector<node*> neigh;
 };
 
-bool dfs(node *n, node *prev, int step) {
+bool dfs(node *n, int col) {
+  if (n->col != -1) return n->col == col;
+  n->col = col;
   for (auto c : n->neigh) {
-    if (c == prev) continue;
-    if (c->f) {
-      if (step & 1) continue;
-      return false;
-    }
-    c->f = true;
-    if (!dfs(c, n, step + 1)) return false;
+    if (!dfs(c, !col)) return false;
   }
   return true;
 }
 
 bool possible(vti2 &W, vti3 &P) {
-  vti2 V;
+  vector<node> N(P.size());
   for (size_t i = 0; i < P.size(); ++i) {
     for (size_t j = i + 1; j < P.size(); ++j) {
       if (!intersect(W, P[i], P[j])) continue;
-      V.emplace_back(i, j);
+      N[i].neigh.push_back(&N[j]);
+      N[j].neigh.push_back(&N[i]);
     }
   }
-  vector<node> N(V.size());
-  for (size_t i = 1; i < N.size(); ++i) {
-    int a, b, c, d;
-    tie(a, b) = V[i];
-    for (size_t j = 0; j < i; ++j) {
-      tie(c, d) = V[j];
-      if (a == c || a == d || b == c || b == d) {
-        N[i].neigh.push_back(&N[j]);
-        N[j].neigh.push_back(&N[i]);
-      }
-    }
-  }
-  for (auto &n : N) if (!n.f) {
-    n.f = true;
-    if (!dfs(&n, 0, 0)) return false;
+  for (auto &n : N) if (n.col == -1) {
+    if (!dfs(&n, 0)) return false;
   }
   return true;
 }
