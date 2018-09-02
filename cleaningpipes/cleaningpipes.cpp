@@ -6,13 +6,8 @@ using ti2 = tuple<int, int>;
 using ti3 = tuple<int, int, int>;
 using vti2 = vector<ti2>;
 using vti3 = vector<ti3>;
-
-vi N;
-
-int find(int n) {
-  if (N[n] == -1) return n;
-  return N[n] = find(N[n]);
-}
+using vb = vector<bool>;
+using v2b = vector<vb>;
 
 bool intersect(vti2 &W, ti3& A, ti3 &B) {
   vi X(4), Y(4);
@@ -34,14 +29,37 @@ bool intersect(vti2 &W, ti3& A, ti3 &B) {
   return axmin <= bxmax && bxmin <= axmax;
 }
 
+struct node {
+  bool f = false;
+  vector<node*> neigh;
+};
+
+bool dfs(node *n, node *prev, int step) {
+  for (auto c : n->neigh) {
+    if (c == prev) continue;
+    if (c->f) {
+      if (step & 1) continue;
+      return false;
+    }
+    c->f = true;
+    if (!dfs(c, n, step + 1)) return false;
+  }
+  return true;
+}
+
 bool possible(vti2 &W, vti3 &P) {
+  vector<node*> N(P.size());
+  for (auto &n : N) n = new node();
   for (size_t i = 0; i < P.size(); ++i) {
     for (size_t j = i + 1; j < P.size(); ++j) {
       if (!intersect(W, P[i], P[j])) continue;
-      int a = find(i), b = find(j);
-      if (a == b) return false;
-      N[b] = a; // join
+      N[i]->neigh.push_back(N[j]);
+      N[j]->neigh.push_back(N[i]);
     }
+  }
+  for (auto n : N) if (!n->f) {
+    n->f = true;
+    if (!dfs(n, 0, 0)) return false;
   }
   return true;
 }
@@ -56,7 +74,6 @@ int main() {
     e = make_tuple(x, y);
   } 
   vti3 P(p);
-  N = vi(p, -1);
   for (auto &e : P) {
     int s, x, y;
     cin >> s >> x >> y;
