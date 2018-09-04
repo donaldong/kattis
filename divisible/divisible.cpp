@@ -3,26 +3,21 @@ using namespace std;
 
 using Num = long long;
 using Nums = vector<Num>;
-using SumMap = unordered_map<Num, Num>;
 using SumSet = unordered_set<Num>;
 
 Num solve(Nums &N, int d) {
-  SumMap M;
+  Num res = 0;
   SumSet F;
   for (auto n : N) {
     SumSet B;
     for (auto s : F) {
       Num k = s + n;
       B.insert(k);
-      ++M[k];
+      if (k % d == 0) ++res;
     }
     B.insert(n);
+    if (n % d == 0) ++res;
     swap(F, B);
-  }
-  Num res = 0;
-  for (auto &entry : M) {
-    if (entry.first % d) continue;
-    res += entry.second;
   }
   return res;
 }
