@@ -9,14 +9,14 @@ vi N;
 v2i T;
 
 uint solve(int n, int l) {
-  if (n < 0 || n >= N.size()) return -1;
-  if (l <= 0 || l >= N.size()) return -1;
+  if (n < 0 || n >= N.size()) return -2;
+  if (l <= 0 || l >= N.size()) return -2;
   if (T[n][l] != -1) return T[n][l];
-  uint res = -1;
-  res = min(res, solve(n - l, l - 1));
-  res = min(res, solve(n + l, l));
-  if (res == -1 || res == -2) return -2;
-  res += N[n];
+  uint res = min(
+    solve(n - l, l - 1),
+    solve(n + l, l)
+  );
+  if (res != -2) res += N[n];
   T[n][l] = res;
   return res; 
 }
