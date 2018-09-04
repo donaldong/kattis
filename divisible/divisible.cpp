@@ -3,21 +3,18 @@ using namespace std;
 
 using Num = int;
 using Nums = vector<Num>;
+using SumMap = unordered_map<Num, Num>;
 
 Num solve(Nums &N, int d) {
   Num res = 0;
-  Nums F(d, 0), B(d, 0);
-  for (Num num : N) {
-    if (!num) ++res;
-    fill(B.begin(), B.end(), 0);
-    for (size_t i = 0; i < F.size(); ++i) {
-      if (!F[i]) continue;
-      Num k = (i + num) % d;
-      if (!k) res += F[i];
-      B[k] += F[i];
+  for (size_t i = 0; i < N.size(); ++i) {
+    Num sum = N[i];
+    if (!N[i]) ++res;
+    for (size_t j = i + 1; j < N.size(); ++j) {
+      sum += i;
+      sum %= d;
+      if (!sum) ++res;
     }
-    ++B[num];
-    swap(F, B);
   }
   return res;
 }
@@ -36,3 +33,4 @@ int main() {
   }
   return 0;
 }
+
