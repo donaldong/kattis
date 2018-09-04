@@ -1,8 +1,7 @@
 def solve(n):
-    if n == 0: return 0
-    if n == 1: return 11
+    if n == 0: return 10
+    if n < 10: return n + 10
     D = [0] * 10
-    if n < 10: D[1] = 1
     for i in range(9, 1, -1):
         while n % i == 0:
             D[i] += 1
