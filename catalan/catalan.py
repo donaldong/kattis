@@ -1,10 +1,10 @@
 def solve(n):
     res = 1
-    for i in range(2 * n, n, -1):
-        res *= i
-    for i in range(2, n + 2):
-        res //= i
-    return res
+    n2 = n * 2
+    for i in range(n):
+        res *= n2 - i
+        res //= i + 1
+    return res // (n + 1)
 
 n = int(input())
 for _ in range(n):
