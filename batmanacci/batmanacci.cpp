@@ -20,8 +20,9 @@ int main() {
   F = vull(2, 1);
   for (ull i = 0; i < n; ++i) {
     size_t k = F.size() - 1;
+    if (F[k - 1] > MAX_F) break;
     ull cur = F[k] + F[k - 1];
-    if (cur < MAX_F) F.push_back(cur);
+    F.push_back(cur);
   }
   while (n >= F.size()) n -= 2;
   cout << solve(n, k) << endl;
