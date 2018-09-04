@@ -1,12 +1,9 @@
-def solve(n):
-    res = 1
-    n2 = n * 2
-    for i in range(n):
-        res *= n2 - i
-        res //= i + 1
-    return res // (n + 1)
+from math import factorial
+
+def nCr(n, r):
+    return factorial(n) // (factorial(r) * factorial(n-r))
 
 n = int(input())
 for _ in range(n):
-    k = int(input())
-    print(solve(k))
+    x = int(input())
+    print(nCr(x*2, x) // (x + 1))
