@@ -1,23 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using Num = long long;
+using Num = int;
 using Nums = vector<Num>;
-using vNums = vector<Nums>; 
 
 Num solve(Nums &N, int d) {
   Num res = 0;
-  vNums S(N.size(), Nums(N.size()));
-  S[0][0] = N[0];
-  if (N[0] % d == 0) ++res;
-  for (size_t i = 1; i < N.size(); ++i) {
-    S[i][i] = N[i];
-    if (N[i] % d == 0) ++res;
-    for (size_t j = 0; j < i; ++j) {
-      Num k = S[j][i - 1] + N[i];
-      if (k % d == 0) ++res;
-      S[j][i] = k;
+  Nums F(d, 0), B(d, 0);
+  for (Num num : N) {
+    if (!num) ++res;
+    fill(B.begin(), B.end(), 0);
+    for (size_t i = 0; i < F.size(); ++i) {
+      if (!F[i]) continue;
+      Num k = (i + num) % d;
+      if (!k) res += F[i];
+      B[k] += F[i];
     }
+    ++B[num];
+    swap(F, B);
   }
   return res;
 }
@@ -28,7 +28,10 @@ int main() {
   while (c--) {
     cin >> d >> n;
     Nums N(n);
-    for (auto &num : N) cin >> num;
+    for (auto &num : N) {
+      cin >> num;
+      num %= d;
+    }
     cout << solve(N, d) << endl;
   }
   return 0;
