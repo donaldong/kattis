@@ -3,21 +3,21 @@ using namespace std;
 
 using Num = long long;
 using Nums = vector<Num>;
-using SumSet = unordered_set<Num>;
+using vNums = vector<Nums>; 
 
 Num solve(Nums &N, int d) {
   Num res = 0;
-  SumSet F;
-  for (auto n : N) {
-    SumSet B;
-    for (auto s : F) {
-      Num k = s + n;
-      B.insert(k);
+  vNums S(N.size(), Nums(N.size()));
+  S[0][0] = N[0];
+  if (N[0] % d == 0) ++res;
+  for (size_t i = 1; i < N.size(); ++i) {
+    S[i][i] = N[i];
+    if (N[i] % d == 0) ++res;
+    for (size_t j = 0; j < i; ++j) {
+      Num k = S[j][i - 1] + N[i];
       if (k % d == 0) ++res;
+      S[j][i] = k;
     }
-    B.insert(n);
-    if (n % d == 0) ++res;
-    swap(F, B);
   }
   return res;
 }
