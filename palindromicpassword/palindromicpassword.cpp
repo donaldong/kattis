@@ -29,16 +29,11 @@ int main() {
     int n;
     cin >> n;
     auto itr = lower_bound(P.begin(), P.end(), n);
-    int diff=INF, d, res;
-    d = dist(itr, n);
-    if (d < diff) {
-      diff = d;
-      res = *itr;
-    }
+    int diff, res;
+    diff = dist(itr, n);
+    res = *itr;
     if (itr != P.begin()) {
-      d = dist(--itr, n);
-      if (d < diff) {
-        diff = d;
+      if (dist(--itr, n) <= diff) {
         res = *itr;
       }
     }
