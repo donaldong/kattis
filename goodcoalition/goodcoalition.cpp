@@ -12,19 +12,17 @@ v2ld M;
 
 ld solve(vi &S, vld &P, int n, int sum) {
   if (n < 0 || sum < 0) return 0;
-  if (sum == 0) return 1.0;
   if (M[n][sum] > -0.5) return M[n][sum];
-  ld res = max(
-    solve(S, P, n - 1, sum),
-    solve(S, P, n - 1, sum - S[n]) * P[n]
-  );
+  ld res = solve(S, P, n - 1, sum);
+  if (sum == S[n]) res = max(res, P[n]);
+  else res = max(res, solve(S, P, n - 1, sum - S[n]) * P[n]);
   M[n][sum] = res;
   return res;
 }
 
 ld solve(vi &S, vld &P) {
   ld res = -1;
-  for (int i = 76; i <= 150; ++i) {
+  for (int i = 76; i < MAX_SUM; ++i) {
     res = max(res, solve(S, P, S.size() - 1, i));
   }
   return res;
@@ -42,7 +40,7 @@ int main() {
       cin >> S[i] >> P[i];
       P[i] /= 100.0;
     }
-    printf("%.1Lf\n", solve(S, P) * 100.0);
+    printf("%.7Lf\n", solve(S, P) * 100.0);
   }
   return 0;
 }
