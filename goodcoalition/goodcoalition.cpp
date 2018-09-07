@@ -3,47 +3,29 @@ using namespace std;
 
 using ld = long double;
 using vld = vector<ld>;
+using v2ld = vector<vld>;
 using vi = vector<int>;
-using v2i = vector<vi>;
 
-struct comb {
-  vi list;
-  int sum = 0;
+int MAX_SUM = 151;
 
-  comb() {}
-  comb(const comb &c) {
-    list = c.list;
-    sum = c.sum;
-  }
-  void add(int i, int n) {
-    list.push_back(i);
-    sum += n;
-  }
-};
+v2ld M;
 
-ld calc(vld &P, comb &c) {
-  ld res = 1.0;
-  for (auto i : c.list) res *= P[i];
+ld solve(vi &S, vld &P, int n, int sum) {
+  if (n < 0 || sum < 0) return 0;
+  if (sum == 0) return 1.0;
+  if (M[n][sum] > -0.5) return M[n][sum];
+  ld res = max(
+    solve(S, P, n - 1, sum),
+    solve(S, P, n - 1, sum - S[n]) * P[n]
+  );
+  M[n][sum] = res;
   return res;
 }
 
 ld solve(vi &S, vld &P) {
-  vector<comb> C;
-  ld res = 0;
-  for (size_t i = 0; i < S.size(); ++i) {
-    size_t j = C.size();
-    for (size_t k = 0; k < j; ++k) {
-      comb new_comb(C[k]);
-      new_comb.add(i, S[i]);
-      if (new_comb.sum < 76) {
-        C.push_back(new_comb);
-      } else {
-        res = max(res, calc(P, new_comb));
-      }
-    }
-    comb c;
-    c.add(i, S[i]);
-    C.push_back(c);
+  ld res = -1;
+  for (int i = 76; i <= 150; ++i) {
+    res = max(res, solve(S, P, S.size() - 1, i));
   }
   return res;
 }
@@ -55,6 +37,7 @@ int main() {
     cin >> n;
     vi S(n);
     vld P(n);
+    M = v2ld(n, vld(MAX_SUM, -1));
     for (int i = 0; i < n; ++i) {
       cin >> S[i] >> P[i];
       P[i] /= 100.0;
