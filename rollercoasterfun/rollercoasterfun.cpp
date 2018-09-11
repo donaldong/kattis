@@ -26,10 +26,9 @@ ll solve(vti3 &N, int k, int t) {
   ll res = solve(N, k - 1, t);
   while (cur <= t) {
     sum += calc(a, b, s);
-    res = max(
-      res,
-      solve(N, k - 1, t - cur) + sum 
-    );
+    ll r = solve(N, k - 1, t - cur) + sum;
+    if (r <= res) break;
+    res = r;
     ++s;
     cur += c;
   }
