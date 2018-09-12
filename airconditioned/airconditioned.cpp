@@ -5,17 +5,19 @@ using ti2 = tuple<int, int>;
 using vti2 = vector<ti2>;
 
 int solve(vti2 &N) {
-  int res = 0, cur = 0, l, r;
+  int res = 1, cur = 0, l, r, l2, r2;
   sort(N.begin(), N.end());
-  for (size_t i = 0; i < N.size(); ++i) {
+  for (size_t i = 0; i < N.size();) {
     tie(l, r) = N[i];
-    if (l <= cur && cur <= r) continue;
-    ++res;
-    cur = r;
-    while (i + 1 < N.size()) {
-      tie(l, r) = N[i + 1];
-      if (r > cur) break;
-      cur = r;
+    cur = l;
+    ++i;
+    while (i < N.size()) {
+      tie(l2, r2) = N[i];
+      if (l2 > r) {
+        ++res;
+        break;
+      }
+      cur = l2;
       ++i;
     }
   }
@@ -33,3 +35,4 @@ int main() {
   cout << solve(N) << endl;
   return 0;
 }
+
