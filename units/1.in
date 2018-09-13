@@ -1,0 +1,25 @@
+4
+km m mm cm
+km = 1000 m
+m = 100 cm
+cm = 10 mm
+4
+m mm cm km
+km = 100000 cm
+km = 1000000 mm
+m = 1000 mm
+6
+MiB Mib KiB Kib B b
+B = 8 b
+MiB = 1024 KiB
+KiB = 1024 B
+Mib = 1048576 b
+Mib = 1024 Kib
+6
+Kib B MiB Mib KiB b
+B = 8 b
+MiB = 1048576 B
+MiB = 1024 KiB
+MiB = 8192 Kib
+MiB = 8 Mib
+0
