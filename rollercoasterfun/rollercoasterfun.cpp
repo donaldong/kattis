@@ -3,39 +3,48 @@ using namespace std;
 
 int MAX_T = 25001;
 int MAX_N = 101;
-int MAX_K = 40;
 
 using ti3 = tuple<int, int, int>;
 using vti3 = vector<ti3>;
 using ll = long long;
-using vi = vector<int>;
+using vi = vector<ll>;
 using v2i = vector<vi>;
-using v3i = vector<v2i>;
 
-v3i M(MAX_N, v2i(MAX_T, vi(MAX_K, -1)));
+v2i M(MAX_N, vi(MAX_T, 0));
 
-ll calc(int a, int b, int k) {
+ll calc(ll a, ll b, ll k) {
   ll r = k - 1;
   return a - r * r * b;
 }
 
-ll solve(vti3 &N, int n, int t, int k) {
-  if (k < 0 || t <= 0) return 0;
-  if (M[k][t] != -1) return M[k][t];
-  int a, b, c, s = 1, sum = 0;
-  tie(a, b, c) = N[k];
-  int cur = c;
-  ll res = solve(N, k - 1, t);
-  while (cur <= t) {
-    sum += calc(a, b, s);
-    ll r = solve(N, k - 1, t - cur) + sum;
-    if (r <= res) break;
-    res = r;
-    ++s;
-    cur += c;
+void fill(vti3 &N) {
+  int a, b, c, _n = N.size();
+  for (int n = 1; n <= _n; ++n) {
+    tie(a, b, c) = N[n - 1];
+    vi S(36, 0);
+    size_t k = 1;
+    for (; k < S.size(); ++k) {
+      ll r = calc(a, b, k);
+      if (r <= 0) break;
+      S[k] = S[k - 1] + r;
+    }
+    for (int t = 1; t < MAX_T; ++t) {
+      ll res = M[n - 1][t];
+      if (!b) {
+        if (t - c >= 0) res = max(
+          res,
+          M[n][t - c] + a
+        );
+      } else {
+        for (size_t i = 1; i < k; ++i) {
+          int r = t - i * c;
+          if (r >= 0) res = max(res, M[n - 1][r] + S[i]);
+          else break;
+        }
+      }
+      M[n][t] = max(res, M[n][t - 1]);
+    }
   }
-  M[k][t] = res;
-  return res;
 }
 
 int main() {
@@ -46,16 +55,12 @@ int main() {
     cin >> a >> b >> t;
     N[i] = make_tuple(a, b, t);
   }
+  fill(N);
   cin >> q;
   while (q--) {
-    int t2;
-    cin >> t2;
-    ll res = 0;
-    int k = t2 / t;
-    for (int i = 0; i <= k; ++i) {
-      res = max(res, solve(N, N.size() - 1, t2, i));
-      cout << res << endl;
-    }
+    cin >> t;
+    cout << M[n][t] << endl;
   }
   return 0;
 }
+
