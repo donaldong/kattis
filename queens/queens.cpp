@@ -20,14 +20,22 @@ bool md(int r, int c) {
 }
 
 bool ad(int r, int c) {
-  if (r >= c) {
-    if (AC[c]) return false;
-    AC[c] = true;
+  int k = r + c;
+  if (k >= AC.size()) {
+    k -= AC.size() - 1;
+    if (AC[k]) return false;
+    AC[k] = true;
   } else {
-    if (AR[r]) return false;
-    AR[r] = true;
+    if (AR[k]) return false;
+    AR[k] = true;
   }
   return true;
+}
+
+void print(vb &v) {
+  cout << endl;
+  for (auto e : v) cout << e << " ";
+  cout << endl;
 }
 
 int main() {
