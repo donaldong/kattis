@@ -39,13 +39,11 @@ int main() {
   sort(T.begin(), T.end());
   auto end = unique(T.begin(), T.end());
   int lo = 0, hi = end - T.begin() - 1;
-  if (lo + 1 == hi) {
-    if (!possible(G, T[hi])) hi = lo;
-  } else while (lo + 1 < hi) {
+  while (lo < hi) {
     int mid = (lo + hi) / 2;
-    if (!possible(G, T[mid])) hi = mid - 1;
-    else lo = mid;
+    if (possible(G, T[mid + 1])) lo = mid + 1;
+    else hi = mid;
   }
-  cout << T[hi] << endl;
+  cout << T[lo] << endl;
   return 0;
 }
