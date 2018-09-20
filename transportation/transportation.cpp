@@ -85,7 +85,7 @@ int main() {
   for (int i = 0; i < r; ++i) {
     cin >> name;
     k = index(name);
-    G[sink][k] = 1e9; // inf cap
+    G[sink][k] = 1; // inf cap
   }
   for (int i = 0; i < f; ++i) {
     cin >> name;
