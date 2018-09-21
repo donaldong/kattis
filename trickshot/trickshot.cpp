@@ -32,10 +32,14 @@ ld to_deg(ld n) {
 bool possible(pt &A, pt &B, pt &C) {
   ld c = atan2(C.y, C.x);
   ld b = atan2(-B.y, -B.x);
+  if (b > 0) return false;
   ld a = atan2(-A.y, -A.x);
   ld ba = a - b;
   ld cb = b - c;
-  return abs(to_deg(ba) - to_deg(cb)) < 0.001;
+  ba = to_deg(ba);
+  cb = to_deg(cb);
+  if (ba > 90 || cb > 90) return false;
+  return abs(ba - cb) < 0.001;
 }
 
 int main() {
@@ -50,7 +54,7 @@ int main() {
   pt contactBL = move_back(B, BL, 2 * r);
   pt dirQ = contactBL - contactAQ;
   bool f = false;
-  for (ld x = 0; x < w; x += 0.0005) {
+  for (ld x = r; x < w - r; x += 0.0005) {
     pt F(x, h);
     F = contactAQ - F;
     if (possible(F, dirA, dirQ)) {
