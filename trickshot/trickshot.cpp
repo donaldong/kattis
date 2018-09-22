@@ -39,7 +39,7 @@ bool possible(pt &A, pt &B, pt &C) {
   ba = to_deg(ba);
   cb = to_deg(cb);
   if (ba > 90 || cb > 90) return false;
-  return abs(ba - cb) < 0.001;
+  return abs(ba - cb) < 0.005;
 }
 
 int main() {
