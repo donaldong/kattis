@@ -12,7 +12,6 @@ struct piece {
 
 struct cmp {
   bool operator()(const piece &a, const piece &b) const {
-    if (a.l != b.l) return a.l < b.l;
     if (a.f != b.f) return a.f < b.f;
     if (a.b != b.b) return a.b < b.b;
     return &a < &b;
@@ -23,23 +22,31 @@ using sp = set<piece, cmp>;
 
 void debug(piece p, string s="") {
   cout << s << endl;
-  cout << p.l << " " << p.b << endl;
-  cout << endl;
+  printf("%d %d %d\n", p.l, p.f, p.b);
 }
 
 bool update(sp &S) {
-  auto a = S.begin();
-  piece p(a->l, a->b + 1, 0);
-  auto b = S.lower_bound(p);
-  if (b == S.end()) return false;
-  p.l = a->l + b->l;
-  p.f = min(a->f, b->f);
-  p.b = max(a->b, b->b);
-  auto c = p.V.insert(p.V.begin(), a->V.begin(), a->V.end());
-  c = p.V.insert(c, b->V.begin(), b->V.end());
-  S.erase(a); S.erase(b);
-  S.insert(p);
-  return true;
+  size_t size = S.size();
+  sp Sp;
+  while (!S.empty()) {
+    auto a = S.begin();
+    piece p(a->l, a->b + 1, 0);
+    auto b = S.lower_bound(p);
+    if (b == S.end()) {
+      Sp.insert(*a);
+      S.erase(a);
+      continue;
+    }
+    p.l = a->l + b->l;
+    p.f = min(a->f, b->f);
+    p.b = max(a->b, b->b);
+    auto c = p.V.insert(p.V.begin(), a->V.begin(), a->V.end());
+    c = p.V.insert(c, b->V.begin(), b->V.end());
+    S.erase(a); S.erase(b);
+    Sp.insert(p);
+  }
+  S = Sp;
+  return Sp.size() != size; 
 }
 
 int main() {
