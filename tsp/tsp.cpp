@@ -8,8 +8,8 @@ using vi = vector<int>;
 using vb = vector<bool>;
 
 struct edge {
-  int a, b;
-  bool in_mst = false, in_matching = false, used = false;
+  int a, b, used_count = 0;
+  bool in_mst = false;
   ld w;
   edge() {}
   edge(int a, int b, ld w) : a(a), b(b), w(w) {}
@@ -42,85 +42,27 @@ void mst(ve &E) {
   }
 }
 
-vi odd_vertices(ve &E) {
-  vi count(NUM_OF_NODES, 0);
-  vi O;
-  for (auto &e : E) if (e.in_mst) ++count[e.a], ++count[e.b];
-  for (int i = 0; i < NUM_OF_NODES; ++i) {
-    if (count[i] & 1) O.push_back(i);
-  }
-  return O;
-}
-
-void math(vi &O, v2ep &M) {
-  vb matched(NUM_OF_NODES, false);
-  int a, b;
-  for (auto n : O) {
-    bool f = false;
-    sort(M[n].begin(), M[n].end(), [](edge *a, edge *b) {
-      return a->w < b->w;
-    });
-    for (auto itr = M[n].begin(); itr != M[n].end(); ++itr) {
-      auto e = *itr;
-      a = e->a, b = e->b;
-      if (matched[a] || matched[b] || e->in_matching) continue;
-      e->in_matching = true;
-      matched[a] = matched[b] = true;
-      f = true;
-      break;
-    }
-    if (!f) a = b / 0;
+void dfs(v2ep &M, int n, vi &path, vb &V) {
+  if (V[n]) return;
+  V[n] = true;
+  path.push_back(n);
+  for (auto ep : M[n]) {
+    if (!ep->in_mst) continue;
+    dfs(M, ep->a == n ? ep->b : ep->a, path, V);
   }
 }
 
-vi eulerian(v2ep &M) {
-  vi res;
-  stack<int> S;
-  int n = 0;
-  S.push(0);
-  while (!S.empty()) {
-    bool f = false;
-    for (auto &ep : M[n]) {
-      if (ep->used) continue;
-      if (!ep->in_matching && !ep->in_mst) continue;
-      S.push(n);
-      ep->used = true;
-      f = true;
-      n = ep->a == n ? ep->b : ep->a;
-    }
-    if (!f) {
-      res.push_back(n);
-      n = S.top();
-      S.pop();
-    }
-  }
-  reverse(res.begin(), res.end());
-  return res;
-}
-
-vi hamiltonian(vi &C) {
-  vb seen(NUM_OF_NODES, false);
-  vi res;
-  res.reserve(NUM_OF_NODES);
-  for (auto c : C) {
-    if (seen[c]) continue;
-    res.push_back(c);
-    seen[c] = true;
-  }
-  return res;
-}
-
-vi christofides(ve &E) {
+vi get_tour(ve &E) {
   mst(E);
-  auto O = odd_vertices(E);
   v2ep M(NUM_OF_NODES);
   for (auto &e : E) {
     M[e.a].push_back(&e);
     M[e.b].push_back(&e);
   }
-  math(O, M); 
-  auto C = eulerian(M);
-  return hamiltonian(C);
+  vi path;
+  vb V(NUM_OF_NODES, false);
+  dfs(M, 0, path, V);
+  return path;
 }
 
 int main() {
@@ -140,7 +82,7 @@ int main() {
     ld dx = get<0>(N[i]) - get<0>(N[j]), dy = get<1>(N[i]) - get<1>(N[j]);
     E.emplace_back(j, i, hypot(dx, dy));
   }
-  vi tour = christofides(E);
+  vi tour = get_tour(E);
   for (int t : tour) cout << t << endl;
   return 0;
 }
