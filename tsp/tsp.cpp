@@ -2,87 +2,83 @@
 using namespace std;
 
 using ld = long double;
-using tld = tuple<ld, ld>;
-using vtld = vector<tld>;
+using vld = vector<ld>;
+using v2ld = vector<vld>;
 using vi = vector<int>;
 using vb = vector<bool>;
-
-struct edge {
-  int a, b, used_count = 0;
-  bool in_mst = false;
-  ld w;
-  edge() {}
-  edge(int a, int b, ld w) : a(a), b(b), w(w) {}
-};
-
-using ve = vector<edge>;
-using vep = vector<edge*>;
-using v2ep = vector<vep>;
-int NUM_OF_NODES;
+ld INF = 1e18;
+vi tour;
+int N;
+vld X, Y;
+v2ld D;
 
 void debug(vi &V) {
   for (int v : V) cout << v << " ";
   cout << endl;
 }
 
-int find(vi &P, int n) {
-  if (P[n] == -1) return n;
-  return P[n] = find(P, P[n]);
+bool vswap(int i, int j) {
+  ld dist = D[tour[i - 1]][tour[j]] + D[tour[i]][tour[j + 1]];
+  dist -= D[tour[i - 1]][tour[i]] + D[tour[j]][tour[j + 1]];
+  return dist < 0;
 }
 
-void mst(ve &E) {
-  int a, b;
-  sort(E.begin(), E.end(), [](edge &a, edge &b) {
-    return a.w < b.w;
-  });
-  vi P(NUM_OF_NODES, -1);
-  for (size_t i = 0; i < E.size(); ++i) {
-    a = find(P, E[i].a), b = find(P, E[i].b);
-    if (a != b) P[b] = a, E[i].in_mst = true;
+ld tour_dist() {
+  ld res = 0;
+  for (size_t i = 1; i < tour.size(); ++i) {
+    res += D[tour[i]][tour[i - 1]];
   }
+  return res;
 }
 
-void dfs(v2ep &M, int n, vi &path, vb &V) {
-  if (V[n]) return;
-  V[n] = true;
-  path.push_back(n);
-  for (auto ep : M[n]) {
-    if (!ep->in_mst) continue;
-    dfs(M, ep->a == n ? ep->b : ep->a, path, V);
+bool dist_swap() {
+  for (size_t i = 1; i < tour.size() - 2; ++i) {
+    for (size_t j = i + 2; j < tour.size() - 1; ++j) {
+      if (vswap(i, j)) {
+        reverse(tour.begin() + i, tour.begin() + j + 1);
+        return true;
+      }
+    }
   }
-}
-
-vi get_tour(ve &E) {
-  mst(E);
-  v2ep M(NUM_OF_NODES);
-  for (auto &e : E) {
-    M[e.a].push_back(&e);
-    M[e.b].push_back(&e);
-  }
-  vi path;
-  vb V(NUM_OF_NODES, false);
-  dfs(M, 0, path, V);
-  return path;
+  return false;
 }
 
 int main() {
-  int n;
+  ios::sync_with_stdio(0);
+  cin.tie(0);
   ld x, y;
-  cin >> n;
-  NUM_OF_NODES = n;
-  vtld N;
-  N.reserve(n);
-  for (int i = 0; i < n; ++i) {
-    cin >> x >> y;
-    N.emplace_back(x, y);
+  cin >> N;
+  vb used(N, false);
+  tour.assign(N, -1);
+  D.assign(N, vld(N, -1));
+  X.assign(N, 0.0);
+  Y.assign(N, 0.0);
+  for (int i = 0; i < N; ++i) {
+    cin >> X[i] >> Y[i];
   }
-  vector<edge> E;
-  E.reserve(n * (n - 1) / 2);
-  for (int i = 1; i < n; ++i) for (int j = 0; j < i; ++j) {
-    ld dx = get<0>(N[i]) - get<0>(N[j]), dy = get<1>(N[i]) - get<1>(N[j]);
-    E.emplace_back(j, i, hypot(dx, dy));
+  for (int i = 0; i < N; ++i) {
+    for (int j = 0; j < i; ++j) D[i][j] = D[j][i];
+    for (int j = i + 1; j < N; ++j) {
+      x = X[i] - X[j], y = Y[i] - Y[j];
+      D[i][j] = hypot(x, y);
+    }
   }
-  vi tour = get_tour(E);
+  tour[0] = 0;
+  used[0] = true;
+  for (int i = 1; i < N; ++i) {
+    int best = -1;
+    for (int j = 0; j < N; ++j) {
+      if (used[j]) continue;
+      if (best == -1 || D[tour[i - 1]][j] < D[tour[i - 1]][best]) {
+        best = j;
+      }
+    }
+    used[best] = true;
+    tour[i] = best;
+  }
+  tour.push_back(0);
+  while (dist_swap());
+  tour.pop_back();
   for (int t : tour) cout << t << endl;
   return 0;
 }
