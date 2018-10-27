@@ -1,0 +1,12 @@
+5 5 3
+Alice 0
+Bob 1
+Carol 1
+Dan 3
+Erin 1
+Alice Bob
+Alice Carol
+Bob Dan
+Carol Dan
+Dan Erin
+Alice

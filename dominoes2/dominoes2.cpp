@@ -1,152 +1,43 @@
-/**
- *  @brief   Kattis - NAME 
- *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
- *  
- *  + BFS
- */
-
-#include <algorithm>
-#include <climits>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <deque>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <regex>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-typedef unsigned int uint;
-typedef long long int ll;
-typedef unsigned long long int ull;
-typedef long double ld;
-#define hmap unordered_map
-#define hset unordered_set
-#define pq priority_queue
-#define pb push_back
-#define mp make_pair
-#define putchar putchar_unlocked
-#define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
+using vb = vector<bool>;
+using vi = vector<int>;
+using v2i = vector<vi>;
 
-inline void scan(int&);
-inline void scan(ll&);
-inline void print(uint);
-inline void print(ull);
-inline void print(string&);
-
-struct node {
-    vector<node*> neigh;
-    bool f = false;
-};
-
-int bfs(node* start) {
-    int res = 0;
-    start->f = true;
-    queue<node*> Q;
-    Q.push(start);
-    while (!Q.empty()) {
-        auto cur = Q.front();
-        Q.pop();
-        for (auto n : cur->neigh) {
-            if (!n->f) {
-                n->f = true;
-                Q.push(n);
-                ++res;
-            }
-        }
+void bfs(v2i &G, int cur, vb &V) {
+  queue<int> Q;
+  Q.push(cur);
+  V[cur] = true;
+  while (!Q.empty()) {
+    cur = Q.front(); Q.pop();
+    for (auto nxt : G[cur]) {
+      if (V[nxt]) continue;
+      V[nxt] = true;
+      Q.push(nxt);
     }
-    return res;
+  }
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    int T;
-    scan(T);
-    while (T--) {
-        int n, m, l;
-        scan(n), scan(m), scan(l);
-        vector<node> nodes(n);
-        while (m--) {
-            int a, b;
-            scan(a), scan(b);
-            --a; --b;
-            nodes[a].neigh.pb(&nodes[b]);
-        }
-        node start;
-        while (l--) {
-            int a;
-            scan(a);
-            --a;
-            start.neigh.pb(&nodes[a]);
-        }
-        cout << bfs(&start) << endl;
+  int t, n, m, l, a, b;
+  cin >> t;
+  while (t--) {
+    cin >> n >> m >> l;
+    vb V(n, false);
+    v2i G(n);
+    while (m--) {
+      cin >> a >> b;
+      --a, --b;
+      G[a].push_back(b);
     }
-    return 0;
-}
-
-inline void scan(int &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
+    while (l--) {
+      cin >> a;
+      bfs(G, --a, V);
     }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void scan(ll &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void print(uint n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[11];
-    int i = 10;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 10) putchar(buf[++i]);
-}
-
-inline void print(ull n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[20];
-    int i = 19;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 19) putchar(buf[++i]);
-}
-
-inline void print(string &s) {
-    rep(i, 0, s.length()) putchar(s[i]);
+    int res = 0;
+    for (auto v : V) if (v) ++res;
+    cout << res << endl;
+  }
+  return 0;
 }

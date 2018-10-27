@@ -1,247 +1,129 @@
-/**
- *  @brief   Kattis - NAME 
- *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
- *  
- *  + DP 
- */
-
-#include <algorithm>
-#include <climits>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <deque>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <regex>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-typedef unsigned int uint;
-typedef long long int ll;
-typedef unsigned long long int ull;
-typedef long double ld;
-#define hmap unordered_map
-#define hset unordered_set
-#define pq priority_queue
-#define pb push_back
-#define mp make_pair
-#define putchar putchar_unlocked
-#define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
+using vb = vector<bool>;
+using vi = vector<int>;
+using v2i = vector<vi>;
+int INF = 1e9;
+v2i G;
 
-inline void scan(int&);
-inline void scan(ll&);
-inline void print(uint);
-inline void print(ull);
-inline void print(string&);
-
-int N, M;
-int INF = 1 << 30;
-int BAD = 1 << 29;
-
-struct node;
-
-struct edge {
-    node *n;
-    int t;
-
-    edge() {}
-    edge(node *n, int t) : n(n), t(t) {}
-};
-
-struct node {
-    vector<edge*> E;
-    int k = 0, i;
-    vector<int> T;
-    node() {}
-};
-
-void build(node *n) {
-    for (auto e : n->E) {
-        build(e->n);
-        n->k += e->n->k + 1;
-    }
+void debug(vi &V) {
+  for (auto v : V) cout << v << " ";
+  cout << endl;
 }
 
-void print(vector<int> &vec) {
-    for (auto v : vec) {
-        cout << v << " ";
+void debug(vb &V) {
+  for (auto v : V) cout << v << " ";
+  cout << endl;
+}
+
+void debug(v2i &T) {
+  for (auto &row : T) {
+    for (auto cell : row) {
+      if (cell != INF) cout << cell << " ";
+      else cout << "I ";
     }
     cout << endl;
+  }
 }
 
-int calc(node *n, vector<int> &list);
-
-int solve(node *n, int k) {
-    if (k == 0) return 0;
-    if (k > n->k) return BAD;
-    --k;
-    if (n->T[k] != INF) return n->T[k];
-    vector<int> C(n->E.size(), 0);
-    //cout << "BEG n: " << n->i << endl;
-    while (true) {
-        C[0]++;
-        rep(i, 0, C.size() - 1) {
-            if (C[i] > n->E[i]->n->k + 1) {
-                C[i] = 0;
-                ++C[i + 1];
-            }
-        }
-        //cout << "C: ";
-        //print(C);
-        if (C.back() > n->E.back()->n->k + 1) break;
-        int j = 0;
-        rep(i, 0, C.size()) j += C[i];
-        --j;
-        int res = calc(n, C);
-        // printf("j: %d, val: %d\n", j, res);
-        n->T[j] = min(n->T[j], res); 
-    }
-    //cout << "END n: " << n->i << endl;
-    return n->T[k];
+void dfs(v2i &DG, vi &P, v2i &DP, int n, int t) {
+  for (size_t i = 0; i < DG.size(); ++i) {
+    if (DG[n][i] == INF) continue;
+    dfs(DG, P, DP, i, DG[n][i]);
+  }
+  int p = P[n];
+  if (p == -1) return;
+  for (size_t i = DP[n].size() - 1; i >= t; --i) {
+    DP[p][i] = max(
+      DP[p][i],
+      max(DP[n][i - t], DP[p][i - t]) + 1
+    );
+  }
+  #if DEBUG
+  printf("n: %d, t: %d\n", n, t);
+  debug(DP[p]);
+  #endif
 }
 
-int initial_cost(node *n, vector<int> &list) {
-    int count = 0;
-    rep(i, 0, list.size()) if (list[i]) ++count;
-    if (!count) return 0;
-    if (count == 1) {
-        rep(i, 0, list.size()) if (list[i])
-            return n->E[i]->t;
+int solve(vi &P, int _b, int n) {
+  #if DEBUG
+  printf("solving: %d\n", _b);
+  #endif
+  int a, b = _b, left = n, res = 0;
+  vb S(P.size(), false);
+  S[0] = true;
+  queue<int> Q;
+  while (b != 0) {
+    S[b] = true;
+    Q.push(b);
+    a = P[b];
+    left -= G[a][b];
+    if (left < 0) return -1;
+    ++res;
+    b = a;
+  }
+  Q.push(0);
+  int s = G.size();
+  v2i DG(G.size() + 1, vi(G.size() + 1, INF));
+  vi P2(DG.size(), -1);
+  #if DEBUG
+  debug(S);
+  #endif
+  while (!Q.empty()) {
+    a = Q.front(); Q.pop();
+    for (size_t i = 0; i < G.size(); ++i) {
+      if (
+        G[a][i] == INF || // no edge
+        P2[i] != -1 || // visited
+        S[i] // on stem
+      ) continue;
+      P2[i] = S[a] ? s : a;
+      DG[P2[i]][i] = G[a][i] * 2;
+      Q.push(i);
     }
-    int res = 0;
-    bool f = true;
-    rep(i, 0, list.size()) {
-        if (!list[i]) continue;
-        if (f) {
-            f = false;
-            res += n->E[i]->t;
-        } else {
-            res += 2 * n->E[i]->t;
-        }
-    }
-    return res;
-}
-
-int calc(node *n, vector<int> &list) {
-    int res = 0, count = 0;
-    bool f = true;
-    rep(i, 0, list.size()) {
-        if (list[i]) ++count;
-    }
-    if (!count) return 0;
-    //print(list);
-    rep(i, 0, list.size()) {
-        if (!list[i]) continue;
-        int r = solve(n->E[i]->n, list[i] - 1); 
-        if (r >= BAD) return BAD;
-        if (count == 1) {
-            res = r + n->E[i]->t;
-            if (res > M) return BAD;
-            else break;
-        } else {
-            if (f) {
-                f = false;
-                res = r + n->E[i]->t;
-            } else {
-                res += 2 * (r + n->E[i]->t);
-            }
-        }
-        if (res > M) return BAD;
-    }
-    return res;
+  }
+  #if DEBUG
+  debug(DG);
+  debug(P2);
+  #endif
+  v2i DP(DG.size(), vi(left + 1, 0));
+  dfs(DG, P2, DP, s, 0);
+  #if DEBUG
+  printf("total: %d, left: %d\n", n, left);
+  printf("on stem: %d, on blossom: %d\n", res, DP[s][left]);
+  debug(DP);
+  #endif
+  return res + DP[s][left];
 }
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    scan(N), scan(M);
-    vector<node> nodes(N);
-    rep(i, 0, N) nodes[i].i = i;
-    rep(i, 0, N - 1) {
-        int a, b, c;
-        scan(a), scan(b), scan(c);
-        nodes[a].E.pb(new edge(&nodes[b], c));
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+  int m, n, a, b, t;
+  cin >> m >> n;
+  G.assign(m, vi(m, INF));
+  for (int i = 1; i < m; ++i) {
+    cin >> a >> b >> t;
+    G[b][a] = G[a][b] = t;
+  }
+  queue<int> Q;
+  Q.push(0);
+  vi P(m, -1);
+  int cur, res = 0;
+  P[0] = 0;
+  while (!Q.empty()) {
+    cur = Q.front(); Q.pop();
+    #if DEBUG
+    printf("bfs: %d\n", cur);
+    #endif
+    for (int i = 0; i < m; ++i) {
+      if (G[cur][i] == INF || P[i] != -1) continue;
+      P[i] = cur;
+      res = max(res, solve(P, i, n));
+      Q.push(i);
     }
-    build(&nodes[0]);
-    rep(i, 0, N) if (nodes[i].k) {
-        nodes[i].T = vector<int>(nodes[i].k, INF);
-        sort(nodes[i].E.begin(), nodes[i].E.end(), [](edge *a, edge *b) {
-            return a->t > b->t;
-        });
-    }
-    solve(&nodes[0], nodes[0].k);
-    int res = 0;
-    for (int i = nodes[0].k - 1; i >= 0; --i) {
-        if (nodes[0].T[i] >= BAD) continue;
-        res = i + 1;
-        break;
-    }
-    cout << res << endl;
-    return 0;
-}
-
-inline void scan(int &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void scan(ll &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
-
-inline void print(uint n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[11];
-    int i = 10;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 10) putchar(buf[++i]);
-}
-
-inline void print(ull n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[20];
-    int i = 19;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 19) putchar(buf[++i]);
-}
-
-inline void print(string &s) {
-    rep(i, 0, s.length()) putchar(s[i]);
+  }
+  cout << res << endl;
+  return 0;
 }
