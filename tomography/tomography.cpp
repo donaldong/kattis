@@ -2,35 +2,33 @@
 using namespace std;
 
 using vi = vector<int>;
-using v2i = vector<vi>;
 
-vi SC, SR;
-
-bool solve(int r, int c) {
-  printf("[%d %d] %d %d \n", r + 1, c + 1, SC[r], SR[c]);
-  if (r < 0 || c < 0) return false;
-  if (r + 1 < SR[c] || c + 1 < SC[r]) return false;
-  if (r == 0 && SC[0] <= c + 1) return true;
-  if (c == 0 && SR[0] <= r + 1) return true;
-  if (SC[r] && SR[c]) {
-    bool f = true;
-    --SC[r];
-    f = f && solve(r, c - 1);
-    ++SC[r];
-    --SR[c];
-    f = f && solve(r - 1, c);
-    ++SR[c];
-    if (f) return true;
+bool possible(vi &row_sum, vi &col_sum) {
+  vi R = row_sum, C = col_sum;
+  for (int r : R) {
+    sort(col_sum.rbegin(), col_sum.rend());
+    for (int i = 0; i < r; ++i) {
+      --col_sum[i];
+      if (col_sum[i] < 0) return false;
+    }
   }
-  return solve(r - 1, c) && solve(r, c - 1);
+  for (int c : C) {
+    sort(row_sum.rbegin(), row_sum.rend());
+    for (int i = 0; i < c; ++i) {
+      --row_sum[i];
+      if (row_sum[i] < 0) return false;
+    }
+  }
+  return true;
 }
 
 int main() {
-  int n, m;
-  cin >> n >> m;
-  SC = vi(n), SR = vi(m);
-  for (auto &num : SC) cin >> num;
-  for (auto &num : SR) cin >> num;
-  cout << (solve(n - 1, m - 1) ? "Yes" : "No") << endl;
-  return 0;
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+  int m, n;
+  cin >> m >> n;
+  vi row_sum(m), col_sum(n);
+  for (int i = 0; i < m; ++i) cin >> row_sum[i];
+  for (int i = 0; i < n; ++i) cin >> col_sum[i];
+  cout << (possible(row_sum, col_sum) ? "Yes" : "No") << endl;
 }
