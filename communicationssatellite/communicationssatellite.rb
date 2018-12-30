@@ -1,5 +1,4 @@
-Point = Struct.new(:x, :y, :r, :p, :rank)
-Edge = Struct.new(:a, :b, :w)
+Point = Struct.new(:x, :y, :r)
 
 def rl
   $stdin.readline.split.map &:to_i
@@ -15,47 +14,32 @@ def cost(a, b)
   dist(a, b) - a.r - b.r
 end
 
-def find(n)
-  return n.p if n.p == n
-  n.p = find(n.p)
-end
-
-def join(a, b)
-  if a.rank < b.rank
-    a.p = b
-  elsif b.rank < a.rank
-    b.p = a
-  else
-    b.p = a
-    a.rank += 1
-  end
-end
-
 N = rl[0]
 P = Array.new(N)
 for i in 0...N
   x, y, r = rl
-  P[i] = Point.new(x, y, r, nil, 0)
-  P[i].p = P[i]
-end
-
-E = Array.new(N * (N - 1) / 2)
-k = 0
-for i in 1...N
-  for j in 0...i
-    E[k] = Edge.new(j, i, cost(P[j], P[i]))
-    k += 1
-  end
+  P[i] = Point.new(x, y, r)
 end
 
 res = 0.0
-DS = Array.new(N, -1)
-E.sort_by! { |e| e.w }
-for e in E
-  ra = find(P[e.a])
-  rb = find(P[e.b])
-  next if ra == rb
-  join(ra, rb)
-  res += e.w
+vis = Array.new(N, false)
+D = Array.new(N, 1e9)
+cur = 0
+
+for i in 1...N
+  vis[cur] = true
+  min = 1e9
+  min_index = 0
+  for n in 1...N
+    next if vis[n]
+    D[n] = [D[n], cost(P[n], P[cur])].min
+    if D[n] < min
+      min = D[n]
+      min_index = n
+    end
+  end
+  cur = min_index
+  res += min
 end
+
 printf("%.7f\n", res)
