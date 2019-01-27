@@ -7,7 +7,8 @@ using v3i = vector<v2i>;
 using vb = vector<bool>;
 using v2b = vector<vb>;
 
-v3i G;
+v2i G;
+unordered_map<int, v2i> C;
 vb good;
 v2b stop;
 
@@ -23,8 +24,8 @@ int dfs(int a, int b) {
 #ifdef DEBUG
     printf("%d => %d\n", a + 1, b + 1);
 #endif
-    for (int i = 0; i < G[b].size(); ++i) {
-      c = G[b][i][0];
+    for (size_t i = 0; i < G[b].size(); ++i) {
+      c = G[b][i];
       if (c != a) {
         if (stop[b][i]) continue;
         if (!good[c]) return G.size();
@@ -39,38 +40,50 @@ int dfs(int a, int b) {
 
 int solve() {
   int n = G.size();
-  for (size_t k = 0; k < G.size(); ++k) {
-    stop[k] = vb(G[k].size(), false);
-    for (size_t i = 1; i < G[k].size(); ++i) for (size_t j = 0; j < i; ++j) {
-      if (G[k][i][1] == G[k][j][1]) {
-        stop[k][i] = stop[k][j] = true;
+  v2i srcs;
+  srcs.reserve(n);
+  for (auto &c : C) {
+    auto &E = c.second;
+    unordered_map<int, vi> nodes;
+    for (size_t j = 0; j < E.size(); ++j) {
+      nodes[E[j][0]].push_back(E[j][1]);
+      nodes[E[j][2]].push_back(E[j][3]);
+    }
+    for (auto &p : nodes) {
+      if (p.second.size() < 2) continue;
+      int j = p.first;
+      for (int k : p.second) {
+#ifdef DEBUG
+        printf("stop: %d => %d\n", j + 1, k + 1);
+#endif
+        stop[j][k] = true;
+        srcs.push_back({j, G[j][k]});
       }
     }
   }
-  for (size_t i = 0; i < stop.size(); ++i) {
-    for (size_t j = 0; j < stop[i].size(); ++j) {
-      if (!stop[i][j]) continue;
-      n -= dfs(i, G[i][j][0]);
-      if (n <= 0) return 0;
-    }
+  for (auto &p : srcs) {
+    n -= dfs(p[0], p[1]);
+    if (n <= 0) return 0;
   }
   return n;
 }
 
 int main() {
   ios::sync_with_stdio(0);
-  cin.tie(0);
 
   int n, a, b, c;
-  cin >> n;
-  G.resize(n);
-  stop.resize(n);
+  scanf("%d", &n);
+  G.resize(n), stop.resize(n);
   good.assign(n, true);
 
   for (int i = 1; i < n; ++i) {
-    cin >> a >> b >> c;
-    --a, --b;
-    G[a].push_back({b, c}); G[b].push_back({a, c});
+    scanf("%d %d %d", &a, &b, &c);
+    --a, --b, --c;
+    C[c].push_back({a, (int) G[a].size(), b, (int) G[b].size()});
+    G[a].push_back(b); G[b].push_back(a);
+  }
+  for (int i = 0; i < n; ++i) {
+    stop[i] = vb(G[i].size(), false);
   }
 
   n = solve();
