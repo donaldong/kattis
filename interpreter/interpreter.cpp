@@ -1,58 +1,74 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-using vs = vector<string>;
-using vi = vector<int>;
+typedef vector<string> vs;
+typedef vector<int> vi;
+vs cmds(1001, "000");
+vi REG(11, 0);
 
-string to_ram(int n) {
+string cmd_string(int n) {
   string res = to_string(n);
-  while (res.size() < 3) res = "0" + res;
+  while (res.size() != 3) res = '0' + res;
+#ifdef DEBUG
+  printf("%d => %s\n", n, res.c_str());
+#endif
   return res;
 }
 
-bool opt(vi &reg, string &s, size_t &i, vs &G) {
-  int o = s[0] - '0';
-  if (o == 1) return false;
-  int a = s[1] - '0', b = s[2] - '0';
-  if (o == 2) {
-    reg[a] = b;
-  } else if (o == 3) {
-    reg[a] += b;
-    reg[a] %= 1000;
-  } else if (o == 4) {
-    reg[a] *= b;
-    reg[a] %= 1000;
-  } else if (o == 5) {
-    reg[a] = reg[b];
-  } else if (o == 6) {
-    reg[a] += reg[b];
-    reg[a] %= 1000;
-  } else if (o == 7) {
-    reg[a] *= reg[b];
-    reg[a] %= 1000;
-  } else if (o == 8) {
-    reg[a] = stoi(G[reg[b]]);
-  } else if (o == 9) {
-    G[reg[b]] = to_ram(reg[a]);
-  } else if (reg[b] != 0) {
-    i = reg[a];
-    return true;
+int exec_cmd(int i) {
+  int d, n, s, a;
+  string cmd = cmds[i];
+  d = cmd[1] - '0', n = cmd[2] - '0';
+  switch (cmd[0]) {
+    case '2':
+      REG[d] = n;
+      break;
+    case '3':
+      REG[d] += n;
+      REG[d] %= 1000;
+      break;
+    case '4':
+      REG[d] *= n;
+      REG[d] %= 1000;
+      break;
+    case '5':
+      s = n;
+      REG[d] = REG[s];
+      break;
+    case '6':
+      s = n;
+      REG[d] += REG[s];
+      REG[d] %= 1000;
+      break;
+    case '7':
+      s = n;
+      REG[d] *= REG[s];
+      REG[d] %= 1000;
+      break;
+    case '8':
+      a = n;
+      REG[d] = stoi(cmds[REG[a]]);
+      break;
+    case '9':
+      s = d, a = n;
+      cmds[REG[a]] = cmd_string(REG[s]);
+      break;
+    default:
+      s = n;
+      if (REG[s] != 0) return REG[d];
   }
-  ++i;
-  return true;
+  return i + 1;
 }
 
 int main() {
-  vs G;
-  string line;
-  while (getline(cin, line)) G.push_back(line);
-  vi reg(10, 0);
-  size_t i = 0;
-  int res = 0;
-  while (i < G.size()) {
+  ios::sync_with_stdio(0);
+
+  int pos = 0, res = 1, i = 0;
+  while (getline(cin, cmds[i++]));
+  while (cmds[pos][0] != '1') {
+    pos = exec_cmd(pos);
     ++res;
-    if (!opt(reg, G[i], i, G)) break;
   }
-  cout << res << endl;
+  printf("%d\n", res);
   return 0;
 }
