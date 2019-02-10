@@ -1,126 +1,45 @@
-/**
- *  @brief   Kattis - NAME 
- *  @author  Donald Dong (@donaldong)
- *  @date    MM/DD/YYYY
- *  
- *  + TAG
- */
-
-#include <algorithm>
-#include <climits>
-#include <cmath>
-#include <cstdio>
-#include <cstring>
-#include <deque>
-#include <iostream>
-#include <map>
-#include <queue>
-#include <regex>
-#include <set>
-#include <sstream>
-#include <stack>
-#include <unordered_map>
-#include <unordered_set>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-typedef unsigned int uint;
-typedef long long int ll;
-typedef unsigned long long int ull;
-typedef long double ld;
-#define hmap unordered_map
-#define hset unordered_set
-#define pq priority_queue
-#define pb push_back
-#define mp make_pair
-#define putchar putchar_unlocked
-#define rep(i, s, e) for (size_t i = s, fe__ = e; i < fe__; ++i)
+typedef vector<int> vi;
 
-inline void scan(int&);
-inline void scan(ll&);
-inline void print(uint);
-inline void print(ull);
-inline void print(string&);
+inline char print(char prev, bool inc, int n, int &count) {
+#ifdef DEBUG
+  printf(
+    "\n%c %c %d = %c  (%d char left)\n",
+    prev, inc ? '+' : '-', n, inc ? prev + n : prev - n, count - n
+  );
+#endif
+  count -= n;
+  prev = inc ? prev + n : prev - n;
+  printf("%c", prev);
+  return prev;
+}
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    int k;
-    scan(k);
-    int len = (k + 24) / 25 + 1;
-    string res(len, 'a');
-    res[0] = 'a';
-    if (len == 2) {
-        res[1] = 'a' + k;
-    } else {
-        int fromZ = k % 25 == 0 ? 0 : (25 - k % 25)/2;
-        res[1] = 'z' - fromZ;
-        int cur = res[1] - res[0];
-        for (int i=2; i<len-1; i++) {
-            res[i] = i%2 == 0 ? 'a' : 'z';
-            cur = cur + abs(res[i]-res[i-1]);
-        }
-        int left = k - cur;
-        res[len-1] = (len-1)%2 == 0 ? (char)(res[len-2]-left) : (char)(res[len-2]+left);
-    }
-    cout << res << endl;
-    return 0;
-}
+  ios::sync_with_stdio(0);
+  cin.tie(0);
 
-inline void scan(int &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
-    }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
+  int n;
+  cin >> n;
+  int last_char = n % 25;
+  int d = last_char == 0 ? 0 : (25  - last_char) / 2;
 
-inline void scan(ll &number) {
-    bool negative = false;
-    int c;
-    number = 0;
-    c = getchar();
-    if (c=='-') {
-        negative = true;
-        c = getchar();
+  char prev = 'a';
+  bool inc = true;
+  printf("%c", 'a');
+  if (n <= 25) prev = print(prev, inc, n, n);
+  else {
+    prev = print(prev, true, 25 - d, n);
+    prev = print(prev, false, min(25 - d, n), n);
+    while (n > 25) {
+      prev = print(prev, inc, 25, n);
+      inc = !inc;
     }
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;
-}
+    if (n > 0) print(prev, inc, n, n);
+  }
+  printf("\n");
+  cout << flush;
 
-inline void print(uint n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[11];
-    int i = 10;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 10) putchar(buf[++i]);
-}
-
-inline void print(ull n) {
-    if (n == 0) {
-        putchar('0');
-        return;
-    }
-    char buf[20];
-    int i = 19;
-    while (n) {
-        buf[i--] = n % 10 + '0';
-        n /= 10;
-    }
-    while (i < 19) putchar(buf[++i]);
-}
-
-inline void print(string &s) {
-    rep(i, 0, s.length()) putchar(s[i]);
+  return 0;
 }
