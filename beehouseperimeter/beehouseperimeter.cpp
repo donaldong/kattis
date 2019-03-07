@@ -3,124 +3,156 @@ using namespace std;
 
 using vi = vector<int>;
 using v2i = vector<vi>;
-using vb = vector<bool>;
-int DR[] = {-1, -1, 0, 1, 1, 0};
-int DC[] = {-1, 0, 1, 1, 0, -1};
+using hset = unordered_set<int>;
+using que = queue<tuple<int, int>>;
 
-void debug(v2i &G) {
-  for (auto &row : G) {
-    for (auto &cell : row) cout << cell << " ";
-    cout << endl;
-  }
-  cout << endl;
+int R;
+v2i G;
+hset K;
+
+bool has(int i) {
+  return K.find(i) != K.end();
 }
 
-void debug(vb &H) {
-  for (auto h : H) cout << h << " ";
-  cout << endl;
-}
-
-v2i build(int k, int &cur) {
-  v2i G(2 * k - 1, vi(2 * k - 1, -1));
-  int r = 3;
-  for (int i = 0; i < k; ++i) {
-    for (int j = 0; j < r; ++j) {
-      G[i][j] = cur++;
-    }
-    ++r;
-  }
-  --r;
-  int c = 0;
-  for (size_t i = k; i < G.size(); ++i) {
-    for (int j = ++c; j < r; ++j) {
-      G[i][j] = cur++;
+int first_non_zero(int r, int &c) {
+  for (size_t i = 0; i < G[r].size(); ++i) {
+    if (G[r][i] != 0) {
+      c = i;
+      return G[r][i];
     }
   }
-  return G;
+  return 0;
 }
 
-bool in_range(v2i &G, int r, int c) {
-  return 0 <= r && r < G.size() && 0 <= c && c < G.back().size();
-}
-
-bool out_of_bound(v2i &G, int r, int c) {
-  if (!in_range(G, r, c)) return true;
-  return G[r][c] == -1;
-}
-
-vi bfs(v2i &G, vb &H, vb &M, int r, int c) {
-  queue<tuple<int, int>> Q;
-  int nr, nc, cur;
-  cur = G[r][c];
-  vi res = {cur};
-  Q.emplace(r, c);
-  M[cur] = true;
-  bool oob = false;
-  while (!Q.empty()) {
-    tie(r, c) = Q.front(); Q.pop();
-    for (int i = 0; i < 6; ++i) {
-      nr = r + DR[i];
-      nc = c + DC[i];
-      if (out_of_bound(G, nr, nc)) {
-        oob = true;
-        continue;
-      }
-      cur = G[nr][nc];
-      if (H[cur] || M[cur]) continue;
-      Q.emplace(nr, nc);
-      M[cur] = true;
-      if (!oob) res.push_back(cur);
+int last_non_zero(int r, int &c) {
+  for (size_t i = G[r].size(); i-- > 0;) {
+    if (G[r][i] != 0) {
+      c = i;
+      return G[r][i];
     }
   }
-  if (oob) return {};
+  return 0;
+}
+
+int add_all(que &Q, int r, int c1, int c2) {
+  int res = 0;
+  for (int i = c1 + 2; i < c2; i += 2) {
+    if (has(G[r][i])) res += 2;
+    else Q.emplace(r, i), G[r][i] = 0;
+  }
   return res;
 }
 
-int solve(int k, vi &houses) {
-  int size = 0, r, c, nr, nc, cur;
-  auto G = build(k, size);
-  vb H(size, false), V(size, false), M(size, false);
-  for (auto &h : houses) H[h] = true;
-  for (r = 0; r < G.size(); ++r) {
-    for (c = 0; c < G[r].size(); ++c) {
-      cur = G[r][c];
-      if (cur == -1) continue;
-      if (H[cur] || M[cur]) continue;
-      auto new_houses = bfs(G, H, M, r, c);
-      for (auto h : new_houses) H[h] = true;
-    }
+int DR[] = {-1, -1, 0, 1, 1, 0};
+int DC[] = {-1, 1, 2, 1, -1, -2};
+
+int solve() {
+  int r, r2, c1, c2, i, res = 0, k = 0;
+  que Q;
+  // first row
+  r = 0;
+  i = first_non_zero(r, c1);
+  if (has(i)) res += 3;
+  else Q.emplace(r, c1), G[r][c1] = 0;
+  i = last_non_zero(r, c2);
+  if (has(i)) res += 3;
+  else Q.emplace(r, c2), G[r][c2] = 0;
+  res += add_all(Q, r, c1, c2);
+
+  for (r = 1; r + 1 < G.size(); ++r) {
+    i = first_non_zero(r, c1);
+    if (has(i)) res += r + 1 == R ? 3 : 2;
+    else Q.emplace(r, c1), G[r][c1] = 0;
+    i = last_non_zero(r, c1);
+    if (has(i)) res += r + 1 == R ? 3 : 2;
+    else Q.emplace(r, c1), G[r][c1] = 0;
   }
-  int res = 0, nxt;
-  for (r = 0; r < G.size(); ++r) {
-    for (c = 0; c < G[r].size(); ++c) {
-      cur = G[r][c];
-      if (cur == -1) continue;
-      if (!H[cur]) continue;
-      cout << cur + 1 << " ";
-      for (int i = 0; i < 6; ++i) {
-        nr = r + DR[i];
-        nc = c + DC[i];
-        if (out_of_bound(G, nr, nc)) {
-          ++res;
-          continue;
-        }
-        nxt = G[nr][nc];
-        if (!H[nxt]) ++res;
+
+  // last row
+  r = G.size() - 1;
+  i = first_non_zero(r, c1);
+  if (has(i)) res += 3;
+  else Q.emplace(r, c1), G[r][c1] = 0;
+  i = last_non_zero(r, c2);
+  if (has(i)) res += 3;
+  else Q.emplace(r, c2), G[r][c2] = 0;
+  res += add_all(Q, r, c1, c2);
+
+  // bfs
+  while (!Q.empty()) {
+    tie(r, c1) = Q.front(), Q.pop();
+    for (k = 0; k < 6; ++k) {
+      r2 = r + DR[k], c2 = c1 + DC[k];
+      if (r2 < 0 || r2 >= G.size()) continue;
+      if (c2 < 0 || c2 >= G[r2].size()) continue;
+      if (!G[r2][c2]) continue;
+      if (has(G[r2][c2])) {
+#ifdef DEBUG
+        printf("%d %d => %d %d\n", r, c1, r2, c2);
+#endif
+        ++res; continue;
       }
-      cout << res << endl;
+      Q.emplace(r2, c2), G[r2][c2] = 0;
     }
   }
+
+#ifdef DEBUG
+  for (int i = 0; i < G.size(); ++i) {
+    for (int j = 0; j < G[i].size(); ++j) {
+      printf("%d ", G[i][j]);
+    }
+    printf("\n");
+  }
+#endif
   return res;
 }
 
 int main() {
-  int r, k, n;
+  ios::sync_with_stdio(0);
+  cin.tie(0);
+  int r, k, n, m, i, j, p, lvl, cnt, cur;
   cin >> r >> k;
-  vi H(k);
-  for (auto &h : H) {
-    cin >> h;
-    --h;
+  R = r;
+
+  while (k--) {
+    cin >> i;
+    K.insert(i);
   }
-  cout << solve(r, H) << endl;
+
+  n = 2 * r - 1, m = 2 * n - 1;
+  G.assign(n, vi(m, 0));
+
+  // first half
+  cur = p = (r + n) * r / 2;
+  for (lvl = 0; lvl < r; ++lvl) {
+    j = m - 1 - lvl;
+    cnt = n - lvl;
+    while (cnt--) {
+      G[r - 1 - lvl][j] = cur--;
+      j -= 2;
+    }
+  }
+
+  // second half
+  cur = p;
+  for (lvl = 1; lvl < r; ++lvl) {
+    j = lvl;
+    cnt = n - lvl;
+    while (cnt--) {
+      G[r - 1 + lvl][j] = ++cur;
+      j += 2;
+    }
+  }
+
+#ifdef DEBUG
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      printf("%d ", G[i][j]);
+    }
+    printf("\n");
+  }
+#endif
+
+  printf("%d\n", solve());
   return 0;
 }
