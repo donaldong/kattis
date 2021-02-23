@@ -1,0 +1,1 @@
+range query -- segment tree
