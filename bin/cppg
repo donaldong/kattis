@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+
+CPP_TEMPLATE='''\
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+  ios_base::sync_with_stdio(false), cin.tie(0); // Fast IO
+}
+'''
+
+def main():
+  file = 'a.cpp'
+  if os.path.exists(file):
+    print(f'{file} already exists. Nothing needs to be done.')
+    return
+  f = open(file, 'a')
+  f.write(CPP_TEMPLATE)
+  f.close()
+
+main()

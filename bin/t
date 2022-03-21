@@ -1,0 +1,59 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import glob
+import optparse
+import os
+import sys
+from utils.files import Files
+
+prog_name = Files.executable()
+parser = optparse.OptionParser()
+parser.add_option('--diff', action="store_true", default=True)
+options, args = parser.parse_args()
+
+if len(args) == 0:
+  inputs = glob.glob('./*.in')
+  args = [input.split('/')[1].split('.')[0] for input in inputs]
+
+if len(args) == 0:
+  print('Nothing to test!')
+  exit(0)
+
+okay = True
+args = sorted(args)
+for arg in args:
+  if not okay:
+    break
+
+  test_in = f'{arg}.in'
+  if not os.path.exists(test_in):
+    okay = False
+    print(f'ERROR: Cannot find test input {test_in}')
+    continue
+
+  if not options.diff:
+    print(f'Running {test_in}')
+    if os.system(f'time ./{prog_name} < {test_in}') != 0:
+      okay = False
+      print(f'ERROR: None zero status code when running input {test_in}')
+    continue
+
+  test_out = f'.{arg}.tmp.out'
+  print(f'Running {test_in}')
+  if os.system(f'time ./{prog_name} < {test_in} 1> {test_out}') != 0:
+    okay = False
+    print(f'ERROR: None zero status code when running input {test_in}')
+    continue
+
+  test_ans = f'{arg}.ans'
+  if not os.path.exists(test_ans):
+    print(f'\n=== No expected answers {test_ans} ===')
+    os.system(f'cat {test_out}')
+    print(f'=== No expected answers {test_ans} ===\n')
+    continue
+  if os.system(f'diff -B -w {test_out} {test_ans}') != 0:
+    okay = False
+    print(f'ERROR: Actual output {test_out} does not match expected answer {test_ans}')
+
+if okay:
+  print('Tests Passed! Try to submit?')
