@@ -1,0 +1,12 @@
+*.o
+*.out
+*.exe
+*.pyc
+.idea
+.DS_Store
+*.swp
+*.in
+*.ans
+
+.ipynb_checkpoints
+node_modules
