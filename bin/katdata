@@ -1,0 +1,14 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Download Kattis sample data into the current working dir
+# Usage:
+#   prob anotherProblem (or cd into anotherProblem)
+#   katdata
+import os, requests, zipfile, io
+
+cwd = os.getcwd()
+problem_id = cwd.split('/')[-1]
+data_url = f'https://open.kattis.com/problems/{problem_id}/file/statement/samples.zip'
+req = requests.get(data_url)
+file = zipfile.ZipFile(io.BytesIO(req.content))
+file.extractall(cwd)
