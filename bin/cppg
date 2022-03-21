@@ -1,13 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
+from datetime import datetime
 
-CPP_TEMPLATE='''\
+date = datetime.now().date()
+CPP_TEMPLATE=f'''\
+/**
+ * @author      Donald Dong
+ * @date        {date}
+ * @tag         unknown 
+ * @difficulty  unknown
+ */
 #include <bits/stdc++.h>
 using namespace std;
-int main() {
+int main() {{
   ios_base::sync_with_stdio(false), cin.tie(0); // Fast IO
-}
+}}
 '''
 
 def main():
