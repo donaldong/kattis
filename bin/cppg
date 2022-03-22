@@ -6,7 +6,6 @@ from datetime import datetime
 date = datetime.now().date()
 CPP_TEMPLATE=f'''\
 /**
- * @author      Donald Dong
  * @date        {date}
  * @tags        unknown 
  * @difficulty  unknown
@@ -14,7 +13,8 @@ CPP_TEMPLATE=f'''\
 #include <bits/stdc++.h>
 using namespace std;
 int main() {{
-  ios_base::sync_with_stdio(false), cin.tie(0); // Fast IO
+  ios_base::sync_with_stdio(false), cin.tie(NULL); // Fast IO
+  return 0;
 }}
 '''
 
