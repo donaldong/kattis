@@ -1,7 +1,7 @@
 /**
  * @author      Donald Dong
  * @date        2022-03-21
- * @tag         greedy, sorting
+ * @tags        greedy, sorting
  * @difficulty  1300
  */
 #include <bits/stdc++.h>
