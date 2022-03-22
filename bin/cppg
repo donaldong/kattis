@@ -8,7 +8,7 @@ CPP_TEMPLATE=f'''\
 /**
  * @author      Donald Dong
  * @date        {date}
- * @tag         unknown 
+ * @tags        unknown 
  * @difficulty  unknown
  */
 #include <bits/stdc++.h>
