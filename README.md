@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **697**
+Number of solved problems in this repo: **703**
 | Problem | Solution |
 | --- | ----------- |
 | [3sideddice](https://open.kattis.com/problems/3sideddice) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/3sideddice/3sideddice.cpp) |
@@ -121,6 +121,7 @@ Number of solved problems in this repo: **697**
 | [checkingforcorrectness](https://open.kattis.com/problems/checkingforcorrectness) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/checkingforcorrectness/checkingforcorrectness.cpp) |
 | [chewbacca](https://open.kattis.com/problems/chewbacca) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/chewbacca/chewbacca.cpp) |
 | [chopwood](https://open.kattis.com/problems/chopwood) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/chopwood/a.cpp) |
+| [cinema2](https://open.kattis.com/problems/cinema2) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cinema2/a.cpp) |
 | [circuitmath](https://open.kattis.com/problems/circuitmath) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/circuitmath/a.cpp) |
 | [citrusintern](https://open.kattis.com/problems/citrusintern) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/citrusintern/citrusintern.cpp) |
 | [classpicture](https://open.kattis.com/problems/classpicture) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/classpicture/classpicture.cpp) |
@@ -202,6 +203,7 @@ Number of solved problems in this repo: **697**
 | [drivingrange](https://open.kattis.com/problems/drivingrange) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/drivingrange/drivingrange.cpp) |
 | [drunkvigenere](https://open.kattis.com/problems/drunkvigenere) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/drunkvigenere/a.cpp) |
 | [dungeon](https://open.kattis.com/problems/dungeon) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dungeon/dungeon.cpp) |
+| [dvaput](https://open.kattis.com/problems/dvaput) | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/string_hashing.cpp),[C++](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/a.cpp) |
 | [dvds](https://open.kattis.com/problems/dvds) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dvds/dvds.cpp) |
 | [dyslectionary](https://open.kattis.com/problems/dyslectionary) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dyslectionary/dyslectionary.cpp) |
 | [earlywinter](https://open.kattis.com/problems/earlywinter) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/earlywinter/earlywinter.cpp) |
@@ -209,6 +211,7 @@ Number of solved problems in this repo: **697**
 | [eatingout](https://open.kattis.com/problems/eatingout) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/eatingout/eatingout.cpp) |
 | [echoechoecho](https://open.kattis.com/problems/echoechoecho) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/echoechoecho/a.cpp) |
 | [eenymeeny](https://open.kattis.com/problems/eenymeeny) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/eenymeeny/a.cpp) |
+| [election2](https://open.kattis.com/problems/election2) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/election2/a.cpp) |
 | [electricaloutlets](https://open.kattis.com/problems/electricaloutlets) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/electricaloutlets/a.rb) |
 | [elementarymath](https://open.kattis.com/problems/elementarymath) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/elementarymath/elementarymath.cpp) |
 | [emergency](https://open.kattis.com/problems/emergency) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/emergency/emergency.cpp) |
@@ -338,6 +341,7 @@ Number of solved problems in this repo: **697**
 | [interpreter](https://open.kattis.com/problems/interpreter) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/interpreter/interpreter.cpp) |
 | [intersectingrectangles](https://open.kattis.com/problems/intersectingrectangles) | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/intersectingrectangles/intersectingrectangles.cpp),[C++](https://github.com/donaldong/kattis/blob/main/solutions/intersectingrectangles/acc.cpp) |
 | [intervalcover](https://open.kattis.com/problems/intervalcover) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/intervalcover/intervalcover.cpp) |
+| [intervalscheduling](https://open.kattis.com/problems/intervalscheduling) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/intervalscheduling/a.cpp) |
 | [ironcoal](https://open.kattis.com/problems/ironcoal) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/ironcoal/ironcoal.cpp) |
 | [irrationaldivision](https://open.kattis.com/problems/irrationaldivision) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/irrationaldivision/irrationaldivision.cpp) |
 | [isithalloween](https://open.kattis.com/problems/isithalloween) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/isithalloween/isithalloween.rb) |
@@ -398,6 +402,7 @@ Number of solved problems in this repo: **697**
 | [lostlineup](https://open.kattis.com/problems/lostlineup) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/lostlineup/a.rb) |
 | [lostmap](https://open.kattis.com/problems/lostmap) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/lostmap/lostmap.cpp) |
 | [loworderzeros](https://open.kattis.com/problems/loworderzeros) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/loworderzeros/loworderzeros.cpp) |
+| [luckynumber](https://open.kattis.com/problems/luckynumber) | [Python](https://github.com/donaldong/kattis/blob/main/solutions/luckynumber/a.py) |
 | [luhnchecksum](https://open.kattis.com/problems/luhnchecksum) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/luhnchecksum/luhnchecksum.rb) |
 | [lyklagangriti](https://open.kattis.com/problems/lyklagangriti) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/lyklagangriti/a.cpp) |
 | [magical3](https://open.kattis.com/problems/magical3) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/magical3/magical3.cpp) |
@@ -451,6 +456,7 @@ Number of solved problems in this repo: **697**
 | [nsum](https://open.kattis.com/problems/nsum) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/nsum/a.cpp) |
 | [numbersetseasy](https://open.kattis.com/problems/numbersetseasy) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/numbersetseasy/numbersetseasy.cpp) |
 | [numbersetshard](https://open.kattis.com/problems/numbersetshard) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/numbersetshard/numbersetshard.cpp) |
+| [oddaevenb](https://open.kattis.com/problems/oddaevenb) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/oddaevenb/a.cpp) |
 | [oddbinom](https://open.kattis.com/problems/oddbinom) | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/oddbinom/oops.cpp),[C++](https://github.com/donaldong/kattis/blob/main/solutions/oddbinom/oddbinom.cpp) |
 | [oddecho](https://open.kattis.com/problems/oddecho) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/oddecho/a.cpp) |
 | [oddmanout](https://open.kattis.com/problems/oddmanout) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/oddmanout/oddmanout.rb) |
