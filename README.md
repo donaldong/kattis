@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **703**
+Number of solved problems in this repo: **705**
 | Problem | Solution |
 | --- | ----------- |
 | [3sideddice](https://open.kattis.com/problems/3sideddice) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/3sideddice/3sideddice.cpp) |
@@ -73,6 +73,7 @@ Number of solved problems in this repo: **703**
 | [birthday](https://open.kattis.com/problems/birthday) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/birthday/a.cpp) |
 | [bitbybit](https://open.kattis.com/problems/bitbybit) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/bitbybit/bitbybit.cpp) |
 | [bitsequalizer](https://open.kattis.com/problems/bitsequalizer) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/bitsequalizer/wa.cpp) |
+| [blackandwhite](https://open.kattis.com/problems/blackandwhite) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blackandwhite/a.cpp) |
 | [blockcrusher](https://open.kattis.com/problems/blockcrusher) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blockcrusher/blockcrusher.cpp) |
 | [blockgame2](https://open.kattis.com/problems/blockgame2) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blockgame2/blockgame2.cpp) |
 | [blowingcandles](https://open.kattis.com/problems/blowingcandles) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blowingcandles/blowingcandles.cpp) |
@@ -314,6 +315,7 @@ Number of solved problems in this repo: **703**
 | [highscore2](https://open.kattis.com/problems/highscore2) | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/highscore2/tle.cpp),[C++](https://github.com/donaldong/kattis/blob/main/solutions/highscore2/highscore2.cpp) |
 | [hindex](https://open.kattis.com/problems/hindex) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hindex/hindex.cpp) |
 | [honeyheist](https://open.kattis.com/problems/honeyheist) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/honeyheist/honeyheist.cpp) |
+| [hopscotch500](https://open.kattis.com/problems/hopscotch500) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch500/a.cpp) |
 | [hopscotch](https://open.kattis.com/problems/hopscotch) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch/hopscotch.cpp) |
 | [horror](https://open.kattis.com/problems/horror) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/horror/horror.cpp) |
 | [horrorfilmnight](https://open.kattis.com/problems/horrorfilmnight) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/horrorfilmnight/horrorfilmnight.cpp) |
