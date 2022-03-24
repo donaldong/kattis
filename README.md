@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **705**
+Number of solved problems in this repo: **708**
 | Problem | Solution |
 | --- | ----------- |
 | [3sideddice](https://open.kattis.com/problems/3sideddice) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/3sideddice/3sideddice.cpp) |
@@ -316,6 +316,7 @@ Number of solved problems in this repo: **705**
 | [hindex](https://open.kattis.com/problems/hindex) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hindex/hindex.cpp) |
 | [honeyheist](https://open.kattis.com/problems/honeyheist) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/honeyheist/honeyheist.cpp) |
 | [hopscotch500](https://open.kattis.com/problems/hopscotch500) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch500/a.cpp) |
+| [hopscotch50](https://open.kattis.com/problems/hopscotch50) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch50/a.cpp) |
 | [hopscotch](https://open.kattis.com/problems/hopscotch) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch/hopscotch.cpp) |
 | [horror](https://open.kattis.com/problems/horror) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/horror/horror.cpp) |
 | [horrorfilmnight](https://open.kattis.com/problems/horrorfilmnight) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/horrorfilmnight/horrorfilmnight.cpp) |
@@ -504,6 +505,7 @@ Number of solved problems in this repo: **705**
 | [plusminus](https://open.kattis.com/problems/plusminus) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/plusminus/plusminus.cpp) |
 | [pokerhand](https://open.kattis.com/problems/pokerhand) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/pokerhand/pokerhand.rb) |
 | [polish](https://open.kattis.com/problems/polish) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/polish/polish.cpp) |
+| [powersof2](https://open.kattis.com/problems/powersof2) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/powersof2/a.cpp) |
 | [powerstrings](https://open.kattis.com/problems/powerstrings) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/powerstrings/powerstrings.cpp) |
 | [prefixfreecode](https://open.kattis.com/problems/prefixfreecode) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/prefixfreecode/prefixfreecode.cpp) |
 | [primalrepresentation](https://open.kattis.com/problems/primalrepresentation) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/primalrepresentation/primalrepresentation.cpp) |
@@ -571,6 +573,7 @@ Number of solved problems in this repo: **705**
 | [setnja](https://open.kattis.com/problems/setnja) | [Python](https://github.com/donaldong/kattis/blob/main/solutions/setnja/setnja.py) |
 | [settlers2](https://open.kattis.com/problems/settlers2) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/settlers2/settlers2.cpp) |
 | [shiritori](https://open.kattis.com/problems/shiritori) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/shiritori/shiritori.cpp) |
+| [shoppinglist](https://open.kattis.com/problems/shoppinglist) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/shoppinglist/a.cpp) |
 | [shortcut](https://open.kattis.com/problems/shortcut) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/shortcut/shortcut.cpp) |
 | [shortestpath1](https://open.kattis.com/problems/shortestpath1) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/shortestpath1/shortestpath1.cpp) |
 | [shortestpath2](https://open.kattis.com/problems/shortestpath2) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/shortestpath2/shortestpath2.cpp) |
