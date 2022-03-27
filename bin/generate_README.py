@@ -23,12 +23,12 @@ class SourceFile:
     self.tags = []
     self.difficulty_score = -1
     if self.extension in self.valid_extensions:
-      file = open('../solutions/'+path, 'r', encoding='utf-8')
+      file = open('../solutions/'+path, 'r')
       for line in file:
-        match = re.match('@tags\s+(.*)', line)
+        match = re.match(r'.*\s+@tags\s+(.*)', line)
         if match:
-          self.tags += re.split('\s*,', match[1])
-        match = re.match('@difficulty\s+(.*)', line)
+          self.tags += re.split(r'\s*,\s*', match[1])
+        match = re.match(r'.*\s+@difficulty\s+(.*)', line)
         if match:
            self.difficulty_score = int(match[1])
 
@@ -49,7 +49,13 @@ class Problem:
   def __lt__(self, other):
     if self.difficulty_score == other.difficulty_score:
       return self.problem_id < other.problem_id
-    return self.difficulty_score < other.difficulty_score
+    a = self.difficulty_score
+    b = other.difficulty_score
+    if a < 0:
+      a = 1e6
+    if b < 0:
+      b = 1e6
+    return a < b
 
   def to_table_row(self) -> str:
     def get_file_link(ext:str, i:int, problem_id:str, file:SourceFile) -> str:
