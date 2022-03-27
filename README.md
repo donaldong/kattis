@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **717**
+Number of solved problems in this repo: **731**
 | Problem | Solution |
 | --- | ----------- |
 | [3sideddice](https://open.kattis.com/problems/3sideddice) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/3sideddice/3sideddice.cpp) |
@@ -108,6 +108,7 @@ Number of solved problems in this repo: **717**
 | [canonical](https://open.kattis.com/problems/canonical) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/canonical/canonical.cpp) |
 | [cantinaofbabel](https://open.kattis.com/problems/cantinaofbabel) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cantinaofbabel/cantinaofbabel.cpp) |
 | [cantor](https://open.kattis.com/problems/cantor) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cantor/cantor.cpp) |
+| [canvas](https://open.kattis.com/problems/canvas) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/canvas/a.cpp) |
 | [cardhand](https://open.kattis.com/problems/cardhand) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cardhand/cardhand.cpp) |
 | [cardmagic](https://open.kattis.com/problems/cardmagic) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cardmagic/cardmagic.cpp) |
 | [cardtrading](https://open.kattis.com/problems/cardtrading) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cardtrading/a.cpp) |
@@ -154,6 +155,7 @@ Number of solved problems in this repo: **717**
 | [conquestcampaign](https://open.kattis.com/problems/conquestcampaign) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/conquestcampaign/conquestcampaign.rb) |
 | [consecutivesums](https://open.kattis.com/problems/consecutivesums) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/consecutivesums/consecutivesums.cpp) |
 | [constrainedfreedomofchoice](https://open.kattis.com/problems/constrainedfreedomofchoice) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/constrainedfreedomofchoice/constrainedfreedomofchoice.cpp) |
+| [conteststruggles](https://open.kattis.com/problems/conteststruggles) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/conteststruggles/a.cpp) |
 | [continuousmedian](https://open.kattis.com/problems/continuousmedian) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/continuousmedian/a.cpp) |
 | [control](https://open.kattis.com/problems/control) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/control/control.cpp) |
 | [conversationlog](https://open.kattis.com/problems/conversationlog) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/conversationlog/conversationlog.cpp) |
@@ -202,9 +204,11 @@ Number of solved problems in this repo: **717**
 | [doublepassword](https://open.kattis.com/problems/doublepassword) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/doublepassword/a.cpp) |
 | [doubleplusgood](https://open.kattis.com/problems/doubleplusgood) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/doubleplusgood/doubleplusgood.cpp) |
 | [downtime](https://open.kattis.com/problems/downtime) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/downtime/downtime.cpp) |
+| [dragonballs](https://open.kattis.com/problems/dragonballs) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/a.cpp),[Python](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/testing_tool.py) |
 | [dreamer](https://open.kattis.com/problems/dreamer) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dreamer/dreamer.cpp) |
 | [drinkingsong](https://open.kattis.com/problems/drinkingsong) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/drinkingsong/a.cpp) |
 | [driver](https://open.kattis.com/problems/driver) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/driver/driver.cpp) |
+| [driversdilemma](https://open.kattis.com/problems/driversdilemma) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/driversdilemma/a.cpp) |
 | [drivingrange](https://open.kattis.com/problems/drivingrange) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/drivingrange/drivingrange.cpp) |
 | [drunkvigenere](https://open.kattis.com/problems/drunkvigenere) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/drunkvigenere/a.cpp) |
 | [dungeon](https://open.kattis.com/problems/dungeon) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dungeon/dungeon.cpp) |
@@ -221,6 +225,7 @@ Number of solved problems in this repo: **717**
 | [elementarymath](https://open.kattis.com/problems/elementarymath) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/elementarymath/elementarymath.cpp) |
 | [emergency](https://open.kattis.com/problems/emergency) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/emergency/emergency.cpp) |
 | [emptyingbaltic](https://open.kattis.com/problems/emptyingbaltic) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/emptyingbaltic/emptyingbaltic.cpp) |
+| [endgame](https://open.kattis.com/problems/endgame) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/endgame/a.cpp) |
 | [enlarginghashtables](https://open.kattis.com/problems/enlarginghashtables) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/enlarginghashtables/enlarginghashtables.cpp) |
 | [epigdanceoff](https://open.kattis.com/problems/epigdanceoff) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/epigdanceoff/epigdanceoff.cpp) |
 | [erraticants](https://open.kattis.com/problems/erraticants) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/erraticants/erraticants.cpp) |
@@ -256,7 +261,9 @@ Number of solved problems in this repo: **717**
 | [fire3](https://open.kattis.com/problems/fire3) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fire3/fire3.cpp) |
 | [firefly](https://open.kattis.com/problems/firefly) | [Python](https://github.com/donaldong/kattis/blob/main/solutions/firefly/firefly.py) |
 | [firestation](https://open.kattis.com/problems/firestation) | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/firestation/firestation_mst.cpp),[C++](https://github.com/donaldong/kattis/blob/main/solutions/firestation/firestation.cpp) |
+| [fishmongers](https://open.kattis.com/problems/fishmongers) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fishmongers/a.cpp) |
 | [flagquiz](https://open.kattis.com/problems/flagquiz) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/flagquiz/a.rb) |
+| [flightcollision](https://open.kattis.com/problems/flightcollision) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flightcollision/a.cpp) |
 | [floodit](https://open.kattis.com/problems/floodit) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/floodit/floodit.cpp),[Ruby](https://github.com/donaldong/kattis/blob/main/solutions/floodit/floodit.rb) |
 | [flowergarden](https://open.kattis.com/problems/flowergarden) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flowergarden/flowergarden.cpp) |
 | [flowerytrails](https://open.kattis.com/problems/flowerytrails) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flowerytrails/flowerytrails.cpp) |
@@ -327,6 +334,7 @@ Number of solved problems in this repo: **717**
 | [horror](https://open.kattis.com/problems/horror) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/horror/horror.cpp) |
 | [horrorfilmnight](https://open.kattis.com/problems/horrorfilmnight) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/horrorfilmnight/horrorfilmnight.cpp) |
 | [hothike](https://open.kattis.com/problems/hothike) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hothike/a.cpp) |
+| [hotsprings](https://open.kattis.com/problems/hotsprings) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hotsprings/a.cpp) |
 | [houselawn](https://open.kattis.com/problems/houselawn) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/houselawn/houselawn.cpp) |
 | [howl](https://open.kattis.com/problems/howl) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/howl/a.cpp) |
 | [howmanydigits](https://open.kattis.com/problems/howmanydigits) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/howmanydigits/howmanydigits.cpp),[Python](https://github.com/donaldong/kattis/blob/main/solutions/howmanydigits/a.py) |
@@ -379,6 +387,7 @@ Number of solved problems in this repo: **717**
 | [kattissquest](https://open.kattis.com/problems/kattissquest) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/kattissquest/kattissquest.cpp) |
 | [kayaking](https://open.kattis.com/problems/kayaking) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/kayaking/kayaking.cpp) |
 | [keepitcool](https://open.kattis.com/problems/keepitcool) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/keepitcool/a.cpp) |
+| [keyboardconcert](https://open.kattis.com/problems/keyboardconcert) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/keyboardconcert/a.cpp) |
 | [keyboardd](https://open.kattis.com/problems/keyboardd) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/keyboardd/a.cpp) |
 | [keypad](https://open.kattis.com/problems/keypad) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/keypad/keypad.cpp) |
 | [keytocrypto](https://open.kattis.com/problems/keytocrypto) | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/keytocrypto/keytocrypto.cpp),[C++](https://github.com/donaldong/kattis/blob/main/solutions/keytocrypto/a.cpp) |
@@ -429,6 +438,7 @@ Number of solved problems in this repo: **717**
 | [maximizingwinnings](https://open.kattis.com/problems/maximizingwinnings) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/maximizingwinnings/maximizingwinnings.cpp) |
 | [maximumrent](https://open.kattis.com/problems/maximumrent) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/maximumrent/maximumrent.cpp) |
 | [maximumsubarrays](https://open.kattis.com/problems/maximumsubarrays) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/maximumsubarrays/maximumsubarrays.cpp) |
+| [memorymatch](https://open.kattis.com/problems/memorymatch) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/memorymatch/a.cpp) |
 | [methodicmultiplication](https://open.kattis.com/problems/methodicmultiplication) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/methodicmultiplication/a.cpp) |
 | [millionairemadness](https://open.kattis.com/problems/millionairemadness) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/millionairemadness/a.cpp) |
 | [mincut](https://open.kattis.com/problems/mincut) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/mincut/mincut.cpp) |
@@ -444,6 +454,7 @@ Number of solved problems in this repo: **717**
 | [moscowdream](https://open.kattis.com/problems/moscowdream) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/moscowdream/a.cpp) |
 | [moviecollection](https://open.kattis.com/problems/moviecollection) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/moviecollection/moviecollection.cpp) |
 | [movingday](https://open.kattis.com/problems/movingday) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/movingday/a.cpp) |
+| [mrcodeformatgrader](https://open.kattis.com/problems/mrcodeformatgrader) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/mrcodeformatgrader/a.cpp) |
 | [muddyhike](https://open.kattis.com/problems/muddyhike) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/muddyhike/muddyhike.cpp) |
 | [mult](https://open.kattis.com/problems/mult) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/mult/a.cpp) |
 | [musicalchairs](https://open.kattis.com/problems/musicalchairs) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/musicalchairs/a.cpp) |
@@ -591,12 +602,14 @@ Number of solved problems in this repo: **717**
 | [sifferprodukt](https://open.kattis.com/problems/sifferprodukt) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/sifferprodukt/a.cpp) |
 | [sim](https://open.kattis.com/problems/sim) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/sim/a.cpp) |
 | [skocimis](https://open.kattis.com/problems/skocimis) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/skocimis/skocimis.cpp) |
+| [skolavslutningen](https://open.kattis.com/problems/skolavslutningen) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/skolavslutningen/a.cpp) |
 | [slikar](https://open.kattis.com/problems/slikar) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/slikar/slikar.cpp) |
 | [smallestmultiple](https://open.kattis.com/problems/smallestmultiple) | [Python](https://github.com/donaldong/kattis/blob/main/solutions/smallestmultiple/smallestmultiple.py) |
 | [smallschedule](https://open.kattis.com/problems/smallschedule) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/smallschedule/smallschedule.cpp) |
 | [smil](https://open.kattis.com/problems/smil) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/smil/a.cpp) |
 | [smoothiestand](https://open.kattis.com/problems/smoothiestand) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/smoothiestand/a.cpp) |
 | [snowflakes](https://open.kattis.com/problems/snowflakes) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/snowflakes/snowflakes.cpp) |
+| [socialrunning](https://open.kattis.com/problems/socialrunning) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/socialrunning/a.cpp) |
 | [softpasswords](https://open.kattis.com/problems/softpasswords) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/softpasswords/a.cpp) |
 | [somesum](https://open.kattis.com/problems/somesum) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/somesum/a.cpp) |
 | [sort](https://open.kattis.com/problems/sort) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/sort/a.cpp) |
@@ -646,6 +659,7 @@ Number of solved problems in this repo: **717**
 | [thinkingofanumber](https://open.kattis.com/problems/thinkingofanumber) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/thinkingofanumber/thinkingofanumber.cpp) |
 | [thisaintyourgrandpascheckerboard](https://open.kattis.com/problems/thisaintyourgrandpascheckerboard) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/thisaintyourgrandpascheckerboard/a.cpp) |
 | [thore](https://open.kattis.com/problems/thore) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/thore/thore.cpp) |
+| [threedigits](https://open.kattis.com/problems/threedigits) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/threedigits/a.cpp) |
 | [tictactoe2](https://open.kattis.com/problems/tictactoe2) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/tictactoe2/tictactoe2.cpp) |
 | [tildes](https://open.kattis.com/problems/tildes) | [C++](https://github.com/donaldong/kattis/blob/main/solutions/tildes/tildes.cpp) |
 | [timing](https://open.kattis.com/problems/timing) | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/timing/a.rb) |
