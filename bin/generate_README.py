@@ -44,7 +44,7 @@ class Problem:
     for ext, files in self.solutions.items():
       for file in files:
          self.difficulty_score = max(self.difficulty_score, file.difficulty_score)
-         self.tags.union(file.tags)
+         self.tags = self.tags.union(file.tags)
 
   def __lt__(self, other):
     if self.difficulty_score == other.difficulty_score:
