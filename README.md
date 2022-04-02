@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **744**
+Number of solved problems in this repo: **754**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -12,12 +12,16 @@ Number of solved problems in this repo: **744**
 | [jointjogjam](https://open.kattis.com/problems/jointjogjam) | easy (1150) | geometry, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jointjogjam/a.cpp) |
 | [locustlocus](https://open.kattis.com/problems/locustlocus) | easy (1150) | math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/locustlocus/a.cpp) |
 | [jazzitup](https://open.kattis.com/problems/jazzitup) | medium (1200) | brute force, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jazzitup/a.cpp) |
+| [brokencalculator](https://open.kattis.com/problems/brokencalculator) | medium (1300) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/brokencalculator/a.cpp) |
 | [conteststruggles](https://open.kattis.com/problems/conteststruggles) | medium (1300) | math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/conteststruggles/a.cpp) |
 | [driversdilemma](https://open.kattis.com/problems/driversdilemma) | medium (1300) | brute force, implementation, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/driversdilemma/a.cpp) |
 | [election2](https://open.kattis.com/problems/election2) | medium (1300) | hash map | [C++](https://github.com/donaldong/kattis/blob/main/solutions/election2/a.cpp) |
 | [intervalscheduling](https://open.kattis.com/problems/intervalscheduling) | medium (1300) | greedy, sorting | [C++](https://github.com/donaldong/kattis/blob/main/solutions/intervalscheduling/a.cpp) |
 | [outofsorts](https://open.kattis.com/problems/outofsorts) | medium (1300) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/outofsorts/a.cpp) |
+| [musicaltrees](https://open.kattis.com/problems/musicaltrees) | medium (1350) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/musicaltrees/a.cpp) |
+| [spellingbee](https://open.kattis.com/problems/spellingbee) | medium (1350) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/spellingbee/a.cpp) |
 | [doctorkattis](https://open.kattis.com/problems/doctorkattis) | medium (1400) | data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/doctorkattis/a.cpp) |
+| [fieldtrip](https://open.kattis.com/problems/fieldtrip) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fieldtrip/a.cpp) |
 | [fishmongers](https://open.kattis.com/problems/fishmongers) | medium (1400) | greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fishmongers/a.cpp) |
 | [hopscotch50](https://open.kattis.com/problems/hopscotch50) | medium (1400) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch50/a.cpp) |
 | [mrcodeformatgrader](https://open.kattis.com/problems/mrcodeformatgrader) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/mrcodeformatgrader/a.cpp) |
@@ -27,9 +31,11 @@ Number of solved problems in this repo: **744**
 | [socialrunning](https://open.kattis.com/problems/socialrunning) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/socialrunning/a.cpp) |
 | [threedigits](https://open.kattis.com/problems/threedigits) | medium (1400) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/threedigits/a.cpp) |
 | [memorymatch](https://open.kattis.com/problems/memorymatch) | medium (1450) | case work, data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/memorymatch/a.cpp) |
+| [annoyedcoworkers](https://open.kattis.com/problems/annoyedcoworkers) | medium (1500) | greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/annoyedcoworkers/a.cpp) |
 | [caveexploration2](https://open.kattis.com/problems/caveexploration2) | medium (1500) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/caveexploration2/a.cpp) |
 | [clinic](https://open.kattis.com/problems/clinic) | medium (1500) | data structure, implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/clinic/a.cpp) |
 | [colorland](https://open.kattis.com/problems/colorland) | medium (1500) | dp, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/colorland/a.cpp) |
+| [escapewallmaria](https://open.kattis.com/problems/escapewallmaria) | medium (1500) | bfs, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/escapewallmaria/a.cpp) |
 | [findmyfamily](https://open.kattis.com/problems/findmyfamily) | medium (1500) | binary search, moving window | [C++](https://github.com/donaldong/kattis/blob/main/solutions/findmyfamily/a.cpp) |
 | [grazedgrains](https://open.kattis.com/problems/grazedgrains) | medium (1500) | geometry | [C++](https://github.com/donaldong/kattis/blob/main/solutions/grazedgrains/a.cpp) |
 | [historicexhibition](https://open.kattis.com/problems/historicexhibition) | medium (1500) | data structure, greedy, map | [C++](https://github.com/donaldong/kattis/blob/main/solutions/historicexhibition/a.cpp) |
@@ -37,6 +43,7 @@ Number of solved problems in this repo: **744**
 | [keyboardconcert](https://open.kattis.com/problems/keyboardconcert) | medium (1500) | bit mask, data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/keyboardconcert/a.cpp) |
 | [luckynumber](https://open.kattis.com/problems/luckynumber) | medium (1500) | math | [Python](https://github.com/donaldong/kattis/blob/main/solutions/luckynumber/a.py) |
 | [promotions](https://open.kattis.com/problems/promotions) | medium (1500) | bfs, dfs, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/promotions/a.cpp) |
+| [reconstructingtapeart](https://open.kattis.com/problems/reconstructingtapeart) | medium (1500) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/reconstructingtapeart/a.cpp) |
 | [appealtotheaudience](https://open.kattis.com/problems/appealtotheaudience) | hard (1600) | dfs, greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/appealtotheaudience/a.cpp) |
 | [canvas](https://open.kattis.com/problems/canvas) | hard (1600) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/canvas/a.cpp) |
 | [dragonballs](https://open.kattis.com/problems/dragonballs) | hard (1600) | binary search, grid, interactive | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/a.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/testing_tool.py) |
@@ -46,10 +53,13 @@ Number of solved problems in this repo: **744**
 | [deceptivedirections](https://open.kattis.com/problems/deceptivedirections) | hard (1700) | bfs, dfs, dp, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/deceptivedirections/a.cpp) |
 | [endgame](https://open.kattis.com/problems/endgame) | hard (1700) | grid, math, random | [C++](https://github.com/donaldong/kattis/blob/main/solutions/endgame/a.cpp) |
 | [forestfruits](https://open.kattis.com/problems/forestfruits) | hard (1700) | graph, greedy, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/forestfruits/a.cpp) |
+| [jackthelumberjack](https://open.kattis.com/problems/jackthelumberjack) | hard (1700) | prefix sum | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jackthelumberjack/a.cpp) |
+| [randomdigitalexponentiation](https://open.kattis.com/problems/randomdigitalexponentiation) | hard (1700) | dfs, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/randomdigitalexponentiation/a.cpp) |
 | [babynames](https://open.kattis.com/problems/babynames) | hard (1800) | data structure, dfs, trie | [C++](https://github.com/donaldong/kattis/blob/main/solutions/babynames/a.cpp) |
 | [blackandwhite](https://open.kattis.com/problems/blackandwhite) | hard (1800) | bitmask, dp, math, probabilities | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blackandwhite/a.cpp) |
 | [dvaput](https://open.kattis.com/problems/dvaput) | hard (1800) | string, string hashing, strings, suffix array | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/string_hashing.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/a.cpp) |
 | [hopscotch500](https://open.kattis.com/problems/hopscotch500) | hard (1800) | dp, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch500/a.cpp) |
+| [perfectskyline](https://open.kattis.com/problems/perfectskyline) | hard (1800) | bit mask, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/perfectskyline/a.cpp) |
 | [shortestpath4](https://open.kattis.com/problems/shortestpath4) | hard (1800) | dp, graph, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/shortestpath4/a.cpp) |
 | [flightcollision](https://open.kattis.com/problems/flightcollision) | hard (1900) | data structure, priority queue, rational number, segment tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flightcollision/a.cpp) |
 | [powersof2](https://open.kattis.com/problems/powersof2) | hard (1900) | bitmask, combinatorics, inclusion-exclusion | [C++](https://github.com/donaldong/kattis/blob/main/solutions/powersof2/a.cpp) |
