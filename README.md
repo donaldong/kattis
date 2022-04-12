@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **754**
+Number of solved problems in this repo: **757**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -12,6 +12,7 @@ Number of solved problems in this repo: **754**
 | [jointjogjam](https://open.kattis.com/problems/jointjogjam) | easy (1150) | geometry, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jointjogjam/a.cpp) |
 | [locustlocus](https://open.kattis.com/problems/locustlocus) | easy (1150) | math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/locustlocus/a.cpp) |
 | [jazzitup](https://open.kattis.com/problems/jazzitup) | medium (1200) | brute force, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jazzitup/a.cpp) |
+| [babelfish](https://open.kattis.com/problems/babelfish) | medium (1300) | data structure | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/a.cpp), [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.rb) |
 | [brokencalculator](https://open.kattis.com/problems/brokencalculator) | medium (1300) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/brokencalculator/a.cpp) |
 | [conteststruggles](https://open.kattis.com/problems/conteststruggles) | medium (1300) | math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/conteststruggles/a.cpp) |
 | [driversdilemma](https://open.kattis.com/problems/driversdilemma) | medium (1300) | brute force, implementation, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/driversdilemma/a.cpp) |
@@ -44,10 +45,13 @@ Number of solved problems in this repo: **754**
 | [luckynumber](https://open.kattis.com/problems/luckynumber) | medium (1500) | math | [Python](https://github.com/donaldong/kattis/blob/main/solutions/luckynumber/a.py) |
 | [promotions](https://open.kattis.com/problems/promotions) | medium (1500) | bfs, dfs, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/promotions/a.cpp) |
 | [reconstructingtapeart](https://open.kattis.com/problems/reconstructingtapeart) | medium (1500) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/reconstructingtapeart/a.cpp) |
+| [tictacstate](https://open.kattis.com/problems/tictacstate) | medium (1500) | bit mask, implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/tictacstate/a.cpp) |
 | [appealtotheaudience](https://open.kattis.com/problems/appealtotheaudience) | hard (1600) | dfs, greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/appealtotheaudience/a.cpp) |
 | [canvas](https://open.kattis.com/problems/canvas) | hard (1600) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/canvas/a.cpp) |
 | [dragonballs](https://open.kattis.com/problems/dragonballs) | hard (1600) | binary search, grid, interactive | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/a.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/testing_tool.py) |
 | [oddaevenb](https://open.kattis.com/problems/oddaevenb) | hard (1600) | combinatorics, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/oddaevenb/a.cpp) |
+| [orchard](https://open.kattis.com/problems/orchard) | hard (1600) | dp, math, probability | [C++](https://github.com/donaldong/kattis/blob/main/solutions/orchard/a.cpp) |
+| [robotturtles](https://open.kattis.com/problems/robotturtles) | hard (1600) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/robotturtles/a.cpp) |
 | [abinitio](https://open.kattis.com/problems/abinitio) | hard (1700) | data structure, graph | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/abinitio/tle.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/abinitio/a.cpp) |
 | [antennaanalysis](https://open.kattis.com/problems/antennaanalysis) | hard (1700) | case work, dp, moving window | [C++](https://github.com/donaldong/kattis/blob/main/solutions/antennaanalysis/a.cpp) |
 | [deceptivedirections](https://open.kattis.com/problems/deceptivedirections) | hard (1700) | bfs, dfs, dp, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/deceptivedirections/a.cpp) |
@@ -107,7 +111,6 @@ Number of solved problems in this repo: **754**
 | [awkwardparty](https://open.kattis.com/problems/awkwardparty) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/awkwardparty/awkwardparty.cpp) |
 | [azulejos](https://open.kattis.com/problems/azulejos) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/azulejos/azulejos.cpp) |
 | [baas](https://open.kattis.com/problems/baas) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/baas/baas.cpp) |
-| [babelfish](https://open.kattis.com/problems/babelfish) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.cpp), [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.rb) |
 | [babybites](https://open.kattis.com/problems/babybites) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/babybites/babybites.cpp) |
 | [badpacking](https://open.kattis.com/problems/badpacking) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/badpacking/a.cpp), [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/badpacking/test.rb) |
 | [balanceddiet](https://open.kattis.com/problems/balanceddiet) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/balanceddiet/balanceddiet.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/balanceddiet/balanceddiet.py) |
