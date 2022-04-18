@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **757**
+Number of solved problems in this repo: **758**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -52,6 +52,7 @@ Number of solved problems in this repo: **757**
 | [oddaevenb](https://open.kattis.com/problems/oddaevenb) | hard (1600) | combinatorics, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/oddaevenb/a.cpp) |
 | [orchard](https://open.kattis.com/problems/orchard) | hard (1600) | dp, math, probability | [C++](https://github.com/donaldong/kattis/blob/main/solutions/orchard/a.cpp) |
 | [robotturtles](https://open.kattis.com/problems/robotturtles) | hard (1600) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/robotturtles/a.cpp) |
+| [rockclimbing](https://open.kattis.com/problems/rockclimbing) | hard (1600) | grid, negative weights, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/rockclimbing/a.cpp) |
 | [abinitio](https://open.kattis.com/problems/abinitio) | hard (1700) | data structure, graph | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/abinitio/tle.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/abinitio/a.cpp) |
 | [antennaanalysis](https://open.kattis.com/problems/antennaanalysis) | hard (1700) | case work, dp, moving window | [C++](https://github.com/donaldong/kattis/blob/main/solutions/antennaanalysis/a.cpp) |
 | [deceptivedirections](https://open.kattis.com/problems/deceptivedirections) | hard (1700) | bfs, dfs, dp, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/deceptivedirections/a.cpp) |
