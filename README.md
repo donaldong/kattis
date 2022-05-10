@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **759**
+Number of solved problems in this repo: **763**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -11,6 +11,7 @@ Number of solved problems in this repo: **759**
 | [cinema2](https://open.kattis.com/problems/cinema2) | easy (1100) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cinema2/a.cpp) |
 | [jointjogjam](https://open.kattis.com/problems/jointjogjam) | easy (1150) | geometry, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jointjogjam/a.cpp) |
 | [locustlocus](https://open.kattis.com/problems/locustlocus) | easy (1150) | math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/locustlocus/a.cpp) |
+| [99problems](https://open.kattis.com/problems/99problems) | medium (1200) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/99problems/a.cpp) |
 | [jazzitup](https://open.kattis.com/problems/jazzitup) | medium (1200) | brute force, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jazzitup/a.cpp) |
 | [babelfish](https://open.kattis.com/problems/babelfish) | medium (1300) | data structure | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/a.cpp), [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.rb) |
 | [brokencalculator](https://open.kattis.com/problems/brokencalculator) | medium (1300) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/brokencalculator/a.cpp) |
@@ -18,9 +19,11 @@ Number of solved problems in this repo: **759**
 | [driversdilemma](https://open.kattis.com/problems/driversdilemma) | medium (1300) | brute force, implementation, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/driversdilemma/a.cpp) |
 | [election2](https://open.kattis.com/problems/election2) | medium (1300) | hash map | [C++](https://github.com/donaldong/kattis/blob/main/solutions/election2/a.cpp) |
 | [intervalscheduling](https://open.kattis.com/problems/intervalscheduling) | medium (1300) | greedy, sorting | [C++](https://github.com/donaldong/kattis/blob/main/solutions/intervalscheduling/a.cpp) |
+| [namegeneration](https://open.kattis.com/problems/namegeneration) | medium (1300) | constructive algorithm | [C++](https://github.com/donaldong/kattis/blob/main/solutions/namegeneration/a.cpp) |
 | [outofsorts](https://open.kattis.com/problems/outofsorts) | medium (1300) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/outofsorts/a.cpp) |
 | [musicaltrees](https://open.kattis.com/problems/musicaltrees) | medium (1350) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/musicaltrees/a.cpp) |
 | [spellingbee](https://open.kattis.com/problems/spellingbee) | medium (1350) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/spellingbee/a.cpp) |
+| [barclassification](https://open.kattis.com/problems/barclassification) | medium (1400) | brute force | [C++](https://github.com/donaldong/kattis/blob/main/solutions/barclassification/a.cpp) |
 | [doctorkattis](https://open.kattis.com/problems/doctorkattis) | medium (1400) | data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/doctorkattis/a.cpp) |
 | [fieldtrip](https://open.kattis.com/problems/fieldtrip) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fieldtrip/a.cpp) |
 | [fishmongers](https://open.kattis.com/problems/fishmongers) | medium (1400) | greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fishmongers/a.cpp) |
@@ -54,6 +57,7 @@ Number of solved problems in this repo: **759**
 | [orchard](https://open.kattis.com/problems/orchard) | hard (1600) | dp, math, probability | [C++](https://github.com/donaldong/kattis/blob/main/solutions/orchard/a.cpp) |
 | [robotturtles](https://open.kattis.com/problems/robotturtles) | hard (1600) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/robotturtles/a.cpp) |
 | [rockclimbing](https://open.kattis.com/problems/rockclimbing) | hard (1600) | grid, negative weights, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/rockclimbing/a.cpp) |
+| [spehrling](https://open.kattis.com/problems/spehrling) | hard (1600) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/spehrling/a.cpp) |
 | [abinitio](https://open.kattis.com/problems/abinitio) | hard (1700) | data structure, graph | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/abinitio/tle.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/abinitio/a.cpp) |
 | [antennaanalysis](https://open.kattis.com/problems/antennaanalysis) | hard (1700) | case work, dp, moving window | [C++](https://github.com/donaldong/kattis/blob/main/solutions/antennaanalysis/a.cpp) |
 | [deceptivedirections](https://open.kattis.com/problems/deceptivedirections) | hard (1700) | bfs, dfs, dp, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/deceptivedirections/a.cpp) |
