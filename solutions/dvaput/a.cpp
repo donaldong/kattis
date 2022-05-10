@@ -1,7 +1,7 @@
 /**
- * @date        2022-03-22
- * @tags        strings, suffix array
- * @difficulty  1800
+ * NOTE: This is not a working solution (Runtime Error)
+ *
+ * See https://github.com/e-maxx-eng/e-maxx-eng/issues/815
  */
 #include <bits/stdc++.h>
 
@@ -58,7 +58,7 @@ struct SuffixArray { // https://cp-algorithms.com/string/suffix-array.html
   }
   int lcp(int i, int j) {
     int ans = 0, l = i, r = j;
-    for (int k = C.size() - 1; k >= 0 && i < n && j < n; k--) {
+    for (int k = C.size() - 1; k >= 0; k--) { // missing boundary check for i and j
       int b = 1 << k;
       if (C[k][i] == C[k][j]) {
         ans += b;
