@@ -58,12 +58,12 @@ struct SuffixArray { // https://cp-algorithms.com/string/suffix-array.html
   }
   int lcp(int i, int j) {
     int ans = 0, l = i, r = j;
-    for (int k = C.size() - 1; k >= 0 && i < n && j < n; k--) {
+    for (int k = C.size() - 1; k >= 0; k--) {
       int b = 1 << k;
       if (C[k][i] == C[k][j]) {
         ans += b;
-        i += b;
-        j += b;
+        i += b, j += b;
+        i %= n, j %= n;
       }
     }
     return min({
