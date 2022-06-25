@@ -30,7 +30,10 @@ class SourceFile:
           self.tags += re.split(r'\s*,\s*', match[1])
         match = re.match(r'.*\s+@difficulty\s+(.*)', line)
         if match:
-           self.difficulty_score = int(match[1])
+          try:
+            self.difficulty_score = int(match[1])
+          except:
+            self.difficulty_score = -1
 
   def __repr__(self) -> str:
     return f'<{self.problem_id}: {self.filename}>'

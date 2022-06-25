@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **763**
+Number of solved problems in this repo: **765**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -53,6 +53,7 @@ Number of solved problems in this repo: **763**
 | [appealtotheaudience](https://open.kattis.com/problems/appealtotheaudience) | hard (1600) | dfs, greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/appealtotheaudience/a.cpp) |
 | [canvas](https://open.kattis.com/problems/canvas) | hard (1600) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/canvas/a.cpp) |
 | [dragonballs](https://open.kattis.com/problems/dragonballs) | hard (1600) | binary search, grid, interactive | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/a.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/testing_tool.py) |
+| [martiandna](https://open.kattis.com/problems/martiandna) | hard (1600) | binary search, moving windows | [C++](https://github.com/donaldong/kattis/blob/main/solutions/martiandna/a.cpp) |
 | [oddaevenb](https://open.kattis.com/problems/oddaevenb) | hard (1600) | combinatorics, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/oddaevenb/a.cpp) |
 | [orchard](https://open.kattis.com/problems/orchard) | hard (1600) | dp, math, probability | [C++](https://github.com/donaldong/kattis/blob/main/solutions/orchard/a.cpp) |
 | [robotturtles](https://open.kattis.com/problems/robotturtles) | hard (1600) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/robotturtles/a.cpp) |
@@ -275,6 +276,7 @@ Number of solved problems in this repo: **763**
 | [eatingout](https://open.kattis.com/problems/eatingout) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/eatingout/eatingout.cpp) |
 | [echoechoecho](https://open.kattis.com/problems/echoechoecho) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/echoechoecho/a.cpp) |
 | [eenymeeny](https://open.kattis.com/problems/eenymeeny) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/eenymeeny/a.cpp) |
+| [efficientbusrouting](https://open.kattis.com/problems/efficientbusrouting) | unknown | greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/efficientbusrouting/wa.cpp) |
 | [electricaloutlets](https://open.kattis.com/problems/electricaloutlets) | unknown |  | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/electricaloutlets/a.rb) |
 | [elementarymath](https://open.kattis.com/problems/elementarymath) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/elementarymath/elementarymath.cpp) |
 | [emergency](https://open.kattis.com/problems/emergency) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/emergency/emergency.cpp) |
