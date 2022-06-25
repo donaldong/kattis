@@ -72,6 +72,7 @@ Number of solved problems in this repo: **765**
 | [hopscotch500](https://open.kattis.com/problems/hopscotch500) | hard (1800) | dp, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch500/a.cpp) |
 | [perfectskyline](https://open.kattis.com/problems/perfectskyline) | hard (1800) | bit mask, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/perfectskyline/a.cpp) |
 | [shortestpath4](https://open.kattis.com/problems/shortestpath4) | hard (1800) | dp, graph, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/shortestpath4/a.cpp) |
+| [efficientbusrouting](https://open.kattis.com/problems/efficientbusrouting) | hard (1900) | graph, greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/efficientbusrouting/a.cpp) |
 | [flightcollision](https://open.kattis.com/problems/flightcollision) | hard (1900) | data structure, priority queue, rational number, segment tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flightcollision/a.cpp) |
 | [powersof2](https://open.kattis.com/problems/powersof2) | hard (1900) | bitmask, combinatorics, inclusion-exclusion | [C++](https://github.com/donaldong/kattis/blob/main/solutions/powersof2/a.cpp) |
 | [3sideddice](https://open.kattis.com/problems/3sideddice) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/3sideddice/3sideddice.cpp) |
@@ -276,7 +277,6 @@ Number of solved problems in this repo: **765**
 | [eatingout](https://open.kattis.com/problems/eatingout) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/eatingout/eatingout.cpp) |
 | [echoechoecho](https://open.kattis.com/problems/echoechoecho) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/echoechoecho/a.cpp) |
 | [eenymeeny](https://open.kattis.com/problems/eenymeeny) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/eenymeeny/a.cpp) |
-| [efficientbusrouting](https://open.kattis.com/problems/efficientbusrouting) | unknown | greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/efficientbusrouting/wa.cpp) |
 | [electricaloutlets](https://open.kattis.com/problems/electricaloutlets) | unknown |  | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/electricaloutlets/a.rb) |
 | [elementarymath](https://open.kattis.com/problems/elementarymath) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/elementarymath/elementarymath.cpp) |
 | [emergency](https://open.kattis.com/problems/emergency) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/emergency/emergency.cpp) |
