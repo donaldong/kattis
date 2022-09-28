@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **772**
+Number of solved problems in this repo: **775**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -56,7 +56,9 @@ Number of solved problems in this repo: **772**
 | [reconstructingtapeart](https://open.kattis.com/problems/reconstructingtapeart) | medium (1500) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/reconstructingtapeart/a.cpp) |
 | [rsamistake](https://open.kattis.com/problems/rsamistake) | medium (1500) | math, number theory | [C++](https://github.com/donaldong/kattis/blob/main/solutions/rsamistake/a.cpp) |
 | [slidecount](https://open.kattis.com/problems/slidecount) | medium (1500) | implementation, prefix sum, sliding window | [C++](https://github.com/donaldong/kattis/blob/main/solutions/slidecount/a.cpp) |
+| [ticketcompleted](https://open.kattis.com/problems/ticketcompleted) | medium (1500) | graph, probability | [C++](https://github.com/donaldong/kattis/blob/main/solutions/ticketcompleted/a.cpp) |
 | [tictacstate](https://open.kattis.com/problems/tictacstate) | medium (1500) | bit mask, implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/tictacstate/a.cpp) |
+| [wordlewithfriends](https://open.kattis.com/problems/wordlewithfriends) | medium (1550) | case work, implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/wordlewithfriends/a.cpp) |
 | [appealtotheaudience](https://open.kattis.com/problems/appealtotheaudience) | hard (1600) | dfs, greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/appealtotheaudience/a.cpp) |
 | [canvas](https://open.kattis.com/problems/canvas) | hard (1600) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/canvas/a.cpp) |
 | [dragonballs](https://open.kattis.com/problems/dragonballs) | hard (1600) | binary search, grid, interactive | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/a.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/testing_tool.py) |
@@ -82,6 +84,7 @@ Number of solved problems in this repo: **772**
 | [efficientbusrouting](https://open.kattis.com/problems/efficientbusrouting) | hard (1900) | graph, greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/efficientbusrouting/a.cpp) |
 | [flightcollision](https://open.kattis.com/problems/flightcollision) | hard (1900) | data structure, priority queue, rational number, segment tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flightcollision/a.cpp) |
 | [powersof2](https://open.kattis.com/problems/powersof2) | hard (1900) | bitmask, combinatorics, inclusion-exclusion | [C++](https://github.com/donaldong/kattis/blob/main/solutions/powersof2/a.cpp) |
+| [traderoutes](https://open.kattis.com/problems/traderoutes) | hard (1900) | graph, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/traderoutes/a.cpp) |
 | [3sideddice](https://open.kattis.com/problems/3sideddice) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/3sideddice/3sideddice.cpp) |
 | [a1paper](https://open.kattis.com/problems/a1paper) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/a1paper/a1paper.cpp) |
 | [ada](https://open.kattis.com/problems/ada) | unknown |  | [Python](https://github.com/donaldong/kattis/blob/main/solutions/ada/ada.py) |
