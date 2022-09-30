@@ -7,6 +7,7 @@
 *.swp
 *.in
 *.ans
+*.dSYM
 
 .ipynb_checkpoints
 node_modules
