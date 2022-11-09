@@ -1,27 +1,27 @@
 /**
- * @author      Donald Dong
- * @date        2022-03-21
+ * @date        2022-10-28
  * @tags        greedy, sorting
- * @difficulty  1300
+ * @difficulty  1500
  */
 #include <bits/stdc++.h>
 using namespace std;
-using Pair = pair<int,int>;
 int main() {
-  ios_base::sync_with_stdio(false), cin.tie(0); // Fast IO
-  int N;
-  cin >> N;
-  vector<Pair> P(N);
-  for (auto& p : P) cin >> p.first >> p.second;
-  sort(P.begin(), P.end(), [](const Pair& a, const Pair& b) {
-    return a.second<b.second;
+  ios_base::sync_with_stdio(false), cin.tie(NULL); // Fast IO
+  int n;
+  cin >> n;
+  using pii = pair<int,int>;
+  vector<pair<int,int>> ranges(n);
+  for (auto& p : ranges) cin >> p.first >> p.second;
+  sort(ranges.begin(), ranges.end(), [&](const pii& a, const pii& b) {
+    return a.second < b.second;
   });
-  int t = 0, res = 0;
-  for (auto& p : P) {
+  int res = 0, t = 0;
+  for (const auto& p : ranges) {
     if (p.first >= t) {
       ++res;
       t = p.second;
     }
   }
   cout << res << endl;
+  return 0;
 }

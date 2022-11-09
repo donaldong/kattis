@@ -1,39 +1,32 @@
+/**
+ * @date        2022-10-07
+ * @tags        prefix sum
+ * @difficulty  1400
+ */
 #include <bits/stdc++.h>
 using namespace std;
-vector<int> A;
-vector<long long> L, R;
-
-long long left(int i) {
-  if (L[i] > LLONG_MIN) return L[i];
-  long long res = i;
-  res *= A[i-1];
-  return L[i] = res + left(i-1);
-}
-
-long long right(int i) {
-  if (R[i] > LLONG_MIN) return R[i];
-  long long res = i+2;
-  res *= A[i];
-  return R[i] = res + right(i+1);
-}
-
 int main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(0);
+  ios_base::sync_with_stdio(false), cin.tie(NULL); // Fast IO
   int n;
   cin >> n;
-  A.resize(n-1);
-  for (int i = 0; i+1 < n; ++i) {
-    cin >> A[i];
-    if (!A[i]) cin >> A[i];
+  vector<int> nums(n-1);
+  for (auto& num : nums) {
+    cin >> num;
+    if (!num) cin >> num;
   }
-  L.assign(n, LLONG_MIN);
-  L[0] = 0;
-  R.assign(n, LLONG_MIN);
-  R[n-1] = 0;
-  long long res = LLONG_MIN;
-  for (int i = 0; i < n; ++i) {
-    res = max(res, left(i) + right(i));
+
+  using ll = long long;
+  ll res = LLONG_MIN;
+  vector<ll> L(n+2, 0), R(n+2, 0);
+
+  for (int i = 0; i < nums.size(); ++i) {
+    L[i+1] = L[i]+nums[i]*(i+1);
+  }
+  for (int i = n; i >= 2; --i) {
+    R[i] = R[i+1]+nums[i-2]*i;
+  }
+  for (int i = 1; i <= n; ++i) {
+    res = max(res,  L[i-1] + R[i+1]);
   }
   cout << res << endl;
   return 0;

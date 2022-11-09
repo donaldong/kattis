@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **775**
+Number of solved problems in this repo: **779**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -16,21 +16,24 @@ Number of solved problems in this repo: **775**
 | [locustlocus](https://open.kattis.com/problems/locustlocus) | easy (1150) | math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/locustlocus/a.cpp) |
 | [99problems](https://open.kattis.com/problems/99problems) | medium (1200) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/99problems/a.cpp) |
 | [jazzitup](https://open.kattis.com/problems/jazzitup) | medium (1200) | brute force, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jazzitup/a.cpp) |
+| [throwns](https://open.kattis.com/problems/throwns) | medium (1200) | implementation, stack | [C++](https://github.com/donaldong/kattis/blob/main/solutions/throwns/a.cpp) |
 | [babelfish](https://open.kattis.com/problems/babelfish) | medium (1300) | data structure | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/a.cpp), [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/babelfish/babelfish.rb) |
 | [brokencalculator](https://open.kattis.com/problems/brokencalculator) | medium (1300) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/brokencalculator/a.cpp) |
 | [conteststruggles](https://open.kattis.com/problems/conteststruggles) | medium (1300) | math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/conteststruggles/a.cpp) |
 | [driversdilemma](https://open.kattis.com/problems/driversdilemma) | medium (1300) | brute force, implementation, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/driversdilemma/a.cpp) |
 | [election2](https://open.kattis.com/problems/election2) | medium (1300) | hash map | [C++](https://github.com/donaldong/kattis/blob/main/solutions/election2/a.cpp) |
 | [electionparadox](https://open.kattis.com/problems/electionparadox) | medium (1300) | greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/electionparadox/a.cpp) |
-| [intervalscheduling](https://open.kattis.com/problems/intervalscheduling) | medium (1300) | greedy, sorting | [C++](https://github.com/donaldong/kattis/blob/main/solutions/intervalscheduling/a.cpp) |
 | [namegeneration](https://open.kattis.com/problems/namegeneration) | medium (1300) | constructive algorithm | [C++](https://github.com/donaldong/kattis/blob/main/solutions/namegeneration/a.cpp) |
 | [outofsorts](https://open.kattis.com/problems/outofsorts) | medium (1300) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/outofsorts/a.cpp) |
+| [howmanydigits](https://open.kattis.com/problems/howmanydigits) | medium (1350) | math, number theory | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/howmanydigits/howmanydigits.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/howmanydigits/a.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/howmanydigits/a.py) |
 | [musicaltrees](https://open.kattis.com/problems/musicaltrees) | medium (1350) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/musicaltrees/a.cpp) |
 | [spellingbee](https://open.kattis.com/problems/spellingbee) | medium (1350) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/spellingbee/a.cpp) |
 | [barclassification](https://open.kattis.com/problems/barclassification) | medium (1400) | brute force | [C++](https://github.com/donaldong/kattis/blob/main/solutions/barclassification/a.cpp) |
+| [busnumbers](https://open.kattis.com/problems/busnumbers) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/busnumbers/a.cpp) |
 | [doctorkattis](https://open.kattis.com/problems/doctorkattis) | medium (1400) | data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/doctorkattis/a.cpp) |
 | [fieldtrip](https://open.kattis.com/problems/fieldtrip) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fieldtrip/a.cpp) |
 | [fishmongers](https://open.kattis.com/problems/fishmongers) | medium (1400) | greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fishmongers/a.cpp) |
+| [fluortanten](https://open.kattis.com/problems/fluortanten) | medium (1400) | prefix sum | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/fluortanten/b.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/fluortanten/a.cpp) |
 | [hopscotch50](https://open.kattis.com/problems/hopscotch50) | medium (1400) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch50/a.cpp) |
 | [mrcodeformatgrader](https://open.kattis.com/problems/mrcodeformatgrader) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/mrcodeformatgrader/a.cpp) |
 | [pawnshop](https://open.kattis.com/problems/pawnshop) | medium (1400) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/pawnshop/a.cpp) |
@@ -39,6 +42,7 @@ Number of solved problems in this repo: **775**
 | [skolavslutningen](https://open.kattis.com/problems/skolavslutningen) | medium (1400) | graph, union find | [C++](https://github.com/donaldong/kattis/blob/main/solutions/skolavslutningen/a.cpp) |
 | [socialrunning](https://open.kattis.com/problems/socialrunning) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/socialrunning/a.cpp) |
 | [threedigits](https://open.kattis.com/problems/threedigits) | medium (1400) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/threedigits/a.cpp) |
+| [loworderzeros](https://open.kattis.com/problems/loworderzeros) | medium (1450) | math, number theory | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/loworderzeros/loworderzeros.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/loworderzeros/a.cpp) |
 | [memorymatch](https://open.kattis.com/problems/memorymatch) | medium (1450) | case work, data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/memorymatch/a.cpp) |
 | [annoyedcoworkers](https://open.kattis.com/problems/annoyedcoworkers) | medium (1500) | greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/annoyedcoworkers/a.cpp) |
 | [caveexploration2](https://open.kattis.com/problems/caveexploration2) | medium (1500) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/caveexploration2/a.cpp) |
@@ -47,9 +51,11 @@ Number of solved problems in this repo: **775**
 | [cowboycheckers](https://open.kattis.com/problems/cowboycheckers) | medium (1500) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cowboycheckers/a.cpp) |
 | [escapewallmaria](https://open.kattis.com/problems/escapewallmaria) | medium (1500) | bfs, grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/escapewallmaria/a.cpp) |
 | [findmyfamily](https://open.kattis.com/problems/findmyfamily) | medium (1500) | binary search, moving window | [C++](https://github.com/donaldong/kattis/blob/main/solutions/findmyfamily/a.cpp) |
+| [foosball](https://open.kattis.com/problems/foosball) | medium (1500) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/foosball/a.cpp) |
 | [grazedgrains](https://open.kattis.com/problems/grazedgrains) | medium (1500) | geometry | [C++](https://github.com/donaldong/kattis/blob/main/solutions/grazedgrains/a.cpp) |
 | [historicexhibition](https://open.kattis.com/problems/historicexhibition) | medium (1500) | data structure, greedy, map | [C++](https://github.com/donaldong/kattis/blob/main/solutions/historicexhibition/a.cpp) |
 | [hotsprings](https://open.kattis.com/problems/hotsprings) | medium (1500) | greedy, sorting | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hotsprings/a.cpp) |
+| [intervalscheduling](https://open.kattis.com/problems/intervalscheduling) | medium (1500) | greedy, sorting | [C++](https://github.com/donaldong/kattis/blob/main/solutions/intervalscheduling/a.cpp) |
 | [keyboardconcert](https://open.kattis.com/problems/keyboardconcert) | medium (1500) | bit mask, data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/keyboardconcert/a.cpp) |
 | [luckynumber](https://open.kattis.com/problems/luckynumber) | medium (1500) | math | [Python](https://github.com/donaldong/kattis/blob/main/solutions/luckynumber/a.py) |
 | [promotions](https://open.kattis.com/problems/promotions) | medium (1500) | bfs, dfs, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/promotions/a.cpp) |
@@ -75,6 +81,7 @@ Number of solved problems in this repo: **775**
 | [forestfruits](https://open.kattis.com/problems/forestfruits) | hard (1700) | graph, greedy, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/forestfruits/a.cpp) |
 | [jackthelumberjack](https://open.kattis.com/problems/jackthelumberjack) | hard (1700) | prefix sum | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jackthelumberjack/a.cpp) |
 | [randomdigitalexponentiation](https://open.kattis.com/problems/randomdigitalexponentiation) | hard (1700) | dfs, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/randomdigitalexponentiation/a.cpp) |
+| [wordpuzzle](https://open.kattis.com/problems/wordpuzzle) | hard (1700) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/wordpuzzle/a.cpp) |
 | [babynames](https://open.kattis.com/problems/babynames) | hard (1800) | data structure, dfs, trie | [C++](https://github.com/donaldong/kattis/blob/main/solutions/babynames/a.cpp) |
 | [blackandwhite](https://open.kattis.com/problems/blackandwhite) | hard (1800) | bitmask, dp, math, probabilities | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blackandwhite/a.cpp) |
 | [dvaput](https://open.kattis.com/problems/dvaput) | hard (1800) | string, string hashing, strings, suffix array | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/string_hashing.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/a.cpp) |
@@ -330,7 +337,6 @@ Number of solved problems in this repo: **775**
 | [flowergarden](https://open.kattis.com/problems/flowergarden) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flowergarden/flowergarden.cpp) |
 | [flowerytrails](https://open.kattis.com/problems/flowerytrails) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flowerytrails/flowerytrails.cpp) |
 | [flowfree](https://open.kattis.com/problems/flowfree) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/flowfree/flowfree.cpp) |
-| [fluortanten](https://open.kattis.com/problems/fluortanten) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fluortanten/a.cpp) |
 | [fodelsedagsmemorisering](https://open.kattis.com/problems/fodelsedagsmemorisering) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fodelsedagsmemorisering/a.cpp) |
 | [fontan](https://open.kattis.com/problems/fontan) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fontan/a.cpp) |
 | [forcedchoice](https://open.kattis.com/problems/forcedchoice) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/forcedchoice/a.cpp) |
@@ -395,7 +401,6 @@ Number of solved problems in this repo: **775**
 | [hothike](https://open.kattis.com/problems/hothike) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hothike/a.cpp) |
 | [houselawn](https://open.kattis.com/problems/houselawn) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/houselawn/houselawn.cpp) |
 | [howl](https://open.kattis.com/problems/howl) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/howl/a.cpp) |
-| [howmanydigits](https://open.kattis.com/problems/howmanydigits) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/howmanydigits/howmanydigits.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/howmanydigits/a.py) |
 | [htoo](https://open.kattis.com/problems/htoo) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/htoo/htoo.cpp) |
 | [humancannonball](https://open.kattis.com/problems/humancannonball) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/humancannonball/humancannonball.cpp) |
 | [hydrasheads](https://open.kattis.com/problems/hydrasheads) | unknown |  | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/hydrasheads/hydrasheads.rb) |
@@ -475,7 +480,6 @@ Number of solved problems in this repo: **775**
 | [lost](https://open.kattis.com/problems/lost) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/lost/lost.cpp) |
 | [lostlineup](https://open.kattis.com/problems/lostlineup) | unknown |  | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/lostlineup/a.rb) |
 | [lostmap](https://open.kattis.com/problems/lostmap) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/lostmap/lostmap.cpp) |
-| [loworderzeros](https://open.kattis.com/problems/loworderzeros) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/loworderzeros/loworderzeros.cpp) |
 | [luhnchecksum](https://open.kattis.com/problems/luhnchecksum) | unknown |  | [Ruby](https://github.com/donaldong/kattis/blob/main/solutions/luhnchecksum/luhnchecksum.rb) |
 | [lyklagangriti](https://open.kattis.com/problems/lyklagangriti) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/lyklagangriti/a.cpp) |
 | [magical3](https://open.kattis.com/problems/magical3) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/magical3/magical3.cpp) |
