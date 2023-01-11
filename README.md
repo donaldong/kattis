@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **789**
+Number of solved problems in this repo: **790**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -64,6 +64,7 @@ Number of solved problems in this repo: **789**
 | [intervalscheduling](https://open.kattis.com/problems/intervalscheduling) | medium (1500) | greedy, sorting | [C++](https://github.com/donaldong/kattis/blob/main/solutions/intervalscheduling/a.cpp) |
 | [keyboardconcert](https://open.kattis.com/problems/keyboardconcert) | medium (1500) | bit mask, data structure | [C++](https://github.com/donaldong/kattis/blob/main/solutions/keyboardconcert/a.cpp) |
 | [luckynumber](https://open.kattis.com/problems/luckynumber) | medium (1500) | math | [Python](https://github.com/donaldong/kattis/blob/main/solutions/luckynumber/a.py) |
+| [olympusmans](https://open.kattis.com/problems/olympusmans) | medium (1500) | binary search, geometry | [Python](https://github.com/donaldong/kattis/blob/main/solutions/olympusmans/a.py) |
 | [promotions](https://open.kattis.com/problems/promotions) | medium (1500) | bfs, dfs, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/promotions/a.cpp) |
 | [reconstructingtapeart](https://open.kattis.com/problems/reconstructingtapeart) | medium (1500) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/reconstructingtapeart/a.cpp) |
 | [rsamistake](https://open.kattis.com/problems/rsamistake) | medium (1500) | math, number theory | [C++](https://github.com/donaldong/kattis/blob/main/solutions/rsamistake/a.cpp) |
