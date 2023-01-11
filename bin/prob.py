@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import optparse
+import argparse
 import os
 
-parser = optparse.OptionParser()
-parser.add_option('--cpp', action="store_true", default=True)
-options, args = parser.parse_args()
+parser = argparse.ArgumentParser()
+parser.add_argument('prob_id')
+parser.add_argument('-l', '--lang', choices=['cpp', 'py'], default='cpp')
+options = parser.parse_args()
 
-path = '/'.join(args)
+path = os.path.join('./', options.prob_id)
 os.system(f'mkdir -p {path}')
-if options.cpp:
+if options.lang == 'cpp':
   os.system(f'cd {path} && cppg')
-print(path)
+else:
+  os.system(f'cd {path} && pyg')
+
+print(path, f"a.{options.lang}")

@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import os
+from datetime import datetime
+
+date = datetime.now().date()
+PY_TEMPLATE=f'''\
+#
+#  @date        {date}
+#  @tags        unknown 
+#  @difficulty  unknown
+#
+'''
+
+def main():
+  file = 'a.py'
+  if os.path.exists(file):
+    print(f'{file} already exists. Nothing needs to be done.')
+    return
+  f = open(file, 'a')
+  f.write(PY_TEMPLATE)
+  f.close()
+
+main()
