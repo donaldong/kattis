@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **787**
+Number of solved problems in this repo: **789**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -34,6 +34,7 @@ Number of solved problems in this repo: **787**
 | [fieldtrip](https://open.kattis.com/problems/fieldtrip) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fieldtrip/a.cpp) |
 | [fishmongers](https://open.kattis.com/problems/fishmongers) | medium (1400) | greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/fishmongers/a.cpp) |
 | [fluortanten](https://open.kattis.com/problems/fluortanten) | medium (1400) | prefix sum | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/fluortanten/b.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/fluortanten/a.cpp) |
+| [generalizedrecursivefunctions](https://open.kattis.com/problems/generalizedrecursivefunctions) | medium (1400) | dp, input format | [Python](https://github.com/donaldong/kattis/blob/main/solutions/generalizedrecursivefunctions/a.py) |
 | [hopscotch50](https://open.kattis.com/problems/hopscotch50) | medium (1400) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/hopscotch50/a.cpp) |
 | [mrcodeformatgrader](https://open.kattis.com/problems/mrcodeformatgrader) | medium (1400) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/mrcodeformatgrader/a.cpp) |
 | [pawnshop](https://open.kattis.com/problems/pawnshop) | medium (1400) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/pawnshop/a.cpp) |
@@ -88,6 +89,7 @@ Number of solved problems in this repo: **787**
 | [forestfruits](https://open.kattis.com/problems/forestfruits) | hard (1700) | graph, greedy, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/forestfruits/a.cpp) |
 | [jackthelumberjack](https://open.kattis.com/problems/jackthelumberjack) | hard (1700) | prefix sum | [C++](https://github.com/donaldong/kattis/blob/main/solutions/jackthelumberjack/a.cpp) |
 | [randomdigitalexponentiation](https://open.kattis.com/problems/randomdigitalexponentiation) | hard (1700) | dfs, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/randomdigitalexponentiation/a.cpp) |
+| [studentsko](https://open.kattis.com/problems/studentsko) | hard (1700) | LIS, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/studentsko/a.cpp) |
 | [wordpuzzle](https://open.kattis.com/problems/wordpuzzle) | hard (1700) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/wordpuzzle/a.cpp) |
 | [babynames](https://open.kattis.com/problems/babynames) | hard (1800) | data structure, dfs, trie | [C++](https://github.com/donaldong/kattis/blob/main/solutions/babynames/a.cpp) |
 | [blackandwhite](https://open.kattis.com/problems/blackandwhite) | hard (1800) | bitmask, dp, math, probabilities | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blackandwhite/a.cpp) |
