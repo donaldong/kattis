@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **790**
+Number of solved problems in this repo: **791**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -103,6 +103,7 @@ Number of solved problems in this repo: **790**
 | [powersof2](https://open.kattis.com/problems/powersof2) | hard (1900) | bitmask, combinatorics, inclusion-exclusion | [C++](https://github.com/donaldong/kattis/blob/main/solutions/powersof2/a.cpp) |
 | [traderoutes](https://open.kattis.com/problems/traderoutes) | hard (1900) | graph, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/traderoutes/a.cpp) |
 | [sabor](https://open.kattis.com/problems/sabor) | hard (1950) | constructive algorithms, simulation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/sabor/a.cpp) |
+| [yatp](https://open.kattis.com/problems/yatp) | hard (2100) | binary search, centroid decomposition, graph, slope trick | [C++](https://github.com/donaldong/kattis/blob/main/solutions/yatp/a.cpp) |
 | [3sideddice](https://open.kattis.com/problems/3sideddice) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/3sideddice/3sideddice.cpp) |
 | [a1paper](https://open.kattis.com/problems/a1paper) | unknown |  | [C++](https://github.com/donaldong/kattis/blob/main/solutions/a1paper/a1paper.cpp) |
 | [ada](https://open.kattis.com/problems/ada) | unknown |  | [Python](https://github.com/donaldong/kattis/blob/main/solutions/ada/ada.py) |
