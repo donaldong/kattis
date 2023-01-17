@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **791**
+Number of solved problems in this repo: **793**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -75,6 +75,7 @@ Number of solved problems in this repo: **791**
 | [appealtotheaudience](https://open.kattis.com/problems/appealtotheaudience) | hard (1600) | dfs, greedy, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/appealtotheaudience/a.cpp) |
 | [canvas](https://open.kattis.com/problems/canvas) | hard (1600) | data structure, greedy | [C++](https://github.com/donaldong/kattis/blob/main/solutions/canvas/a.cpp) |
 | [dragonballs](https://open.kattis.com/problems/dragonballs) | hard (1600) | binary search, grid, interactive | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/a.cpp), [Python](https://github.com/donaldong/kattis/blob/main/solutions/dragonballs/testing_tool.py) |
+| [draughts](https://open.kattis.com/problems/draughts) | hard (1600) | backtracking, brute force, dfs, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/draughts/a.cpp) |
 | [enumeratingbrackets](https://open.kattis.com/problems/enumeratingbrackets) | hard (1600) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/enumeratingbrackets/a.cpp) |
 | [martiandna](https://open.kattis.com/problems/martiandna) | hard (1600) | binary search, moving windows | [C++](https://github.com/donaldong/kattis/blob/main/solutions/martiandna/a.cpp) |
 | [meltdown](https://open.kattis.com/problems/meltdown) | hard (1600) | binary search, geometry | [C++](https://github.com/donaldong/kattis/blob/main/solutions/meltdown/a.cpp) |
@@ -92,6 +93,7 @@ Number of solved problems in this repo: **791**
 | [randomdigitalexponentiation](https://open.kattis.com/problems/randomdigitalexponentiation) | hard (1700) | dfs, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/randomdigitalexponentiation/a.cpp) |
 | [studentsko](https://open.kattis.com/problems/studentsko) | hard (1700) | LIS, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/studentsko/a.cpp) |
 | [wordpuzzle](https://open.kattis.com/problems/wordpuzzle) | hard (1700) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/wordpuzzle/a.cpp) |
+| [ntnuorienteering](https://open.kattis.com/problems/ntnuorienteering) | hard (1750) | all pair shortest path, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/ntnuorienteering/a.cpp) |
 | [babynames](https://open.kattis.com/problems/babynames) | hard (1800) | data structure, dfs, trie | [C++](https://github.com/donaldong/kattis/blob/main/solutions/babynames/a.cpp) |
 | [blackandwhite](https://open.kattis.com/problems/blackandwhite) | hard (1800) | bitmask, dp, math, probabilities | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blackandwhite/a.cpp) |
 | [dvaput](https://open.kattis.com/problems/dvaput) | hard (1800) | string, string hashing, strings, suffix array | [C++(2)](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/string_hashing.cpp), [C++](https://github.com/donaldong/kattis/blob/main/solutions/dvaput/a.cpp) |
