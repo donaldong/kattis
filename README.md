@@ -3,7 +3,7 @@
 A collection of solutions since 2016, when I was a 2nd-year CS student in college. This could explain some weird
 solutions you might find lol 😛
 
-Number of solved problems in this repo: **793**
+Number of solved problems in this repo: **795**
 | Problem | Difficulty | Tags | Solution |
 | ------- | ---------- | ---- | -------- |
 | [whichisgreater](https://open.kattis.com/problems/whichisgreater) | easy (800) | implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/whichisgreater/a.cpp) |
@@ -50,6 +50,7 @@ Number of solved problems in this repo: **793**
 | [arraysmoothening](https://open.kattis.com/problems/arraysmoothening) | medium (1500) | greedy, heap, priority queue | [C++](https://github.com/donaldong/kattis/blob/main/solutions/arraysmoothening/a.cpp) |
 | [battleship](https://open.kattis.com/problems/battleship) | medium (1500) | implementation, simulation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/battleship/a.cpp) |
 | [caveexploration2](https://open.kattis.com/problems/caveexploration2) | medium (1500) | grid, shortest path | [C++](https://github.com/donaldong/kattis/blob/main/solutions/caveexploration2/a.cpp) |
+| [cheatingbooleantree](https://open.kattis.com/problems/cheatingbooleantree) | medium (1500) | dp, graph, tree | [C++](https://github.com/donaldong/kattis/blob/main/solutions/cheatingbooleantree/a.cpp) |
 | [clinic](https://open.kattis.com/problems/clinic) | medium (1500) | data structure, implementation | [C++](https://github.com/donaldong/kattis/blob/main/solutions/clinic/a.cpp) |
 | [colorland](https://open.kattis.com/problems/colorland) | medium (1500) | dp, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/colorland/a.cpp) |
 | [congaline](https://open.kattis.com/problems/congaline) | medium (1500) | linked list | [C++](https://github.com/donaldong/kattis/blob/main/solutions/congaline/a.cpp) |
@@ -93,6 +94,7 @@ Number of solved problems in this repo: **793**
 | [randomdigitalexponentiation](https://open.kattis.com/problems/randomdigitalexponentiation) | hard (1700) | dfs, math | [C++](https://github.com/donaldong/kattis/blob/main/solutions/randomdigitalexponentiation/a.cpp) |
 | [studentsko](https://open.kattis.com/problems/studentsko) | hard (1700) | LIS, dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/studentsko/a.cpp) |
 | [wordpuzzle](https://open.kattis.com/problems/wordpuzzle) | hard (1700) | dp | [C++](https://github.com/donaldong/kattis/blob/main/solutions/wordpuzzle/a.cpp) |
+| [dartscoring](https://open.kattis.com/problems/dartscoring) | hard (1750) | convex hull, geometry | [C++](https://github.com/donaldong/kattis/blob/main/solutions/dartscoring/a.cpp) |
 | [ntnuorienteering](https://open.kattis.com/problems/ntnuorienteering) | hard (1750) | all pair shortest path, graph | [C++](https://github.com/donaldong/kattis/blob/main/solutions/ntnuorienteering/a.cpp) |
 | [babynames](https://open.kattis.com/problems/babynames) | hard (1800) | data structure, dfs, trie | [C++](https://github.com/donaldong/kattis/blob/main/solutions/babynames/a.cpp) |
 | [blackandwhite](https://open.kattis.com/problems/blackandwhite) | hard (1800) | bitmask, dp, math, probabilities | [C++](https://github.com/donaldong/kattis/blob/main/solutions/blackandwhite/a.cpp) |
